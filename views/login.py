@@ -16,16 +16,23 @@ def login_page():
     with center:
         ui.page_transition(f"AUTH_{st.session_state['auth_mode'].upper()}")
         st.markdown(
-            ":green-badge[● AUTH.GATEWAY] "
-            ":blue-badge[◆ CRYPTO // PBKDF2-SHA256] "
-            ":violet-badge[▲ DB // JSON.PERSIST] "
+            ":green-badge[● PISES.GATEWAY] "
+            ":blue-badge[◆ MOTTO // رب زدني علما] "
+            ":violet-badge[▲ CRYPTO // PBKDF2-SHA256] "
             f":orange-badge[■ ACCOUNTS // {len(existing_users)}]"
         )
 
-        hdr_l, hdr_r = st.columns([3, 1.3])
+        logo = ui.logo_path()
+        if logo:
+            logo_col, hdr_l, hdr_r = st.columns([0.85, 2.5, 1.15])
+            with logo_col:
+                st.image(logo, width="stretch")
+        else:
+            hdr_l, hdr_r = st.columns([3, 1.3])
         with hdr_l:
-            st.title("■ :blue[CLASSPILOT] :violet[OS]")
-            st.caption(f"▸ {settings['school_name'].upper()} · TECHNICAL LEARNING MANAGEMENT SYSTEM")
+            st.title("■ :green[CLASSPILOT] :orange[PISES]")
+            st.markdown(f"**▸ {settings['school_name'].upper()} · LEARNING MANAGEMENT PORTAL**")
+            st.caption("رب زدني علما — My Lord, Increase Me in Knowledge · Academic Year " + settings["academic_year"])
         with hdr_r:
             st.write("")
             if st.session_state["auth_mode"] == "signin":

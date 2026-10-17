@@ -50,6 +50,15 @@ def mono_icon(icon, default=":material/circle:"):
     return default
 
 
+def logo_path():
+    """Return the path to the PISES Riyadh school emblem image if present."""
+    p = storage.PROJECT_DIR / "classpilot" / "pises_logo.png"
+    if p.exists():
+        return str(p)
+    p_data = storage.DATA_DIR / "pises_logo.png"
+    return str(p_data) if p_data.exists() else None
+
+
 # --------------------------------------------------------------------------
 # Pure-Python Page-Switch Transition & Technical Telemetry Header
 # --------------------------------------------------------------------------
@@ -66,15 +75,15 @@ def page_transition(title):
 
     slot = st.empty()
     stages = [
-        (30, "blue", "ROUTING // INITIALIZING MODULE", title.upper()),
-        (72, "violet", "TELEMETRY // SYNCING JSON ENGINE", title.upper()),
-        (100, "green", "READY // RENDERING VIEWPORT", title.upper()),
+        (32, "green", "PISES // ROUTING MODULE", title.upper()),
+        (74, "blue", "GRID ENGINE // SYNCING WORKSPACE", title.upper()),
+        (100, "green", "ONLINE // RENDERING VIEWPORT", title.upper()),
     ]
     for pct, color, phase, mod_name in stages:
         with slot.container(border=True):
             st.markdown(
                 f":{color}-badge[● {phase}] &nbsp; **Target:** `{mod_name}` &nbsp; "
-                f":gray[Frame sync {pct}%]"
+                f":gray[Grid sync {pct}%]"
             )
             st.progress(pct)
         _time.sleep(0.045)
@@ -84,41 +93,41 @@ def page_transition(title):
 def badge(text):
     """Return markdown for a saturated high-contrast technical badge."""
     symbol = STATUS_SYMBOLS.get(text, "■")
-    color = STATUS_COLORS.get(text, "blue")
+    color = STATUS_COLORS.get(text, "green")
     safe = str(text).replace("[", "(").replace("]", ")")
     return f":{color}-badge[{symbol} {safe}]"
 
 
 def page_header(title, subtitle=None, icon=""):
-    """Technical HUD header with live telemetry ribbon, page transition, and divider."""
+    """PISES Riyadh Technical Grid header with live telemetry ribbon, page transition, and divider."""
     clean_title = str(title).strip()
     page_transition(clean_title)
 
     module_code = clean_title.split("—")[0].split(",")[0].strip().upper().replace(" ", "_")[:18]
     now_str = datetime.now().strftime("%H:%M:%S")
 
-    # Technical Telemetry Status Bar
+    # PISES Technical Telemetry Status Bar
     st.markdown(
-        f":green-badge[● SYS.ONLINE] "
+        f":green-badge[● PISES.ONLINE] "
         f":blue-badge[◆ MOD // {module_code}] "
-        f":violet-badge[▲ DB // JSON.PERSIST] "
+        f":violet-badge[▲ MOTTO // رب زدني علما] "
         f":orange-badge[■ CLK // {now_str}]"
     )
-    st.title(f"■ :blue[{clean_title}]")
+    st.title(f"■ :green[{clean_title}]")
     if subtitle:
-        st.caption(f"▸ {subtitle}")
+        st.markdown(f"**▸ {subtitle}**")
     st.divider()
 
 
 def section(title, caption=None):
-    st.subheader(f"◆ :blue[{title}]" if not str(title).startswith(("■", "◆")) else title)
+    st.subheader(f"◆ :green[{title}]" if not str(title).startswith(("■", "◆")) else title)
     if caption:
         st.caption(caption)
 
 
 def empty_state(message, icon=None):
     with st.container(border=True):
-        st.markdown(f":violet-badge[◆ STATUS // STANDBY] &nbsp; {message}")
+        st.markdown(f":green-badge[◆ STATUS // STANDBY] &nbsp; **{message}**")
 
 
 def page_link(path, label, icon=":material/arrow_forward:"):
@@ -182,7 +191,7 @@ def pct_column(label, help_text=None):
 
 def metrics(items):
     """Row of technical metric cards. ``items`` = list of (label, value, help, delta)."""
-    accent_cycle = ["blue", "green", "violet", "orange", "red", "blue"]
+    accent_cycle = ["green", "blue", "orange", "violet", "red", "green"]
     columns = st.columns(len(items))
     for idx, (column, item) in enumerate(zip(columns, items)):
         label, value = item[0], item[1]
@@ -190,7 +199,7 @@ def metrics(items):
         delta = item[3] if len(item) > 3 else None
         acc = accent_cycle[idx % len(accent_cycle)]
         with column.container(border=True):
-            st.markdown(f":{acc}-badge[◆ TELEMETRY #{idx + 1:02d}]")
+            st.markdown(f":{acc}-badge[◆ METRIC #{idx + 1:02d}]")
             st.metric(label, value, delta=delta, help=help_text)
 
 
@@ -198,7 +207,7 @@ def bar_chart(rows, x, y, color=None, horizontal=False, height=280):
     if not rows:
         empty_state("No data for this chart yet.")
         return
-    chart_color = color if color is not None else "#00E5FF"
+    chart_color = color if color is not None else "#1EA812"
     st.bar_chart(pd.DataFrame(rows), x=x, y=y, color=chart_color, horizontal=horizontal, height=height)
 
 
@@ -206,7 +215,7 @@ def line_chart(rows, x, y, height=280):
     if not rows:
         empty_state("No data for this chart yet.")
         return
-    st.line_chart(pd.DataFrame(rows), x=x, y=y, color="#00FF9D", height=height)
+    st.line_chart(pd.DataFrame(rows), x=x, y=y, color="#0D9488", height=height)
 
 
 # --------------------------------------------------------------------------

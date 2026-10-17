@@ -1,68 +1,144 @@
 [theme]
-base = "dark"
-primaryColor = "#00E5FF"
-backgroundColor = "#07080C"
-secondaryBackgroundColor = "#11131A"
-textColor = "#F8FAFC"
-font = "sans serif"
-codeFont = "monospace"
-borderColor = "#262936"
+base = "light"
+primaryColor = "#1EA812"
+backgroundColor = "#F3FAF2"
+secondaryBackgroundColor = "#FFFFFF"
+textColor = "#072205"
+
+# Modern, bold geometric typography
+font = "Plus Jakarta Sans:https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
+headingFont = "Space Grotesk:https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700;800&display=swap"
+codeFont = "JetBrains Mono:https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&display=swap"
+baseFontSize = 16
+baseFontWeight = 550
+headingFontWeights = [800, 800, 750, 700, 700, 700]
+headingFontSizes = ["2.65rem", "2.05rem", "1.55rem", "1.25rem", "1.1rem", "1rem"]
+metricValueFontWeight = 800
+codeFontWeight = 600
+
+borderColor = "#9EE096"
 showWidgetBorder = true
 showSidebarBorder = true
-baseRadius = "0.4rem"
-buttonRadius = "0.35rem"
-linkColor = "#00E5FF"
-codeBackgroundColor = "#0D1017"
-codeTextColor = "#00FF9D"
-dataframeBorderColor = "#262936"
-dataframeHeaderBackgroundColor = "#161923"
-dataframeHeaderTextColor = "#00E5FF"
+baseRadius = "0.55rem"
+buttonRadius = "0.45rem"
+linkColor = "#15800D"
+codeBackgroundColor = "#EBF7E9"
+codeTextColor = "#0C3B09"
+dataframeBorderColor = "#A3E29B"
+dataframeHeaderBackgroundColor = "#E3F6E0"
+dataframeHeaderTextColor = "#0A3307"
 
-# Saturated, vivid technical palette for badges, alerts, and multi-series charts
-blueColor = "#00E5FF"
-greenColor = "#00FF9D"
-orangeColor = "#FF8A00"
-yellowColor = "#FFD600"
-redColor = "#FF2E54"
-violetColor = "#B829FF"
-grayColor = "#94A3B8"
+# PISES Riyadh Emerald, Teal & Royal Gold palette
+greenColor = "#1EA812"
+blueColor = "#0D9488"
+violetColor = "#15803D"
+orangeColor = "#D97706"
+yellowColor = "#CA8A04"
+redColor = "#DC2626"
+grayColor = "#3F623D"
 
-blueBackgroundColor = "#042836"
-greenBackgroundColor = "#032B1E"
-orangeBackgroundColor = "#331C00"
-yellowBackgroundColor = "#332B00"
-redBackgroundColor = "#360712"
-violetBackgroundColor = "#240836"
-grayBackgroundColor = "#161923"
+greenBackgroundColor = "#DCFCE7"
+blueBackgroundColor = "#CCFBF1"
+violetBackgroundColor = "#D1FAE5"
+orangeBackgroundColor = "#FEF3C7"
+yellowBackgroundColor = "#FEF9C3"
+redBackgroundColor = "#FEE2E2"
+grayBackgroundColor = "#E6F4E4"
 
-blueTextColor = "#67E8F9"
-greenTextColor = "#6EE7B7"
-orangeTextColor = "#FDBA74"
-yellowTextColor = "#FDE047"
-redTextColor = "#FDA4AF"
-violetTextColor = "#D8B4FE"
-grayTextColor = "#CBD5E1"
+greenTextColor = "#0F5E09"
+blueTextColor = "#0F5850"
+violetTextColor = "#115E2E"
+orangeTextColor = "#92400E"
+yellowTextColor = "#854D0E"
+redTextColor = "#991B1B"
+grayTextColor = "#1E3A1C"
 
-chartCategoricalColors = ["#00E5FF", "#00FF9D", "#B829FF", "#FF8A00", "#FF2E54", "#FFD600"]
+chartCategoricalColors = ["#1EA812", "#0D9488", "#D97706", "#15803D", "#0284C7", "#DC2626"]
+
+# Architectural Grid Background & Modern Bold Typography Rules via Theme FontFace
+[[theme.fontFaces]]
+family = "Plus Jakarta Sans"
+url = "https://fonts.gstatic.com/s/plusjakartasans/v8/L0xTDF4xlVMF-BfR8bXMIjhGq3-cXbKDO1w.woff2"
+weight_range = "500 800"
+style = "normal"
+unicode_range = """U+0000-FFFF; }
+[data-testid="stAppViewContainer"], .stApp {
+  background-color: #F3FAF2 !important;
+  background-image:
+    radial-gradient(circle at 50% 0%, rgba(30, 168, 18, 0.12), transparent 65%),
+    linear-gradient(to right, rgba(30, 168, 18, 0.10) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(30, 168, 18, 0.10) 1px, transparent 1px),
+    linear-gradient(to right, rgba(21, 128, 13, 0.22) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(21, 128, 13, 0.22) 1px, transparent 1px) !important;
+  background-size: 100% 100%, 24px 24px, 24px 24px, 120px 120px, 120px 120px !important;
+  background-attachment: fixed !important;
+}
+[data-testid="stHeader"] {
+  background: rgba(243, 250, 242, 0.82) !important;
+  backdrop-filter: blur(8px) !important;
+  border-bottom: 1px solid rgba(30, 168, 18, 0.22) !important;
+}
+[data-testid="stSidebar"] {
+  background-color: #082406 !important;
+  background-image:
+    linear-gradient(to right, rgba(46, 213, 29, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(46, 213, 29, 0.08) 1px, transparent 1px) !important;
+  background-size: 24px 24px !important;
+  border-right: 2px solid #1EA812 !important;
+}
+[data-testid="stMain"] [data-testid="stVerticalBlockBorderWrapper"] {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border: 1.5px solid rgba(30, 168, 18, 0.34) !important;
+  box-shadow: 0 6px 20px rgba(8, 36, 6, 0.06) !important;
+  border-radius: 0.6rem !important;
+}
+[data-testid="stSidebar"] [data-testid="stVerticalBlockBorderWrapper"] {
+  background-color: rgba(16, 56, 13, 0.92) !important;
+  border: 1.5px solid rgba(46, 213, 29, 0.38) !important;
+  border-radius: 0.6rem !important;
+}
+h1, h2, h3, h4, [data-testid="stMarkdownContainer"] h1, [data-testid="stMarkdownContainer"] h2, [data-testid="stMarkdownContainer"] h3 {
+  font-family: "Space Grotesk", "Plus Jakarta Sans", sans-serif !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.025em !important;
+}
+p, li, label, [data-testid="stMarkdownContainer"] p, [data-testid="stWidgetLabel"] p {
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.005em !important;
+}
+button[kind="primary"], button[kind="secondary"] {
+  font-family: "Space Grotesk", "Plus Jakarta Sans", sans-serif !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.01em !important;
+  border-width: 1.5px !important;
+}
+[data-testid="stMetricValue"] {
+  font-family: "Space Grotesk", sans-serif !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.03em !important;
+}
+.stApp { --pises-grid-ready: 1"""
 
 [theme.sidebar]
-backgroundColor = "#FFFFFF"
-secondaryBackgroundColor = "#F1F5F9"
-textColor = "#09090B"
-primaryColor = "#0284C7"
-borderColor = "#CBD5E1"
+backgroundColor = "#082406"
+secondaryBackgroundColor = "#10380D"
+textColor = "#F0FDF0"
+primaryColor = "#28C71A"
+borderColor = "#1F6E18"
 showWidgetBorder = true
-linkColor = "#0284C7"
-codeBackgroundColor = "#F1F5F9"
-codeTextColor = "#0F172A"
+linkColor = "#4ADE80"
+codeBackgroundColor = "#0D300A"
+codeTextColor = "#86EFAC"
+headingFontWeights = [800, 800, 750, 700, 700, 700]
 
-blueColor = "#0284C7"
-greenColor = "#059669"
-orangeColor = "#EA580C"
-yellowColor = "#CA8A04"
-redColor = "#E11D48"
-violetColor = "#7C3AED"
-grayColor = "#475569"
+greenColor = "#28C71A"
+blueColor = "#2DD4BF"
+violetColor = "#4ADE80"
+orangeColor = "#FBBF24"
+yellowColor = "#FDE047"
+redColor = "#F87171"
+grayColor = "#A7F3D0"
 
 [server]
 maxUploadSize = 10
@@ -71,4 +147,3 @@ enableXsrfProtection = false
 
 [browser]
 gatherUsageStats = false
-
