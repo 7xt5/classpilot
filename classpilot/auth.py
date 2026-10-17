@@ -120,28 +120,105 @@ def change_password(user_id, current_password, new_password, confirm_password):
 
 
 # --------------------------------------------------------------------------
-# Session helpers (who is logged in right now?)
+# Session helpers (who is logged in right now?) + Persistent "Remember Me"
 # --------------------------------------------------------------------------
-def login_session(user):
-    """Remember the logged-in user's id in this browser session."""
+REMEMBER_DAYS = 30
+
+
+def login_session(user, remember=False):
+    """Remember the logged-in user's id in this session, and optionally persist across visits."""
     st.session_state["user_id"] = user["id"]
+    if remember:
+        token = secrets.token_urlsafe(24)
+        expires = (datetime.now() + timedelta(days=REMEMBER_DAYS)).isoformat(timespec="seconds")
+        storage.update("users", user["id"], {
+            "remember_token": token,
+            "remember_expires": expires,
+        })
+        settings = storage.load_settings()
+        settings["remembered_user_id"] = user["id"]
+        settings["remembered_token"] = token
+        settings["remembered_expires"] = expires
+        storage.save_settings(settings)
+        try:
+            st.query_params["session"] = token
+        except Exception:
+            pass
+    else:
+        settings = storage.load_settings()
+        if settings.get("remembered_user_id") == user["id"]:
+            settings.pop("remembered_user_id", None)
+            settings.pop("remembered_token", None)
+            settings.pop("remembered_expires", None)
+            storage.save_settings(settings)
 
 
 def logout():
-    """Forget the current user and clear every session value."""
+    """Forget the current user, clear persistent remember-me state, and reset session values."""
+    uid = st.session_state.get("user_id")
+    if uid:
+        storage.update("users", uid, {"remember_token": None, "remember_expires": None})
+    settings = storage.load_settings()
+    if settings.get("remembered_user_id"):
+        settings.pop("remembered_user_id", None)
+        settings.pop("remembered_token", None)
+        settings.pop("remembered_expires", None)
+        storage.save_settings(settings)
+    try:
+        st.query_params.clear()
+    except Exception:
+        pass
     for key in list(st.session_state.keys()):
         del st.session_state[key]
+
+
+def _restore_remembered_user():
+    """Check URL query params or device settings for an active 'Remember Me' token."""
+    if st.session_state.get("_fast_test_mode") and not st.session_state.get("_test_remember_me"):
+        return None
+
+    now_iso = datetime.now().isoformat(timespec="seconds")
+
+    # 1. Check URL session token if present
+    try:
+        q_token = st.query_params.get("session")
+    except Exception:
+        q_token = None
+
+    if q_token:
+        for u in storage.load("users"):
+            if (
+                u.get("remember_token") == q_token
+                and u.get("active", True)
+                and (u.get("remember_expires") or "") > now_iso
+            ):
+                st.session_state["user_id"] = u["id"]
+                return u
+
+    # 2. Check persistent device remember-me settings
+    settings = storage.load_settings()
+    rem_uid = settings.get("remembered_user_id")
+    rem_tok = settings.get("remembered_token")
+    rem_exp = settings.get("remembered_expires") or ""
+    if rem_uid and rem_tok and rem_exp > now_iso:
+        user = storage.get("users", rem_uid)
+        if user and user.get("active", True) and user.get("remember_token") == rem_tok:
+            st.session_state["user_id"] = user["id"]
+            return user
+
+    return None
 
 
 def current_user():
     """Return the logged-in user record, freshly loaded from disk.
 
     Re-loading every time means that if an admin deactivates an account
-    or changes a role, it takes effect immediately.
+    or changes a role, it takes effect immediately. Also restores a
+    remembered user automatically if 'Remember me' was enabled.
     """
     user_id = st.session_state.get("user_id")
     if not user_id:
-        return None
+        return _restore_remembered_user()
     user = storage.get("users", user_id)
     if not user or not user.get("active", True):
         logout()

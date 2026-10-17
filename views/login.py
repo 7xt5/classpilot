@@ -113,6 +113,12 @@ def login_page():
                     )
                     confirm_password = p2.text_input("Confirm Password", type="password")
 
+                    remember_signup = st.checkbox(
+                        "Remember me (stay signed in automatically)",
+                        value=True,
+                        help="Keep your account signed in on this browser/device so you don't have to log in every time.",
+                    )
+
                     create_submitted = st.form_submit_button(
                         f"Initialize {role_choice.title()} Account & Launch Dashboard",
                         type="primary",
@@ -133,7 +139,7 @@ def login_page():
                     if err:
                         st.error(err, icon=":material/error:")
                     else:
-                        auth.login_session(new_user)
+                        auth.login_session(new_user, remember=remember_signup)
                         st.session_state.setdefault("_flash", []).append((
                             f"Account initialized! Welcome to your {role_choice.title()} Dashboard, {new_user['full_name'].split()[0]}.",
                             ":material/check_circle:",
@@ -152,13 +158,18 @@ def login_page():
                 with st.form("login_form"):
                     username = st.text_input("Username", placeholder="Enter your username")
                     password = st.text_input("Password", type="password")
+                    remember_signin = st.checkbox(
+                        "Remember me (stay signed in automatically)",
+                        value=True,
+                        help="Keep your account signed in on this browser/device so you don't have to log in every time.",
+                    )
                     submitted = st.form_submit_button("Sign In & Launch Workspace", type="primary", width="stretch", icon=":material/login:")
                 if submitted:
                     user, error = auth.authenticate(username, password)
                     if error:
                         st.error(error, icon=":material/error:")
                     else:
-                        auth.login_session(user)
+                        auth.login_session(user, remember=remember_signin)
                         st.session_state.setdefault("_flash", []).append(
                             (f"Session authenticated. Welcome back, {user['full_name'].split()[0]}.", ":material/check_circle:"))
                         st.rerun()
