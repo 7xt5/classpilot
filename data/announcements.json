@@ -1,0 +1,88 @@
+[
+  {
+    "id": "ann_1bdbf164",
+    "class_id": "all",
+    "title": "Parent-Teacher Conferences next Thursday",
+    "body": "Conferences run from 2:00 pm to 6:00 pm in the main hall. Booking slips go home on Monday. Teachers: please have your gradebooks up to date by Wednesday.",
+    "author_id": "usr_099bf363",
+    "created_at": "2026-10-13T08:30:00",
+    "pinned": true,
+    "priority": "Important",
+    "read_by": [
+      "usr_20309556",
+      "usr_316955bc",
+      "usr_323e7276",
+      "usr_3861af1d",
+      "usr_5d5ef4bd",
+      "usr_6b17bb27",
+      "usr_7a7a6d90",
+      "usr_e1114dd7",
+      "usr_ee3c4895",
+      "usr_ee45d0c4"
+    ]
+  },
+  {
+    "id": "ann_ce8333e0",
+    "class_id": "cls_3b362c5e",
+    "title": "Bring a scientific calculator tomorrow",
+    "body": "We start the geometry problem set tomorrow. Please bring a scientific calculator and a ruler.",
+    "author_id": "usr_b3442496",
+    "created_at": "2026-10-15T08:30:00",
+    "pinned": false,
+    "priority": "Normal",
+    "read_by": [
+      "usr_3861af1d",
+      "usr_e1114dd7",
+      "usr_ee45d0c4"
+    ]
+  },
+  {
+    "id": "ann_82c4ba9a",
+    "class_id": "cls_3b362c5e",
+    "title": "Lab safety goggles are required",
+    "body": "From next week, nobody may take part in practical work without safety goggles. Spare pairs are available from the science office.",
+    "author_id": "usr_323e7276",
+    "created_at": "2026-10-10T08:30:00",
+    "pinned": false,
+    "priority": "Urgent",
+    "read_by": [
+      "usr_6b17bb27",
+      "usr_a62bc806",
+      "usr_cfb8ba4c",
+      "usr_e1114dd7",
+      "usr_ee45d0c4"
+    ]
+  },
+  {
+    "id": "ann_7b269bc1",
+    "class_id": "cls_e582383b",
+    "title": "Extra help session: Trigonometry",
+    "body": "Drop-in help session every Tuesday at lunch in Room 211. Bring the questions you found hardest - especially sine and cosine rules.",
+    "author_id": "usr_b3442496",
+    "created_at": "2026-10-14T08:30:00",
+    "pinned": true,
+    "priority": "Normal",
+    "read_by": [
+      "usr_20309556",
+      "usr_5d5ef4bd"
+    ]
+  },
+  {
+    "id": "ann_b52b5697",
+    "class_id": "cls_e582383b",
+    "title": "Macbeth reading schedule",
+    "body": "Please finish reading Act 2 by next Friday. Audio versions are linked in the Lesson Hub.",
+    "author_id": "usr_bfd69e92",
+    "created_at": "2026-10-12T08:30:00",
+    "pinned": false,
+    "priority": "Normal",
+    "read_by": [
+      "usr_17824ca2",
+      "usr_20309556",
+      "usr_316955bc",
+      "usr_5d5ef4bd",
+      "usr_7a7a6d90",
+      "usr_ee3c4895"
+    ]
+  }
+]

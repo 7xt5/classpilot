@@ -1,0 +1,34 @@
+{
+  "school_name": "Riverside Academy",
+  "academic_year": "2026-2027",
+  "conflict_window_days": 2,
+  "conflict_max_deadlines": 3,
+  "alert_missing_threshold": 2,
+  "alert_low_grade": 60,
+  "alert_attendance": 85,
+  "alert_decline_points": 10,
+  "pulse_low_threshold": 2.5,
+  "default_late_penalty": 10,
+  "grade_scale": [
+    {
+      "letter": "A",
+      "min": 90
+    },
+    {
+      "letter": "B",
+      "min": 80
+    },
+    {
+      "letter": "C",
+      "min": 70
+    },
+    {
+      "letter": "D",
+      "min": 60
+    },
+    {
+      "letter": "F",
+      "min": 0
+    }
+  ]
+}

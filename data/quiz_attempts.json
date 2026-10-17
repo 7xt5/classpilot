@@ -1,0 +1,302 @@
+[
+  {
+    "id": "att_9dafb243",
+    "quiz_id": "quiz_edc8639f",
+    "student_id": "usr_a62bc806",
+    "answers": {
+      "q_9f3d14f5": 0,
+      "q_412a639b": 3,
+      "q_55a42e1a": 2,
+      "q_e6aaf8fd": 1
+    },
+    "score": 2,
+    "max_score": 4,
+    "percent": 50.0,
+    "submitted_at": "2026-10-06T18:01:00"
+  },
+  {
+    "id": "att_88393ff6",
+    "quiz_id": "quiz_edc8639f",
+    "student_id": "usr_cfb8ba4c",
+    "answers": {
+      "q_9f3d14f5": 1,
+      "q_412a639b": 0,
+      "q_55a42e1a": 1,
+      "q_e6aaf8fd": 3
+    },
+    "score": 2,
+    "max_score": 4,
+    "percent": 50.0,
+    "submitted_at": "2026-10-06T18:39:00"
+  },
+  {
+    "id": "att_0d858d2e",
+    "quiz_id": "quiz_edc8639f",
+    "student_id": "usr_6b17bb27",
+    "answers": {
+      "q_9f3d14f5": 1,
+      "q_412a639b": 0,
+      "q_55a42e1a": 2,
+      "q_e6aaf8fd": 1
+    },
+    "score": 4,
+    "max_score": 4,
+    "percent": 100.0,
+    "submitted_at": "2026-10-06T18:38:00"
+  },
+  {
+    "id": "att_5e73e46f",
+    "quiz_id": "quiz_edc8639f",
+    "student_id": "usr_ee45d0c4",
+    "answers": {
+      "q_9f3d14f5": 1,
+      "q_412a639b": 0,
+      "q_55a42e1a": 2,
+      "q_e6aaf8fd": 1
+    },
+    "score": 4,
+    "max_score": 4,
+    "percent": 100.0,
+    "submitted_at": "2026-10-06T18:41:00"
+  },
+  {
+    "id": "att_699d4372",
+    "quiz_id": "quiz_212ab0eb",
+    "student_id": "usr_a62bc806",
+    "answers": {
+      "q_54bfec2b": 1,
+      "q_40ea0c4e": 2,
+      "q_f802c2b8": 2,
+      "q_76451cb1": 2
+    },
+    "score": 3,
+    "max_score": 4,
+    "percent": 75.0,
+    "submitted_at": "2026-10-07T18:01:00"
+  },
+  {
+    "id": "att_046cbd5a",
+    "quiz_id": "quiz_212ab0eb",
+    "student_id": "usr_e1114dd7",
+    "answers": {
+      "q_54bfec2b": 1,
+      "q_40ea0c4e": 2,
+      "q_f802c2b8": 2,
+      "q_76451cb1": 1
+    },
+    "score": 4,
+    "max_score": 4,
+    "percent": 100.0,
+    "submitted_at": "2026-10-07T18:42:00"
+  },
+  {
+    "id": "att_e538bf22",
+    "quiz_id": "quiz_212ab0eb",
+    "student_id": "usr_cfb8ba4c",
+    "answers": {
+      "q_54bfec2b": 1,
+      "q_40ea0c4e": 2,
+      "q_f802c2b8": 2,
+      "q_76451cb1": 3
+    },
+    "score": 3,
+    "max_score": 4,
+    "percent": 75.0,
+    "submitted_at": "2026-10-07T18:35:00"
+  },
+  {
+    "id": "att_3b484041",
+    "quiz_id": "quiz_212ab0eb",
+    "student_id": "usr_6b17bb27",
+    "answers": {
+      "q_54bfec2b": 1,
+      "q_40ea0c4e": 2,
+      "q_f802c2b8": 2,
+      "q_76451cb1": 1
+    },
+    "score": 4,
+    "max_score": 4,
+    "percent": 100.0,
+    "submitted_at": "2026-10-07T18:30:00"
+  },
+  {
+    "id": "att_b4ef32d0",
+    "quiz_id": "quiz_212ab0eb",
+    "student_id": "usr_ee45d0c4",
+    "answers": {
+      "q_54bfec2b": 1,
+      "q_40ea0c4e": 2,
+      "q_f802c2b8": 2,
+      "q_76451cb1": 1
+    },
+    "score": 4,
+    "max_score": 4,
+    "percent": 100.0,
+    "submitted_at": "2026-10-07T18:02:00"
+  },
+  {
+    "id": "att_8ae9df17",
+    "quiz_id": "quiz_6775bc66",
+    "student_id": "usr_20309556",
+    "answers": {
+      "q_932ddaef": 1,
+      "q_8c4ec67c": 2,
+      "q_01147c2e": 1,
+      "q_399f123f": 0
+    },
+    "score": 4,
+    "max_score": 4,
+    "percent": 100.0,
+    "submitted_at": "2026-10-08T18:58:00"
+  },
+  {
+    "id": "att_d2c4f2ec",
+    "quiz_id": "quiz_6775bc66",
+    "student_id": "usr_316955bc",
+    "answers": {
+      "q_932ddaef": 2,
+      "q_8c4ec67c": 2,
+      "q_01147c2e": 1,
+      "q_399f123f": 0
+    },
+    "score": 3,
+    "max_score": 4,
+    "percent": 75.0,
+    "submitted_at": "2026-10-08T18:56:00"
+  },
+  {
+    "id": "att_ea0514b2",
+    "quiz_id": "quiz_6775bc66",
+    "student_id": "usr_ee3c4895",
+    "answers": {
+      "q_932ddaef": 1,
+      "q_8c4ec67c": 2,
+      "q_01147c2e": 1,
+      "q_399f123f": 0
+    },
+    "score": 4,
+    "max_score": 4,
+    "percent": 100.0,
+    "submitted_at": "2026-10-08T18:23:00"
+  },
+  {
+    "id": "att_246f591a",
+    "quiz_id": "quiz_6775bc66",
+    "student_id": "usr_5d5ef4bd",
+    "answers": {
+      "q_932ddaef": 0,
+      "q_8c4ec67c": 2,
+      "q_01147c2e": 1,
+      "q_399f123f": 2
+    },
+    "score": 2,
+    "max_score": 4,
+    "percent": 50.0,
+    "submitted_at": "2026-10-08T18:13:00"
+  },
+  {
+    "id": "att_06473301",
+    "quiz_id": "quiz_6775bc66",
+    "student_id": "usr_17824ca2",
+    "answers": {
+      "q_932ddaef": 1,
+      "q_8c4ec67c": 2,
+      "q_01147c2e": 1,
+      "q_399f123f": 0
+    },
+    "score": 4,
+    "max_score": 4,
+    "percent": 100.0,
+    "submitted_at": "2026-10-08T18:32:00"
+  },
+  {
+    "id": "att_6dd546d2",
+    "quiz_id": "quiz_aaae54cd",
+    "student_id": "usr_7a7a6d90",
+    "answers": {
+      "q_33c9c475": 0,
+      "q_774f859a": 1,
+      "q_5159f92e": 2,
+      "q_019cde8a": 3
+    },
+    "score": 3,
+    "max_score": 4,
+    "percent": 75.0,
+    "submitted_at": "2026-10-09T18:35:00"
+  },
+  {
+    "id": "att_71ae627e",
+    "quiz_id": "quiz_aaae54cd",
+    "student_id": "usr_20309556",
+    "answers": {
+      "q_33c9c475": 0,
+      "q_774f859a": 1,
+      "q_5159f92e": 2,
+      "q_019cde8a": 1
+    },
+    "score": 4,
+    "max_score": 4,
+    "percent": 100.0,
+    "submitted_at": "2026-10-09T18:52:00"
+  },
+  {
+    "id": "att_f4ef9f81",
+    "quiz_id": "quiz_aaae54cd",
+    "student_id": "usr_316955bc",
+    "answers": {
+      "q_33c9c475": 1,
+      "q_774f859a": 2,
+      "q_5159f92e": 2,
+      "q_019cde8a": 1
+    },
+    "score": 2,
+    "max_score": 4,
+    "percent": 50.0,
+    "submitted_at": "2026-10-09T18:04:00"
+  },
+  {
+    "id": "att_f9dc0458",
+    "quiz_id": "quiz_aaae54cd",
+    "student_id": "usr_ee3c4895",
+    "answers": {
+      "q_33c9c475": 0,
+      "q_774f859a": 1,
+      "q_5159f92e": 3,
+      "q_019cde8a": 3
+    },
+    "score": 2,
+    "max_score": 4,
+    "percent": 50.0,
+    "submitted_at": "2026-10-09T18:30:00"
+  },
+  {
+    "id": "att_89df392d",
+    "quiz_id": "quiz_aaae54cd",
+    "student_id": "usr_5d5ef4bd",
+    "answers": {
+      "q_33c9c475": 0,
+      "q_774f859a": 1,
+      "q_5159f92e": 2,
+      "q_019cde8a": 1
+    },
+    "score": 4,
+    "max_score": 4,
+    "percent": 100.0,
+    "submitted_at": "2026-10-09T18:10:00"
+  },
+  {
+    "id": "att_910c42d5",
+    "quiz_id": "quiz_aaae54cd",
+    "student_id": "usr_17824ca2",
+    "answers": {
+      "q_33c9c475": 0,
+      "q_774f859a": 3,
+      "q_5159f92e": 3,
+      "q_019cde8a": 1
+    },
+    "score": 2,
+    "max_score": 4,
+    "percent": 50.0,
+    "submitted_at": "2026-10-09T18:46:00"
+  }
+]

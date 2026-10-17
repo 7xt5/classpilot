@@ -1,0 +1,141 @@
+"""
+app.py - ClassPilot entry point.
+
+Run with:   python run.py
+        or: python -m streamlit run app.py
+"""
+
+import streamlit as st
+from streamlit.config import get_config_options
+
+from classpilot import auth, school, seed, storage, ui
+from views import (admin, announcements, assignments, assistant, attendance, dashboard,
+                   gradebook, lessons, login, profile, pulse, quizzes, search, support)
+
+# Ensure the monochrome White & Black theme in .streamlit/config.toml is active
+try:
+    get_config_options(force_reparse=True)
+except Exception:
+    pass
+
+st.set_page_config(
+    page_title="ClassPilot",
+    page_icon=":material/school:",
+    layout="wide",
+    initial_sidebar_state="expanded",
+)
+
+
+def build_pages(user):
+    """Return the navigation structure (section -> pages) for a role."""
+    role = user["role"]
+    unread = school.unread_count(user)
+    news_title = f"Announcements ({unread} new)" if unread else "Announcements"
+
+    registry = {}
+    st.session_state["_pages"] = registry
+
+    def page(func, title, icon, path, default=False):
+        registry[path] = st.Page(func, title=title, icon=icon, url_path=path, default=default)
+        return registry[path]
+
+    common = [
+        page(announcements.announcements_page, news_title, ":material/campaign:", "announcements"),
+        page(search.search_page, "Search", ":material/search:", "search"),
+        page(profile.profile_page, "My account", ":material/person:", "account"),
+    ]
+    if role == "admin":
+        return {
+            "Overview": [
+                page(dashboard.admin_dashboard, "Dashboard", ":material/dashboard:", "dashboard", True),
+                page(assistant.teacher_assistant_page, "PilotAI Copilot", ":material/smart_toy:", "assistant"),
+            ],
+            "School setup": [
+                page(admin.users_page, "Users", ":material/group:", "users"),
+                page(admin.classes_page, "Classes", ":material/domain:", "classes"),
+                page(admin.subjects_page, "Subjects", ":material/menu_book:", "subjects"),
+                page(admin.settings_page, "Settings", ":material/settings:", "settings"),
+            ],
+            "Insights": [
+                page(support.alerts_page, "Early Support Alerts", ":material/flag:", "alerts"),
+                page(support.deadline_planner_page, "Deadline Planner", ":material/event:", "deadlines"),
+                page(gradebook.teacher_gradebook_page, "Gradebook", ":material/bar_chart:", "gradebook"),
+            ],
+            "General": common,
+        }
+    if role == "teacher":
+        return {
+            "Overview": [
+                page(dashboard.teacher_dashboard, "Dashboard", ":material/dashboard:", "dashboard", True),
+                page(assistant.teacher_assistant_page, "PilotAI Copilot", ":material/smart_toy:", "assistant"),
+            ],
+            "Teaching": [
+                page(lessons.teacher_lessons_page, "Lesson Hub", ":material/library_books:", "lessons"),
+                page(assignments.teacher_assignments_page, "Assignments", ":material/assignment:", "assignments"),
+                page(quizzes.teacher_quizzes_page, "Quiz Builder", ":material/quiz:", "quizzes"),
+                page(attendance.teacher_attendance_page, "Attendance", ":material/fact_check:", "attendance"),
+                page(gradebook.teacher_gradebook_page, "Gradebook", ":material/bar_chart:", "gradebook"),
+            ],
+            "Insights": [
+                page(pulse.teacher_pulse_page, "ClassPulse", ":material/monitor_heart:", "classpulse"),
+                page(support.alerts_page, "Early Support Alerts", ":material/flag:", "alerts"),
+                page(support.deadline_planner_page, "Deadline Planner", ":material/event:", "deadlines"),
+            ],
+            "General": common,
+        }
+    return {
+        "Overview": [
+            page(dashboard.student_dashboard, "Dashboard", ":material/dashboard:", "dashboard", True),
+            page(assistant.student_assistant_page, "PilotAI Tutor", ":material/smart_toy:", "assistant"),
+        ],
+        "Learning": [
+            page(lessons.student_lessons_page, "Lessons", ":material/library_books:", "lessons"),
+            page(assignments.student_assignments_page, "Assignments", ":material/assignment:", "assignments"),
+            page(quizzes.student_quizzes_page, "Quizzes", ":material/quiz:", "quizzes"),
+            page(gradebook.student_grades_page, "My grades", ":material/bar_chart:", "grades"),
+            page(attendance.student_attendance_page, "My attendance", ":material/fact_check:", "attendance"),
+        ],
+        "General": common,
+    }
+
+
+def sidebar(user):
+    """Technical telemetry sidebar with branding, active operator badge, and logout."""
+    settings = storage.load_settings()
+    with st.sidebar:
+        st.markdown("## ■ :blue[CLASSPILOT] :violet[OS]")
+        st.caption(f"NODE // {settings['school_name'].upper()} · {settings['academic_year']}")
+        with st.container(border=True):
+            st.markdown(
+                f":green-badge[● ONLINE] {ui.badge(user['role'].title())}  \n"
+                f"**{user['full_name']}**  \n"
+                f":gray[`@{user['username']}`]"
+            )
+            if user["role"] == "student":
+                cls = school.student_class(user["id"])
+                st.caption(f"COHORT // {cls['name']}" if cls else "COHORT // UNASSIGNED")
+        if st.button("Disconnect / Log out", icon=":material/logout:", width="stretch"):
+            auth.logout()
+            st.rerun()
+
+
+
+def main():
+    try:
+        seed.ensure_data()
+    except OSError as exc:
+        st.error(f"ClassPilot could not create its data folder: {exc}", icon=":material/error:")
+        st.stop()
+
+    ui.show_flash()
+    user = auth.current_user()
+    if user is None:
+        st.navigation([st.Page(login.login_page, title="Sign in / Sign up", icon=":material/person_add:")], position="hidden").run()
+        return
+
+    sidebar(user)
+    st.navigation(build_pages(user)).run()
+
+
+main()
+

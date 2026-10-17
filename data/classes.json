@@ -1,0 +1,42 @@
+[
+  {
+    "id": "cls_3b362c5e",
+    "name": "Grade 9 - A",
+    "grade_level": "Grade 9",
+    "room": "Room 104",
+    "student_ids": [
+      "usr_a62bc806",
+      "usr_e1114dd7",
+      "usr_cfb8ba4c",
+      "usr_6b17bb27",
+      "usr_3861af1d",
+      "usr_ee45d0c4"
+    ],
+    "created_at": "2026-08-17T10:00:00"
+  },
+  {
+    "id": "cls_e582383b",
+    "name": "Grade 10 - B",
+    "grade_level": "Grade 10",
+    "room": "Room 211",
+    "student_ids": [
+      "usr_7a7a6d90",
+      "usr_20309556",
+      "usr_316955bc",
+      "usr_ee3c4895",
+      "usr_5d5ef4bd",
+      "usr_17824ca2"
+    ],
+    "created_at": "2026-08-17T10:00:00"
+  },
+  {
+    "id": "cls_551e5d74",
+    "name": "9O",
+    "grade_level": "9O",
+    "room": "Room 101",
+    "student_ids": [
+      "usr_6a0a26eb"
+    ],
+    "created_at": "2026-10-17T13:34:31"
+  }
+]

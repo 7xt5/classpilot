@@ -1,0 +1,389 @@
+[
+  {
+    "id": "quiz_edc8639f",
+    "subject_id": "sub_fe907a63",
+    "title": "Algebra Checkpoint",
+    "description": "Multiple-choice quiz on recent mathematics topics.",
+    "due": "2026-10-07T23:59",
+    "attempts_allowed": 1,
+    "show_answers": true,
+    "published": true,
+    "created_by": "usr_b3442496",
+    "created_at": "2026-09-30T10:00:00",
+    "questions": [
+      {
+        "id": "q_9f3d14f5",
+        "text": "Solve 2x + 6 = 14",
+        "options": [
+          "x = 3",
+          "x = 4",
+          "x = 10",
+          "x = 5"
+        ],
+        "answer": 1,
+        "points": 1
+      },
+      {
+        "id": "q_412a639b",
+        "text": "Factorise x² + 5x + 6",
+        "options": [
+          "(x + 2)(x + 3)",
+          "(x + 1)(x + 6)",
+          "(x - 2)(x - 3)",
+          "(x + 5)(x + 1)"
+        ],
+        "answer": 0,
+        "points": 1
+      },
+      {
+        "id": "q_55a42e1a",
+        "text": "Which value of x solves 5x - 5 = 0?",
+        "options": [
+          "0",
+          "5",
+          "1",
+          "-1"
+        ],
+        "answer": 2,
+        "points": 1
+      },
+      {
+        "id": "q_e6aaf8fd",
+        "text": "Expand 3(x - 4)",
+        "options": [
+          "3x - 4",
+          "3x - 12",
+          "x - 12",
+          "3x + 12"
+        ],
+        "answer": 1,
+        "points": 1
+      }
+    ]
+  },
+  {
+    "id": "quiz_9525fe50",
+    "subject_id": "sub_fe907a63",
+    "title": "Pythagoras Quick Quiz",
+    "description": "Multiple-choice quiz on recent mathematics topics.",
+    "due": "2026-10-28T23:59",
+    "attempts_allowed": 2,
+    "show_answers": true,
+    "published": true,
+    "created_by": "usr_b3442496",
+    "created_at": "2026-10-21T10:00:00",
+    "questions": [
+      {
+        "id": "q_8995cad3",
+        "text": "A right triangle has legs 3 and 4. The hypotenuse is:",
+        "options": [
+          "5",
+          "6",
+          "7",
+          "12"
+        ],
+        "answer": 0,
+        "points": 1
+      },
+      {
+        "id": "q_e491f89c",
+        "text": "Which side is the hypotenuse?",
+        "options": [
+          "The shortest side",
+          "Opposite the right angle",
+          "Next to the right angle",
+          "Any side"
+        ],
+        "answer": 1,
+        "points": 1
+      },
+      {
+        "id": "q_a5619a83",
+        "text": "Legs 6 and 8 give a hypotenuse of:",
+        "options": [
+          "10",
+          "14",
+          "48",
+          "12"
+        ],
+        "answer": 0,
+        "points": 1
+      }
+    ]
+  },
+  {
+    "id": "quiz_212ab0eb",
+    "subject_id": "sub_944f2970",
+    "title": "Cells & Atoms Quiz",
+    "description": "Multiple-choice quiz on recent general science topics.",
+    "due": "2026-10-08T23:59",
+    "attempts_allowed": 1,
+    "show_answers": true,
+    "published": true,
+    "created_by": "usr_323e7276",
+    "created_at": "2026-10-01T10:00:00",
+    "questions": [
+      {
+        "id": "q_54bfec2b",
+        "text": "Which organelle releases energy?",
+        "options": [
+          "Nucleus",
+          "Mitochondria",
+          "Cell wall",
+          "Vacuole"
+        ],
+        "answer": 1,
+        "points": 1
+      },
+      {
+        "id": "q_40ea0c4e",
+        "text": "Plant cells have ... but animal cells do not.",
+        "options": [
+          "A nucleus",
+          "Cytoplasm",
+          "A cell wall",
+          "A membrane"
+        ],
+        "answer": 2,
+        "points": 1
+      },
+      {
+        "id": "q_f802c2b8",
+        "text": "The charge of an electron is:",
+        "options": [
+          "Positive",
+          "Neutral",
+          "Negative",
+          "It varies"
+        ],
+        "answer": 2,
+        "points": 1
+      },
+      {
+        "id": "q_76451cb1",
+        "text": "Rows in the periodic table are called:",
+        "options": [
+          "Groups",
+          "Periods",
+          "Blocks",
+          "Families"
+        ],
+        "answer": 1,
+        "points": 1
+      }
+    ]
+  },
+  {
+    "id": "quiz_6775bc66",
+    "subject_id": "sub_e2e3d421",
+    "title": "Trigonometry Quiz",
+    "description": "Multiple-choice quiz on recent mathematics topics.",
+    "due": "2026-10-09T23:59",
+    "attempts_allowed": 1,
+    "show_answers": true,
+    "published": true,
+    "created_by": "usr_b3442496",
+    "created_at": "2026-10-02T10:00:00",
+    "questions": [
+      {
+        "id": "q_932ddaef",
+        "text": "sin θ equals:",
+        "options": [
+          "adjacent/hypotenuse",
+          "opposite/hypotenuse",
+          "opposite/adjacent",
+          "hypotenuse/opposite"
+        ],
+        "answer": 1,
+        "points": 1
+      },
+      {
+        "id": "q_8c4ec67c",
+        "text": "tan 45° equals:",
+        "options": [
+          "0",
+          "0.5",
+          "1",
+          "Undefined"
+        ],
+        "answer": 2,
+        "points": 1
+      },
+      {
+        "id": "q_01147c2e",
+        "text": "Use the cosine rule when you know:",
+        "options": [
+          "Three angles",
+          "Two sides and the included angle",
+          "One side only",
+          "Two angles"
+        ],
+        "answer": 1,
+        "points": 1
+      },
+      {
+        "id": "q_399f123f",
+        "text": "cos 60° equals:",
+        "options": [
+          "0.5",
+          "1",
+          "0.866",
+          "0"
+        ],
+        "answer": 0,
+        "points": 1
+      }
+    ]
+  },
+  {
+    "id": "quiz_9af098b9",
+    "subject_id": "sub_e2e3d421",
+    "title": "Statistics Check-in",
+    "description": "Multiple-choice quiz on recent mathematics topics.",
+    "due": "2026-10-25T23:59",
+    "attempts_allowed": 2,
+    "show_answers": true,
+    "published": true,
+    "created_by": "usr_b3442496",
+    "created_at": "2026-10-18T10:00:00",
+    "questions": [
+      {
+        "id": "q_c359b105",
+        "text": "The median of 2, 5, 9 is:",
+        "options": [
+          "5",
+          "9",
+          "2",
+          "16"
+        ],
+        "answer": 0,
+        "points": 1
+      },
+      {
+        "id": "q_8b8b546c",
+        "text": "The mode of 3, 3, 4, 7 is:",
+        "options": [
+          "3",
+          "4",
+          "7",
+          "4.25"
+        ],
+        "answer": 0,
+        "points": 1
+      },
+      {
+        "id": "q_2c88bbca",
+        "text": "The mean of 2, 4, 6 is:",
+        "options": [
+          "3",
+          "4",
+          "6",
+          "12"
+        ],
+        "answer": 1,
+        "points": 1
+      }
+    ]
+  },
+  {
+    "id": "quiz_eb16ff11",
+    "subject_id": "sub_e2e3d421",
+    "title": "Probability Starter (draft)",
+    "description": "Multiple-choice quiz on recent mathematics topics.",
+    "due": "2026-11-05T23:59",
+    "attempts_allowed": 2,
+    "show_answers": true,
+    "published": false,
+    "created_by": "usr_b3442496",
+    "created_at": "2026-10-29T10:00:00",
+    "questions": [
+      {
+        "id": "q_45b9a963",
+        "text": "The probability of a fair coin landing heads is:",
+        "options": [
+          "0",
+          "0.25",
+          "0.5",
+          "1"
+        ],
+        "answer": 2,
+        "points": 1
+      }
+    ]
+  },
+  {
+    "id": "quiz_aaae54cd",
+    "subject_id": "sub_0285a4de",
+    "title": "Electricity Quiz",
+    "description": "Multiple-choice quiz on recent physics topics.",
+    "due": "2026-10-10T23:59",
+    "attempts_allowed": 1,
+    "show_answers": true,
+    "published": true,
+    "created_by": "usr_323e7276",
+    "created_at": "2026-10-03T10:00:00",
+    "questions": [
+      {
+        "id": "q_33c9c475",
+        "text": "Ohm's law is:",
+        "options": [
+          "V = I × R",
+          "P = I × V",
+          "F = m × a",
+          "E = m × c²"
+        ],
+        "answer": 0,
+        "points": 1
+      },
+      {
+        "id": "q_774f859a",
+        "text": "In a series circuit the current is:",
+        "options": [
+          "Different in each component",
+          "The same everywhere",
+          "Zero",
+          "Doubled"
+        ],
+        "answer": 1,
+        "points": 1
+      },
+      {
+        "id": "q_5159f92e",
+        "text": "Resistance is measured in:",
+        "options": [
+          "Volts",
+          "Amps",
+          "Ohms",
+          "Watts"
+        ],
+        "answer": 2,
+        "points": 1
+      },
+      {
+        "id": "q_019cde8a",
+        "text": "Adding branches in parallel makes total resistance:",
+        "options": [
+          "Increase",
+          "Decrease",
+          "Stay the same",
+          "Zero"
+        ],
+        "answer": 1,
+        "points": 1
+      }
+    ]
+  },
+  {
+    "subject_id": "sub_258a67d4",
+    "title": "Circle theorums",
+    "description": "NO CHEATING! and no calculator allowed",
+    "due": "2026-10-24T23:59",
+    "attempts_allowed": 1,
+    "show_answers": true,
+    "id": "quiz_540fcf07",
+    "questions": [],
+    "published": false,
+    "created_by": "usr_c62d206b",
+    "created_at": "2026-10-17T14:37:01"
+  }
+]

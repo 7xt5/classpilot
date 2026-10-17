@@ -1,0 +1,65 @@
+[
+  {
+    "id": "sub_fe907a63",
+    "name": "Mathematics",
+    "code": "MATH9A",
+    "class_id": "cls_3b362c5e",
+    "teacher_id": "usr_b3442496",
+    "description": "Core algebra and geometry for Grade 9.",
+    "created_at": "2026-08-17T10:00:00"
+  },
+  {
+    "id": "sub_944f2970",
+    "name": "General Science",
+    "code": "SCI9A",
+    "class_id": "cls_3b362c5e",
+    "teacher_id": "usr_323e7276",
+    "description": "Biology, chemistry and physics foundations.",
+    "created_at": "2026-08-17T10:00:00"
+  },
+  {
+    "id": "sub_4536ab4e",
+    "name": "English Language",
+    "code": "ENG9A",
+    "class_id": "cls_3b362c5e",
+    "teacher_id": "usr_bfd69e92",
+    "description": "Reading, writing and speaking skills.",
+    "created_at": "2026-08-17T10:00:00"
+  },
+  {
+    "id": "sub_e2e3d421",
+    "name": "Mathematics",
+    "code": "MATH10B",
+    "class_id": "cls_e582383b",
+    "teacher_id": "usr_b3442496",
+    "description": "Trigonometry and statistics for Grade 10.",
+    "created_at": "2026-08-17T10:00:00"
+  },
+  {
+    "id": "sub_0285a4de",
+    "name": "Physics",
+    "code": "PHY10B",
+    "class_id": "cls_e582383b",
+    "teacher_id": "usr_323e7276",
+    "description": "Electricity, waves and energy.",
+    "created_at": "2026-08-17T10:00:00"
+  },
+  {
+    "id": "sub_9c0ae79d",
+    "name": "English Literature",
+    "code": "ENG10B",
+    "class_id": "cls_e582383b",
+    "teacher_id": "usr_bfd69e92",
+    "description": "Shakespeare, poetry anthology and essay skills.",
+    "created_at": "2026-08-17T10:00:00"
+  },
+  {
+    "id": "sub_258a67d4",
+    "name": "Mathematics",
+    "code": "M9O",
+    "class_id": "cls_551e5d74",
+    "teacher_id": "usr_c62d206b",
+    "description": "Mathematics (9O)",
+    "created_at": "2026-10-17T14:36:13"
+  }
+]

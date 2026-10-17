@@ -1,0 +1,1802 @@
+[
+  {
+    "id": "atd_54ae3ad5",
+    "subject_id": "sub_fe907a63",
+    "date": "2026-10-15",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Absent",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Late",
+      "usr_3861af1d": "Present",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-10-15T09:15:00"
+  },
+  {
+    "id": "atd_f5bf78ad",
+    "subject_id": "sub_944f2970",
+    "date": "2026-10-15",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Excused",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-10-15T09:15:00"
+  },
+  {
+    "id": "atd_f7a9a80f",
+    "subject_id": "sub_4536ab4e",
+    "date": "2026-10-15",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Excused",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Absent",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-10-15T09:15:00"
+  },
+  {
+    "id": "atd_eda7e207",
+    "subject_id": "sub_e2e3d421",
+    "date": "2026-10-15",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-10-15T09:15:00"
+  },
+  {
+    "id": "atd_2738a74d",
+    "subject_id": "sub_0285a4de",
+    "date": "2026-10-15",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Absent",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-10-15T09:15:00"
+  },
+  {
+    "id": "atd_6024c51b",
+    "subject_id": "sub_9c0ae79d",
+    "date": "2026-10-15",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-10-15T09:15:00"
+  },
+  {
+    "id": "atd_7ad63165",
+    "subject_id": "sub_fe907a63",
+    "date": "2026-10-14",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Late",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-10-14T09:15:00"
+  },
+  {
+    "id": "atd_585a0b37",
+    "subject_id": "sub_944f2970",
+    "date": "2026-10-14",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Present",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-10-14T09:15:00"
+  },
+  {
+    "id": "atd_77df2395",
+    "subject_id": "sub_4536ab4e",
+    "date": "2026-10-14",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Late",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-10-14T09:15:00"
+  },
+  {
+    "id": "atd_abad122c",
+    "subject_id": "sub_e2e3d421",
+    "date": "2026-10-14",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Absent",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-10-14T09:15:00"
+  },
+  {
+    "id": "atd_35779114",
+    "subject_id": "sub_0285a4de",
+    "date": "2026-10-14",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-10-14T09:15:00"
+  },
+  {
+    "id": "atd_64ff8ae3",
+    "subject_id": "sub_9c0ae79d",
+    "date": "2026-10-14",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Absent",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Absent",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-10-14T09:15:00"
+  },
+  {
+    "id": "atd_be0613cb",
+    "subject_id": "sub_fe907a63",
+    "date": "2026-10-13",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Late",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Present",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-10-13T09:15:00"
+  },
+  {
+    "id": "atd_a9914db8",
+    "subject_id": "sub_944f2970",
+    "date": "2026-10-13",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Present",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-10-13T09:15:00"
+  },
+  {
+    "id": "atd_91e34397",
+    "subject_id": "sub_4536ab4e",
+    "date": "2026-10-13",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Absent",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Present",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-10-13T09:15:00"
+  },
+  {
+    "id": "atd_75b63820",
+    "subject_id": "sub_e2e3d421",
+    "date": "2026-10-13",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Absent",
+      "usr_17824ca2": "Excused"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-10-13T09:15:00"
+  },
+  {
+    "id": "atd_bd0d5eb9",
+    "subject_id": "sub_0285a4de",
+    "date": "2026-10-13",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-10-13T09:15:00"
+  },
+  {
+    "id": "atd_85e01da0",
+    "subject_id": "sub_9c0ae79d",
+    "date": "2026-10-13",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-10-13T09:15:00"
+  },
+  {
+    "id": "atd_5ebd0bb9",
+    "subject_id": "sub_fe907a63",
+    "date": "2026-10-12",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Absent",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Absent",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-10-12T09:15:00"
+  },
+  {
+    "id": "atd_1247cdba",
+    "subject_id": "sub_944f2970",
+    "date": "2026-10-12",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Absent",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-10-12T09:15:00"
+  },
+  {
+    "id": "atd_b4a4ec3c",
+    "subject_id": "sub_4536ab4e",
+    "date": "2026-10-12",
+    "records": {
+      "usr_a62bc806": "Absent",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Present",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-10-12T09:15:00"
+  },
+  {
+    "id": "atd_05978f03",
+    "subject_id": "sub_e2e3d421",
+    "date": "2026-10-12",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Late",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-10-12T09:15:00"
+  },
+  {
+    "id": "atd_bdf7a3b1",
+    "subject_id": "sub_0285a4de",
+    "date": "2026-10-12",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-10-12T09:15:00"
+  },
+  {
+    "id": "atd_d687aedd",
+    "subject_id": "sub_9c0ae79d",
+    "date": "2026-10-12",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-10-12T09:15:00"
+  },
+  {
+    "id": "atd_41a3470a",
+    "subject_id": "sub_fe907a63",
+    "date": "2026-10-09",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Absent",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-10-09T09:15:00"
+  },
+  {
+    "id": "atd_4fafbbcd",
+    "subject_id": "sub_944f2970",
+    "date": "2026-10-09",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Present",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-10-09T09:15:00"
+  },
+  {
+    "id": "atd_0630fef9",
+    "subject_id": "sub_4536ab4e",
+    "date": "2026-10-09",
+    "records": {
+      "usr_a62bc806": "Absent",
+      "usr_e1114dd7": "Late",
+      "usr_cfb8ba4c": "Excused",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Absent",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-10-09T09:15:00"
+  },
+  {
+    "id": "atd_da08b14b",
+    "subject_id": "sub_e2e3d421",
+    "date": "2026-10-09",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-10-09T09:15:00"
+  },
+  {
+    "id": "atd_73d5bcb1",
+    "subject_id": "sub_0285a4de",
+    "date": "2026-10-09",
+    "records": {
+      "usr_7a7a6d90": "Excused",
+      "usr_20309556": "Late",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Excused"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-10-09T09:15:00"
+  },
+  {
+    "id": "atd_7f710af1",
+    "subject_id": "sub_9c0ae79d",
+    "date": "2026-10-09",
+    "records": {
+      "usr_7a7a6d90": "Excused",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-10-09T09:15:00"
+  },
+  {
+    "id": "atd_b683eb02",
+    "subject_id": "sub_fe907a63",
+    "date": "2026-10-08",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Present",
+      "usr_ee45d0c4": "Excused"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-10-08T09:15:00"
+  },
+  {
+    "id": "atd_d50415b6",
+    "subject_id": "sub_944f2970",
+    "date": "2026-10-08",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Absent",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-10-08T09:15:00"
+  },
+  {
+    "id": "atd_4b0ae1a4",
+    "subject_id": "sub_4536ab4e",
+    "date": "2026-10-08",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Late",
+      "usr_3861af1d": "Present",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-10-08T09:15:00"
+  },
+  {
+    "id": "atd_90d5bbae",
+    "subject_id": "sub_e2e3d421",
+    "date": "2026-10-08",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Late",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-10-08T09:15:00"
+  },
+  {
+    "id": "atd_029d0e04",
+    "subject_id": "sub_0285a4de",
+    "date": "2026-10-08",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-10-08T09:15:00"
+  },
+  {
+    "id": "atd_92fc46e3",
+    "subject_id": "sub_9c0ae79d",
+    "date": "2026-10-08",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-10-08T09:15:00"
+  },
+  {
+    "id": "atd_efc92367",
+    "subject_id": "sub_fe907a63",
+    "date": "2026-10-07",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Present",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-10-07T09:15:00"
+  },
+  {
+    "id": "atd_0084a22f",
+    "subject_id": "sub_944f2970",
+    "date": "2026-10-07",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Absent",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-10-07T09:15:00"
+  },
+  {
+    "id": "atd_6a9e5a95",
+    "subject_id": "sub_4536ab4e",
+    "date": "2026-10-07",
+    "records": {
+      "usr_a62bc806": "Absent",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Present",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-10-07T09:15:00"
+  },
+  {
+    "id": "atd_6cfc1831",
+    "subject_id": "sub_e2e3d421",
+    "date": "2026-10-07",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-10-07T09:15:00"
+  },
+  {
+    "id": "atd_668d1701",
+    "subject_id": "sub_0285a4de",
+    "date": "2026-10-07",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-10-07T09:15:00"
+  },
+  {
+    "id": "atd_45a2c05d",
+    "subject_id": "sub_9c0ae79d",
+    "date": "2026-10-07",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-10-07T09:15:00"
+  },
+  {
+    "id": "atd_105faee0",
+    "subject_id": "sub_fe907a63",
+    "date": "2026-10-06",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Excused",
+      "usr_3861af1d": "Present",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-10-06T09:15:00"
+  },
+  {
+    "id": "atd_d6098354",
+    "subject_id": "sub_944f2970",
+    "date": "2026-10-06",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Present",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-10-06T09:15:00"
+  },
+  {
+    "id": "atd_f011b4f1",
+    "subject_id": "sub_4536ab4e",
+    "date": "2026-10-06",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Present",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-10-06T09:15:00"
+  },
+  {
+    "id": "atd_0f84cccd",
+    "subject_id": "sub_e2e3d421",
+    "date": "2026-10-06",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-10-06T09:15:00"
+  },
+  {
+    "id": "atd_2c4bd723",
+    "subject_id": "sub_0285a4de",
+    "date": "2026-10-06",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Absent"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-10-06T09:15:00"
+  },
+  {
+    "id": "atd_331cd552",
+    "subject_id": "sub_9c0ae79d",
+    "date": "2026-10-06",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Late",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-10-06T09:15:00"
+  },
+  {
+    "id": "atd_1d8bc96c",
+    "subject_id": "sub_fe907a63",
+    "date": "2026-10-05",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Excused",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Present",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-10-05T09:15:00"
+  },
+  {
+    "id": "atd_5b84f382",
+    "subject_id": "sub_944f2970",
+    "date": "2026-10-05",
+    "records": {
+      "usr_a62bc806": "Excused",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Present",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-10-05T09:15:00"
+  },
+  {
+    "id": "atd_e75072d3",
+    "subject_id": "sub_4536ab4e",
+    "date": "2026-10-05",
+    "records": {
+      "usr_a62bc806": "Late",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Absent",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-10-05T09:15:00"
+  },
+  {
+    "id": "atd_8825dcc2",
+    "subject_id": "sub_e2e3d421",
+    "date": "2026-10-05",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Absent",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-10-05T09:15:00"
+  },
+  {
+    "id": "atd_07b88ad0",
+    "subject_id": "sub_0285a4de",
+    "date": "2026-10-05",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Absent",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-10-05T09:15:00"
+  },
+  {
+    "id": "atd_bdaf9b54",
+    "subject_id": "sub_9c0ae79d",
+    "date": "2026-10-05",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Late",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-10-05T09:15:00"
+  },
+  {
+    "id": "atd_911c18a8",
+    "subject_id": "sub_fe907a63",
+    "date": "2026-10-02",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Excused",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-10-02T09:15:00"
+  },
+  {
+    "id": "atd_bc18fb08",
+    "subject_id": "sub_944f2970",
+    "date": "2026-10-02",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Present",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-10-02T09:15:00"
+  },
+  {
+    "id": "atd_da1dfe70",
+    "subject_id": "sub_4536ab4e",
+    "date": "2026-10-02",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Absent",
+      "usr_3861af1d": "Absent",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-10-02T09:15:00"
+  },
+  {
+    "id": "atd_e8619626",
+    "subject_id": "sub_e2e3d421",
+    "date": "2026-10-02",
+    "records": {
+      "usr_7a7a6d90": "Late",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Late",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-10-02T09:15:00"
+  },
+  {
+    "id": "atd_f7b05c1f",
+    "subject_id": "sub_0285a4de",
+    "date": "2026-10-02",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Excused",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-10-02T09:15:00"
+  },
+  {
+    "id": "atd_87b7c19c",
+    "subject_id": "sub_9c0ae79d",
+    "date": "2026-10-02",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-10-02T09:15:00"
+  },
+  {
+    "id": "atd_b7fc2d23",
+    "subject_id": "sub_fe907a63",
+    "date": "2026-10-01",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Present",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-10-01T09:15:00"
+  },
+  {
+    "id": "atd_4165f4ef",
+    "subject_id": "sub_944f2970",
+    "date": "2026-10-01",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Present",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-10-01T09:15:00"
+  },
+  {
+    "id": "atd_27fd5c19",
+    "subject_id": "sub_4536ab4e",
+    "date": "2026-10-01",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Present",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-10-01T09:15:00"
+  },
+  {
+    "id": "atd_aefc41c6",
+    "subject_id": "sub_e2e3d421",
+    "date": "2026-10-01",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-10-01T09:15:00"
+  },
+  {
+    "id": "atd_40a7d70b",
+    "subject_id": "sub_0285a4de",
+    "date": "2026-10-01",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Absent",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-10-01T09:15:00"
+  },
+  {
+    "id": "atd_695228e6",
+    "subject_id": "sub_9c0ae79d",
+    "date": "2026-10-01",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Late",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Late",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-10-01T09:15:00"
+  },
+  {
+    "id": "atd_49b31f57",
+    "subject_id": "sub_fe907a63",
+    "date": "2026-09-30",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Present",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-09-30T09:15:00"
+  },
+  {
+    "id": "atd_49dc27f0",
+    "subject_id": "sub_944f2970",
+    "date": "2026-09-30",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Absent",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Absent",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-09-30T09:15:00"
+  },
+  {
+    "id": "atd_7b4f0c10",
+    "subject_id": "sub_4536ab4e",
+    "date": "2026-09-30",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Present",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-09-30T09:15:00"
+  },
+  {
+    "id": "atd_7febbeaa",
+    "subject_id": "sub_e2e3d421",
+    "date": "2026-09-30",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Late",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-09-30T09:15:00"
+  },
+  {
+    "id": "atd_f42b95fe",
+    "subject_id": "sub_0285a4de",
+    "date": "2026-09-30",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Late",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Absent",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-09-30T09:15:00"
+  },
+  {
+    "id": "atd_ef070d4d",
+    "subject_id": "sub_9c0ae79d",
+    "date": "2026-09-30",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-09-30T09:15:00"
+  },
+  {
+    "id": "atd_4114c154",
+    "subject_id": "sub_fe907a63",
+    "date": "2026-09-29",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Absent",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-09-29T09:15:00"
+  },
+  {
+    "id": "atd_bfd543f3",
+    "subject_id": "sub_944f2970",
+    "date": "2026-09-29",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Present",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-09-29T09:15:00"
+  },
+  {
+    "id": "atd_cd3dd51d",
+    "subject_id": "sub_4536ab4e",
+    "date": "2026-09-29",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Absent",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-09-29T09:15:00"
+  },
+  {
+    "id": "atd_947e6c78",
+    "subject_id": "sub_e2e3d421",
+    "date": "2026-09-29",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-09-29T09:15:00"
+  },
+  {
+    "id": "atd_9af1d6d2",
+    "subject_id": "sub_0285a4de",
+    "date": "2026-09-29",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-09-29T09:15:00"
+  },
+  {
+    "id": "atd_f96c3000",
+    "subject_id": "sub_9c0ae79d",
+    "date": "2026-09-29",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Late"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-09-29T09:15:00"
+  },
+  {
+    "id": "atd_6b340a6a",
+    "subject_id": "sub_fe907a63",
+    "date": "2026-09-28",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Present",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-09-28T09:15:00"
+  },
+  {
+    "id": "atd_5de8506d",
+    "subject_id": "sub_944f2970",
+    "date": "2026-09-28",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Present",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-09-28T09:15:00"
+  },
+  {
+    "id": "atd_fca678e4",
+    "subject_id": "sub_4536ab4e",
+    "date": "2026-09-28",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Late",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Late",
+      "usr_ee45d0c4": "Late"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-09-28T09:15:00"
+  },
+  {
+    "id": "atd_0abf7053",
+    "subject_id": "sub_e2e3d421",
+    "date": "2026-09-28",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-09-28T09:15:00"
+  },
+  {
+    "id": "atd_3ae3dc78",
+    "subject_id": "sub_0285a4de",
+    "date": "2026-09-28",
+    "records": {
+      "usr_7a7a6d90": "Late",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Late",
+      "usr_17824ca2": "Excused"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-09-28T09:15:00"
+  },
+  {
+    "id": "atd_fcec3d3d",
+    "subject_id": "sub_9c0ae79d",
+    "date": "2026-09-28",
+    "records": {
+      "usr_7a7a6d90": "Late",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-09-28T09:15:00"
+  },
+  {
+    "id": "atd_95ba4990",
+    "subject_id": "sub_fe907a63",
+    "date": "2026-09-25",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Absent",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-09-25T09:15:00"
+  },
+  {
+    "id": "atd_3c4c5d07",
+    "subject_id": "sub_944f2970",
+    "date": "2026-09-25",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Late",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Present",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-09-25T09:15:00"
+  },
+  {
+    "id": "atd_57a1b31e",
+    "subject_id": "sub_4536ab4e",
+    "date": "2026-09-25",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Present",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-09-25T09:15:00"
+  },
+  {
+    "id": "atd_f19ab4d1",
+    "subject_id": "sub_e2e3d421",
+    "date": "2026-09-25",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-09-25T09:15:00"
+  },
+  {
+    "id": "atd_5ba8794f",
+    "subject_id": "sub_0285a4de",
+    "date": "2026-09-25",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-09-25T09:15:00"
+  },
+  {
+    "id": "atd_564ee76d",
+    "subject_id": "sub_9c0ae79d",
+    "date": "2026-09-25",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Absent",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-09-25T09:15:00"
+  },
+  {
+    "id": "atd_e7275db0",
+    "subject_id": "sub_fe907a63",
+    "date": "2026-09-24",
+    "records": {
+      "usr_a62bc806": "Late",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Late",
+      "usr_3861af1d": "Present",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-09-24T09:15:00"
+  },
+  {
+    "id": "atd_c13d74cc",
+    "subject_id": "sub_944f2970",
+    "date": "2026-09-24",
+    "records": {
+      "usr_a62bc806": "Absent",
+      "usr_e1114dd7": "Late",
+      "usr_cfb8ba4c": "Absent",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Present",
+      "usr_ee45d0c4": "Late"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-09-24T09:15:00"
+  },
+  {
+    "id": "atd_eec8a1ba",
+    "subject_id": "sub_4536ab4e",
+    "date": "2026-09-24",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Absent",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-09-24T09:15:00"
+  },
+  {
+    "id": "atd_086db6df",
+    "subject_id": "sub_e2e3d421",
+    "date": "2026-09-24",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-09-24T09:15:00"
+  },
+  {
+    "id": "atd_abbbc47c",
+    "subject_id": "sub_0285a4de",
+    "date": "2026-09-24",
+    "records": {
+      "usr_7a7a6d90": "Excused",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-09-24T09:15:00"
+  },
+  {
+    "id": "atd_5ddc77f2",
+    "subject_id": "sub_9c0ae79d",
+    "date": "2026-09-24",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Late",
+      "usr_316955bc": "Absent",
+      "usr_ee3c4895": "Absent",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-09-24T09:15:00"
+  },
+  {
+    "id": "atd_7bdb311e",
+    "subject_id": "sub_fe907a63",
+    "date": "2026-09-23",
+    "records": {
+      "usr_a62bc806": "Late",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Absent",
+      "usr_3861af1d": "Absent",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-09-23T09:15:00"
+  },
+  {
+    "id": "atd_47513ae9",
+    "subject_id": "sub_944f2970",
+    "date": "2026-09-23",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Late",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Absent",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-09-23T09:15:00"
+  },
+  {
+    "id": "atd_e504bb49",
+    "subject_id": "sub_4536ab4e",
+    "date": "2026-09-23",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Late",
+      "usr_3861af1d": "Present",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-09-23T09:15:00"
+  },
+  {
+    "id": "atd_ac4ccb1e",
+    "subject_id": "sub_e2e3d421",
+    "date": "2026-09-23",
+    "records": {
+      "usr_7a7a6d90": "Late",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-09-23T09:15:00"
+  },
+  {
+    "id": "atd_3bf1343b",
+    "subject_id": "sub_0285a4de",
+    "date": "2026-09-23",
+    "records": {
+      "usr_7a7a6d90": "Absent",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-09-23T09:15:00"
+  },
+  {
+    "id": "atd_7ef6607c",
+    "subject_id": "sub_9c0ae79d",
+    "date": "2026-09-23",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Late",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Absent",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-09-23T09:15:00"
+  },
+  {
+    "id": "atd_76055c5f",
+    "subject_id": "sub_fe907a63",
+    "date": "2026-09-22",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Excused",
+      "usr_3861af1d": "Present",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-09-22T09:15:00"
+  },
+  {
+    "id": "atd_8ad4079f",
+    "subject_id": "sub_944f2970",
+    "date": "2026-09-22",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Present",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-09-22T09:15:00"
+  },
+  {
+    "id": "atd_dd160a89",
+    "subject_id": "sub_4536ab4e",
+    "date": "2026-09-22",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Present",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-09-22T09:15:00"
+  },
+  {
+    "id": "atd_7c397c17",
+    "subject_id": "sub_e2e3d421",
+    "date": "2026-09-22",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Late",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Excused"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-09-22T09:15:00"
+  },
+  {
+    "id": "atd_58c1d397",
+    "subject_id": "sub_0285a4de",
+    "date": "2026-09-22",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-09-22T09:15:00"
+  },
+  {
+    "id": "atd_4dcc0c63",
+    "subject_id": "sub_9c0ae79d",
+    "date": "2026-09-22",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Excused",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-09-22T09:15:00"
+  },
+  {
+    "id": "atd_4cec7d99",
+    "subject_id": "sub_fe907a63",
+    "date": "2026-09-21",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Present",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-09-21T09:15:00"
+  },
+  {
+    "id": "atd_673440a5",
+    "subject_id": "sub_944f2970",
+    "date": "2026-09-21",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Absent",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-09-21T09:15:00"
+  },
+  {
+    "id": "atd_72c2666e",
+    "subject_id": "sub_4536ab4e",
+    "date": "2026-09-21",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Absent",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Present",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-09-21T09:15:00"
+  },
+  {
+    "id": "atd_42447fb5",
+    "subject_id": "sub_e2e3d421",
+    "date": "2026-09-21",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Absent",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-09-21T09:15:00"
+  },
+  {
+    "id": "atd_422c7aef",
+    "subject_id": "sub_0285a4de",
+    "date": "2026-09-21",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Present",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-09-21T09:15:00"
+  },
+  {
+    "id": "atd_2deb0f72",
+    "subject_id": "sub_9c0ae79d",
+    "date": "2026-09-21",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Late",
+      "usr_316955bc": "Late",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Absent",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-09-21T09:15:00"
+  },
+  {
+    "id": "atd_d11c086b",
+    "subject_id": "sub_fe907a63",
+    "date": "2026-09-18",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Absent",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Absent",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-09-18T09:15:00"
+  },
+  {
+    "id": "atd_ed08a619",
+    "subject_id": "sub_944f2970",
+    "date": "2026-09-18",
+    "records": {
+      "usr_a62bc806": "Late",
+      "usr_e1114dd7": "Excused",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Present",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-09-18T09:15:00"
+  },
+  {
+    "id": "atd_05f0a16c",
+    "subject_id": "sub_4536ab4e",
+    "date": "2026-09-18",
+    "records": {
+      "usr_a62bc806": "Present",
+      "usr_e1114dd7": "Present",
+      "usr_cfb8ba4c": "Present",
+      "usr_6b17bb27": "Present",
+      "usr_3861af1d": "Present",
+      "usr_ee45d0c4": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-09-18T09:15:00"
+  },
+  {
+    "id": "atd_4a5feda0",
+    "subject_id": "sub_e2e3d421",
+    "date": "2026-09-18",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Absent",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_b3442496",
+    "updated_at": "2026-09-18T09:15:00"
+  },
+  {
+    "id": "atd_f1612d22",
+    "subject_id": "sub_0285a4de",
+    "date": "2026-09-18",
+    "records": {
+      "usr_7a7a6d90": "Excused",
+      "usr_20309556": "Present",
+      "usr_316955bc": "Present",
+      "usr_ee3c4895": "Excused",
+      "usr_5d5ef4bd": "Absent",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_323e7276",
+    "updated_at": "2026-09-18T09:15:00"
+  },
+  {
+    "id": "atd_49d2598d",
+    "subject_id": "sub_9c0ae79d",
+    "date": "2026-09-18",
+    "records": {
+      "usr_7a7a6d90": "Present",
+      "usr_20309556": "Late",
+      "usr_316955bc": "Late",
+      "usr_ee3c4895": "Present",
+      "usr_5d5ef4bd": "Absent",
+      "usr_17824ca2": "Present"
+    },
+    "taken_by": "usr_bfd69e92",
+    "updated_at": "2026-09-18T09:15:00"
+  }
+]

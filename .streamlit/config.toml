@@ -1,0 +1,71 @@
+[theme]
+base = "dark"
+primaryColor = "#00E5FF"
+backgroundColor = "#07080C"
+secondaryBackgroundColor = "#11131A"
+textColor = "#F8FAFC"
+font = "sans serif"
+codeFont = "monospace"
+borderColor = "#262936"
+showWidgetBorder = true
+showSidebarBorder = true
+baseRadius = "0.4rem"
+buttonRadius = "0.35rem"
+linkColor = "#00E5FF"
+codeBackgroundColor = "#0D1017"
+codeTextColor = "#00FF9D"
+dataframeBorderColor = "#262936"
+dataframeHeaderBackgroundColor = "#161923"
+dataframeHeaderTextColor = "#00E5FF"
+
+# Saturated, vivid technical palette for badges, alerts, and multi-series charts
+blueColor = "#00E5FF"
+greenColor = "#00FF9D"
+orangeColor = "#FF8A00"
+yellowColor = "#FFD600"
+redColor = "#FF2E54"
+violetColor = "#B829FF"
+grayColor = "#94A3B8"
+
+blueBackgroundColor = "#042836"
+greenBackgroundColor = "#032B1E"
+orangeBackgroundColor = "#331C00"
+yellowBackgroundColor = "#332B00"
+redBackgroundColor = "#360712"
+violetBackgroundColor = "#240836"
+grayBackgroundColor = "#161923"
+
+blueTextColor = "#67E8F9"
+greenTextColor = "#6EE7B7"
+orangeTextColor = "#FDBA74"
+yellowTextColor = "#FDE047"
+redTextColor = "#FDA4AF"
+violetTextColor = "#D8B4FE"
+grayTextColor = "#CBD5E1"
+
+chartCategoricalColors = ["#00E5FF", "#00FF9D", "#B829FF", "#FF8A00", "#FF2E54", "#FFD600"]
+
+[theme.sidebar]
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F1F5F9"
+textColor = "#09090B"
+primaryColor = "#0284C7"
+borderColor = "#CBD5E1"
+showWidgetBorder = true
+linkColor = "#0284C7"
+codeBackgroundColor = "#F1F5F9"
+codeTextColor = "#0F172A"
+
+blueColor = "#0284C7"
+greenColor = "#059669"
+orangeColor = "#EA580C"
+yellowColor = "#CA8A04"
+redColor = "#E11D48"
+violetColor = "#7C3AED"
+grayColor = "#475569"
+
+[server]
+maxUploadSize = 10
+
+[browser]
+gatherUsageStats = false

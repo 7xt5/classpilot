@@ -1,0 +1,284 @@
+[
+  {
+    "id": "les_9886263d",
+    "subject_id": "sub_fe907a63",
+    "topic": "Algebra",
+    "title": "Solving Linear Equations",
+    "content": "## Key ideas\n- An equation is balanced: whatever you do to one side, do to the other.\n- Undo operations in reverse order (BIDMAS backwards).\n\n## Worked example\nSolve `3x + 5 = 20`\n1. Subtract 5 → `3x = 15`\n2. Divide by 3 → `x = 5`\n\n## Practice\nTry questions 1-12 on the worksheet before Friday.",
+    "resources": [
+      {
+        "label": "Maths is Fun - Solving equations",
+        "url": "https://www.mathsisfun.com/algebra/equations-solving.html"
+      },
+      {
+        "label": "Khan Academy - Algebra basics",
+        "url": "https://www.khanacademy.org/math/algebra-basics"
+      }
+    ],
+    "files": [
+      {
+        "name": "linear_equations_worksheet.txt",
+        "path": "lessons/demo0_linear_equations_worksheet.txt",
+        "size": 89
+      }
+    ],
+    "created_by": "usr_b3442496",
+    "created_at": "2026-09-21T10:00:00",
+    "updated_at": "2026-09-21T10:00:00"
+  },
+  {
+    "id": "les_e2fc3c9e",
+    "subject_id": "sub_fe907a63",
+    "topic": "Algebra",
+    "title": "Factorising Quadratics",
+    "content": "## Key ideas\n- Look for two numbers that **multiply** to `c` and **add** to `b`.\n- Always check for a common factor first.\n\n## Example\n`x² + 7x + 12 = (x + 3)(x + 4)`\n\n## Watch out\nSigns! For `x² - x - 12` you need `-4` and `+3`.",
+    "resources": [
+      {
+        "label": "Maths is Fun - Factoring quadratics",
+        "url": "https://www.mathsisfun.com/algebra/factoring-quadratics.html"
+      }
+    ],
+    "files": [],
+    "created_by": "usr_b3442496",
+    "created_at": "2026-09-27T10:00:00",
+    "updated_at": "2026-09-27T10:00:00"
+  },
+  {
+    "id": "les_e62c5c08",
+    "subject_id": "sub_fe907a63",
+    "topic": "Geometry",
+    "title": "Pythagoras' Theorem",
+    "content": "## Formula\n`a² + b² = c²` where `c` is the hypotenuse (longest side).\n\n## Steps\n1. Label the hypotenuse.\n2. Square the two known sides.\n3. Add (finding c) or subtract (finding a shorter side).\n4. Square root.",
+    "resources": [
+      {
+        "label": "Maths is Fun - Pythagoras",
+        "url": "https://www.mathsisfun.com/pythagoras.html"
+      }
+    ],
+    "files": [],
+    "created_by": "usr_b3442496",
+    "created_at": "2026-10-03T10:00:00",
+    "updated_at": "2026-10-03T10:00:00"
+  },
+  {
+    "id": "les_c0c0c86b",
+    "subject_id": "sub_944f2970",
+    "topic": "Cells",
+    "title": "Cell Structure and Function",
+    "content": "## Animal vs plant cells\n| Part | Animal | Plant |\n|---|---|---|\n| Nucleus | ✔ | ✔ |\n| Cell wall | ✘ | ✔ |\n| Chloroplast | ✘ | ✔ |\n\nThe **mitochondria** release energy through respiration.",
+    "resources": [
+      {
+        "label": "Khan Academy - Biology",
+        "url": "https://www.khanacademy.org/science/biology"
+      }
+    ],
+    "files": [],
+    "created_by": "usr_323e7276",
+    "created_at": "2026-09-21T10:00:00",
+    "updated_at": "2026-09-21T10:00:00"
+  },
+  {
+    "id": "les_cf044521",
+    "subject_id": "sub_944f2970",
+    "topic": "Chemistry Basics",
+    "title": "Atoms and the Periodic Table",
+    "content": "## Atom structure\n- Protons (+) and neutrons in the nucleus\n- Electrons (−) in shells\n\nGroups = columns (same outer electrons). Periods = rows.",
+    "resources": [
+      {
+        "label": "Interactive periodic table",
+        "url": "https://ptable.com"
+      }
+    ],
+    "files": [],
+    "created_by": "usr_323e7276",
+    "created_at": "2026-09-27T10:00:00",
+    "updated_at": "2026-09-27T10:00:00"
+  },
+  {
+    "id": "les_1e62e956",
+    "subject_id": "sub_944f2970",
+    "topic": "Forces",
+    "title": "Newton's Laws of Motion",
+    "content": "1. An object stays at rest or keeps moving unless a force acts on it.\n2. `F = m × a`\n3. Every action has an equal and opposite reaction.",
+    "resources": [
+      {
+        "label": "PhET - Forces and Motion simulation",
+        "url": "https://phet.colorado.edu/en/simulations/forces-and-motion-basics"
+      }
+    ],
+    "files": [],
+    "created_by": "usr_323e7276",
+    "created_at": "2026-10-03T10:00:00",
+    "updated_at": "2026-10-03T10:00:00"
+  },
+  {
+    "id": "les_889f5283",
+    "subject_id": "sub_4536ab4e",
+    "topic": "Writing Skills",
+    "title": "Persuasive Writing Techniques",
+    "content": "Remember **AFOREST**: Alliteration, Facts, Opinions, Rhetorical questions, Emotive language, Statistics, Triples.",
+    "resources": [
+      {
+        "label": "BBC Bitesize - English",
+        "url": "https://www.bbc.co.uk/bitesize/subjects/zr9d7ty"
+      }
+    ],
+    "files": [],
+    "created_by": "usr_bfd69e92",
+    "created_at": "2026-09-21T10:00:00",
+    "updated_at": "2026-09-21T10:00:00"
+  },
+  {
+    "id": "les_ee9e7d7f",
+    "subject_id": "sub_4536ab4e",
+    "topic": "Poetry",
+    "title": "Analysing Imagery in Poetry",
+    "content": "Use **PEEL** paragraphs: Point, Evidence, Explain, Link.\n\nLook for similes, metaphors and personification.",
+    "resources": [
+      {
+        "label": "Poetry Foundation",
+        "url": "https://www.poetryfoundation.org"
+      }
+    ],
+    "files": [],
+    "created_by": "usr_bfd69e92",
+    "created_at": "2026-09-27T10:00:00",
+    "updated_at": "2026-09-27T10:00:00"
+  },
+  {
+    "id": "les_32d30eb4",
+    "subject_id": "sub_e2e3d421",
+    "topic": "Trigonometry",
+    "title": "SOH CAH TOA",
+    "content": "- `sin θ = opposite / hypotenuse`\n- `cos θ = adjacent / hypotenuse`\n- `tan θ = opposite / adjacent`",
+    "resources": [
+      {
+        "label": "Maths is Fun - Trigonometry",
+        "url": "https://www.mathsisfun.com/sine-cosine-tangent.html"
+      }
+    ],
+    "files": [],
+    "created_by": "usr_b3442496",
+    "created_at": "2026-09-21T10:00:00",
+    "updated_at": "2026-09-21T10:00:00"
+  },
+  {
+    "id": "les_419c4bc4",
+    "subject_id": "sub_e2e3d421",
+    "topic": "Trigonometry",
+    "title": "Sine and Cosine Rules",
+    "content": "- Sine rule: `a / sin A = b / sin B`\n- Cosine rule: `a² = b² + c² − 2bc cos A`\n\nUse the cosine rule when you know two sides and the angle **between** them.",
+    "resources": [
+      {
+        "label": "Maths is Fun - Law of Sines",
+        "url": "https://www.mathsisfun.com/algebra/trig-sine-law.html"
+      }
+    ],
+    "files": [],
+    "created_by": "usr_b3442496",
+    "created_at": "2026-09-27T10:00:00",
+    "updated_at": "2026-09-27T10:00:00"
+  },
+  {
+    "id": "les_ba576d47",
+    "subject_id": "sub_e2e3d421",
+    "topic": "Statistics",
+    "title": "Mean, Median and Mode",
+    "content": "- Mean: add up and divide by how many\n- Median: middle value when ordered\n- Mode: most common value",
+    "resources": [
+      {
+        "label": "Khan Academy - Statistics",
+        "url": "https://www.khanacademy.org/math/statistics-probability"
+      }
+    ],
+    "files": [],
+    "created_by": "usr_b3442496",
+    "created_at": "2026-10-03T10:00:00",
+    "updated_at": "2026-10-03T10:00:00"
+  },
+  {
+    "id": "les_7a40367f",
+    "subject_id": "sub_0285a4de",
+    "topic": "Electricity",
+    "title": "Ohm's Law and Circuits",
+    "content": "`V = I × R`\n\n- Voltage (V) in volts\n- Current (I) in amps\n- Resistance (R) in ohms",
+    "resources": [
+      {
+        "label": "PhET - Circuit Construction Kit",
+        "url": "https://phet.colorado.edu/en/simulations/circuit-construction-kit-dc"
+      }
+    ],
+    "files": [],
+    "created_by": "usr_323e7276",
+    "created_at": "2026-09-21T10:00:00",
+    "updated_at": "2026-09-21T10:00:00"
+  },
+  {
+    "id": "les_494fbf82",
+    "subject_id": "sub_0285a4de",
+    "topic": "Electricity",
+    "title": "Series and Parallel Circuits",
+    "content": "- **Series:** same current everywhere, voltages add up.\n- **Parallel:** same voltage on each branch, currents add up.",
+    "resources": [
+      {
+        "label": "PhET - Circuit Construction Kit",
+        "url": "https://phet.colorado.edu/en/simulations/circuit-construction-kit-dc"
+      }
+    ],
+    "files": [],
+    "created_by": "usr_323e7276",
+    "created_at": "2026-09-27T10:00:00",
+    "updated_at": "2026-09-27T10:00:00"
+  },
+  {
+    "id": "les_6a48fdf4",
+    "subject_id": "sub_0285a4de",
+    "topic": "Waves",
+    "title": "Properties of Waves",
+    "content": "Wave speed: `v = f × λ`.\n\nTransverse waves vibrate at right angles to the direction of travel; longitudinal waves vibrate parallel to it.",
+    "resources": [
+      {
+        "label": "PhET - Wave on a String",
+        "url": "https://phet.colorado.edu/en/simulations/wave-on-a-string"
+      }
+    ],
+    "files": [],
+    "created_by": "usr_323e7276",
+    "created_at": "2026-10-03T10:00:00",
+    "updated_at": "2026-10-03T10:00:00"
+  },
+  {
+    "id": "les_962a2423",
+    "subject_id": "sub_9c0ae79d",
+    "topic": "Shakespeare",
+    "title": "Macbeth Act 1 - Ambition",
+    "content": "Focus on Macbeth's soliloquy *'Stars, hide your fires'*. What does it reveal about his ambition?",
+    "resources": [
+      {
+        "label": "Folger Shakespeare - Macbeth",
+        "url": "https://www.folger.edu/explore/shakespeares-works/macbeth/"
+      }
+    ],
+    "files": [],
+    "created_by": "usr_bfd69e92",
+    "created_at": "2026-09-21T10:00:00",
+    "updated_at": "2026-09-21T10:00:00"
+  },
+  {
+    "id": "les_8d5ce6f8",
+    "subject_id": "sub_9c0ae79d",
+    "topic": "Essay Skills",
+    "title": "Structuring a Literary Essay",
+    "content": "1. Thesis statement\n2. Three analytical paragraphs\n3. Conclusion linking back to the question",
+    "resources": [
+      {
+        "label": "Purdue OWL - Writing about literature",
+        "url": "https://owl.purdue.edu/owl/subject_specific_writing/writing_in_literature/index.html"
+      }
+    ],
+    "files": [],
+    "created_by": "usr_bfd69e92",
+    "created_at": "2026-09-27T10:00:00",
+    "updated_at": "2026-09-27T10:00:00"
+  }
+]
