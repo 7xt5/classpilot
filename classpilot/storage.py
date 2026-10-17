@@ -45,7 +45,7 @@ COLLECTIONS = [
 
 # Default school settings (stored in settings.json, which is a dictionary).
 DEFAULT_SETTINGS = {
-    "school_name": "Pakistan Int'l School (English Section) Riyadh",
+    "school_name": "ClassPilot Academy",
     "academic_year": "2026-2027",
     # Deadline Conflict Detector
     "conflict_window_days": 2,       # look this many days before/after a due date

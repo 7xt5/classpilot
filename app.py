@@ -100,20 +100,11 @@ def build_pages(user):
 
 
 def sidebar(user):
-    """PISES Riyadh sidebar with school emblem, active operator badge, and logout."""
+    """Technical telemetry sidebar with branding, active operator badge, and logout."""
     settings = storage.load_settings()
-    logo = ui.logo_path()
     with st.sidebar:
-        if logo:
-            c_logo, c_title = st.columns([1, 2.2])
-            with c_logo:
-                st.image(logo, width="stretch")
-            with c_title:
-                st.markdown("### ■ :green[CLASSPILOT]\n**:orange[PISES RIYADH]**")
-                st.caption("رب زدني علما")
-        else:
-            st.markdown("## ■ :green[CLASSPILOT] :orange[PISES]")
-        st.caption(f"CAMPUS // {settings['school_name'].upper()} · {settings['academic_year']}")
+        st.markdown("## ■ :green[CLASSPILOT] :blue[OS]")
+        st.caption(f"NODE // {settings['school_name'].upper()} · {settings['academic_year']}")
         with st.container(border=True):
             st.markdown(
                 f":green-badge[● ONLINE] {ui.badge(user['role'].title())}  \n"

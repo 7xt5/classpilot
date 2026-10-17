@@ -50,15 +50,6 @@ def mono_icon(icon, default=":material/circle:"):
     return default
 
 
-def logo_path():
-    """Return the path to the PISES Riyadh school emblem image if present."""
-    p = storage.PROJECT_DIR / "classpilot" / "pises_logo.png"
-    if p.exists():
-        return str(p)
-    p_data = storage.DATA_DIR / "pises_logo.png"
-    return str(p_data) if p_data.exists() else None
-
-
 # --------------------------------------------------------------------------
 # Pure-Python Page-Switch Transition & Technical Telemetry Header
 # --------------------------------------------------------------------------
@@ -75,15 +66,15 @@ def page_transition(title):
 
     slot = st.empty()
     stages = [
-        (32, "green", "PISES // ROUTING MODULE", title.upper()),
-        (74, "blue", "GRID ENGINE // SYNCING WORKSPACE", title.upper()),
-        (100, "green", "ONLINE // RENDERING VIEWPORT", title.upper()),
+        (32, "green", "ROUTING // INITIALIZING MODULE", title.upper()),
+        (74, "blue", "TELEMETRY // SYNCING WORKSPACE", title.upper()),
+        (100, "green", "READY // RENDERING VIEWPORT", title.upper()),
     ]
     for pct, color, phase, mod_name in stages:
         with slot.container(border=True):
             st.markdown(
                 f":{color}-badge[● {phase}] &nbsp; **Target:** `{mod_name}` &nbsp; "
-                f":gray[Grid sync {pct}%]"
+                f":gray[Frame sync {pct}%]"
             )
             st.progress(pct)
         _time.sleep(0.045)
@@ -99,23 +90,23 @@ def badge(text):
 
 
 def page_header(title, subtitle=None, icon=""):
-    """PISES Riyadh Technical Grid header with live telemetry ribbon, page transition, and divider."""
+    """Technical HUD header with live telemetry ribbon, page transition, and divider."""
     clean_title = str(title).strip()
     page_transition(clean_title)
 
     module_code = clean_title.split("—")[0].split(",")[0].strip().upper().replace(" ", "_")[:18]
     now_str = datetime.now().strftime("%H:%M:%S")
 
-    # PISES Technical Telemetry Status Bar
+    # Technical Telemetry Status Bar
     st.markdown(
-        f":green-badge[● PISES.ONLINE] "
+        f":green-badge[● SYS.ONLINE] "
         f":blue-badge[◆ MOD // {module_code}] "
-        f":violet-badge[▲ MOTTO // رب زدني علما] "
+        f":violet-badge[▲ DB // JSON.PERSIST] "
         f":orange-badge[■ CLK // {now_str}]"
     )
     st.title(f"■ :green[{clean_title}]")
     if subtitle:
-        st.markdown(f"**▸ {subtitle}**")
+        st.caption(f"▸ {subtitle}")
     st.divider()
 
 

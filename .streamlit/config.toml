@@ -1,138 +1,137 @@
 [theme]
 base = "light"
 primaryColor = "#1EA812"
-backgroundColor = "#F3FAF2"
+backgroundColor = "#F7FAF7"
 secondaryBackgroundColor = "#FFFFFF"
-textColor = "#072205"
+textColor = "#0B1D0A"
 
-# Modern, bold geometric typography
-font = "Plus Jakarta Sans:https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
-headingFont = "Space Grotesk:https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700;800&display=swap"
-codeFont = "JetBrains Mono:https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&display=swap"
+# Modern, fatter/heavier geometric typography
+font = "Outfit:https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&display=swap"
+headingFont = "Outfit:https://fonts.googleapis.com/css2?family=Outfit:wght@700;800;900&display=swap"
+codeFont = "JetBrains Mono:https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600;700&display=swap"
 baseFontSize = 16
-baseFontWeight = 550
-headingFontWeights = [800, 800, 750, 700, 700, 700]
-headingFontSizes = ["2.65rem", "2.05rem", "1.55rem", "1.25rem", "1.1rem", "1rem"]
-metricValueFontWeight = 800
-codeFontWeight = 600
+baseFontWeight = 600
+headingFontWeights = [900, 850, 800, 800, 750, 750]
+headingFontSizes = ["2.7rem", "2.1rem", "1.6rem", "1.3rem", "1.12rem", "1rem"]
+metricValueFontWeight = 900
+codeFontWeight = 700
 
-borderColor = "#9EE096"
+borderColor = "#D1E7CF"
 showWidgetBorder = true
 showSidebarBorder = true
 baseRadius = "0.55rem"
 buttonRadius = "0.45rem"
-linkColor = "#15800D"
-codeBackgroundColor = "#EBF7E9"
-codeTextColor = "#0C3B09"
-dataframeBorderColor = "#A3E29B"
-dataframeHeaderBackgroundColor = "#E3F6E0"
-dataframeHeaderTextColor = "#0A3307"
+linkColor = "#168A0E"
+codeBackgroundColor = "#EFF7EE"
+codeTextColor = "#0D360A"
+dataframeBorderColor = "#D1E7CF"
+dataframeHeaderBackgroundColor = "#EDF7EC"
+dataframeHeaderTextColor = "#0B2909"
 
-# PISES Riyadh Emerald, Teal & Royal Gold palette
+# Subtle Emerald & Clean Modern Accents
 greenColor = "#1EA812"
 blueColor = "#0D9488"
 violetColor = "#15803D"
 orangeColor = "#D97706"
 yellowColor = "#CA8A04"
 redColor = "#DC2626"
-grayColor = "#3F623D"
+grayColor = "#4B6349"
 
-greenBackgroundColor = "#DCFCE7"
-blueBackgroundColor = "#CCFBF1"
-violetBackgroundColor = "#D1FAE5"
+greenBackgroundColor = "#E3F9E1"
+blueBackgroundColor = "#E0F7F4"
+violetBackgroundColor = "#E2F5EA"
 orangeBackgroundColor = "#FEF3C7"
 yellowBackgroundColor = "#FEF9C3"
 redBackgroundColor = "#FEE2E2"
-grayBackgroundColor = "#E6F4E4"
+grayBackgroundColor = "#EDF4EC"
 
-greenTextColor = "#0F5E09"
-blueTextColor = "#0F5850"
-violetTextColor = "#115E2E"
+greenTextColor = "#11660B"
+blueTextColor = "#0F5E56"
+violetTextColor = "#14532D"
 orangeTextColor = "#92400E"
 yellowTextColor = "#854D0E"
 redTextColor = "#991B1B"
-grayTextColor = "#1E3A1C"
+grayTextColor = "#243823"
 
-chartCategoricalColors = ["#1EA812", "#0D9488", "#D97706", "#15803D", "#0284C7", "#DC2626"]
+chartCategoricalColors = ["#1EA812", "#0D9488", "#15803D", "#D97706", "#0284C7", "#DC2626"]
 
-# Architectural Grid Background & Modern Bold Typography Rules via Theme FontFace
+# Subtle Grid Background & Fatter Modern Typography
 [[theme.fontFaces]]
-family = "Plus Jakarta Sans"
-url = "https://fonts.gstatic.com/s/plusjakartasans/v8/L0xTDF4xlVMF-BfR8bXMIjhGq3-cXbKDO1w.woff2"
-weight_range = "500 800"
+family = "Outfit"
+url = "https://fonts.gstatic.com/s/outfit/v11/QGYvz_MVcBeNP4NJtEtq.woff2"
+weight_range = "500 900"
 style = "normal"
 unicode_range = """U+0000-FFFF; }
 [data-testid="stAppViewContainer"], .stApp {
-  background-color: #F3FAF2 !important;
+  background-color: #F7FAF7 !important;
   background-image:
-    radial-gradient(circle at 50% 0%, rgba(30, 168, 18, 0.12), transparent 65%),
-    linear-gradient(to right, rgba(30, 168, 18, 0.10) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(30, 168, 18, 0.10) 1px, transparent 1px),
-    linear-gradient(to right, rgba(21, 128, 13, 0.22) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(21, 128, 13, 0.22) 1px, transparent 1px) !important;
-  background-size: 100% 100%, 24px 24px, 24px 24px, 120px 120px, 120px 120px !important;
+    radial-gradient(circle at 50% 0%, rgba(30, 168, 18, 0.055), transparent 65%),
+    linear-gradient(to right, rgba(30, 168, 18, 0.042) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(30, 168, 18, 0.042) 1px, transparent 1px),
+    linear-gradient(to right, rgba(22, 138, 14, 0.082) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(22, 138, 14, 0.082) 1px, transparent 1px) !important;
+  background-size: 100% 100%, 28px 28px, 28px 28px, 140px 140px, 140px 140px !important;
   background-attachment: fixed !important;
 }
 [data-testid="stHeader"] {
-  background: rgba(243, 250, 242, 0.82) !important;
+  background: rgba(247, 250, 247, 0.85) !important;
   backdrop-filter: blur(8px) !important;
-  border-bottom: 1px solid rgba(30, 168, 18, 0.22) !important;
+  border-bottom: 1px solid rgba(30, 168, 18, 0.12) !important;
 }
 [data-testid="stSidebar"] {
-  background-color: #082406 !important;
+  background-color: #0B1F0A !important;
   background-image:
-    linear-gradient(to right, rgba(46, 213, 29, 0.08) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(46, 213, 29, 0.08) 1px, transparent 1px) !important;
-  background-size: 24px 24px !important;
-  border-right: 2px solid #1EA812 !important;
+    linear-gradient(to right, rgba(46, 213, 29, 0.038) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(46, 213, 29, 0.038) 1px, transparent 1px) !important;
+  background-size: 28px 28px !important;
+  border-right: 1.5px solid rgba(30, 168, 18, 0.35) !important;
 }
 [data-testid="stMain"] [data-testid="stVerticalBlockBorderWrapper"] {
-  background-color: rgba(255, 255, 255, 0.95) !important;
-  border: 1.5px solid rgba(30, 168, 18, 0.34) !important;
-  box-shadow: 0 6px 20px rgba(8, 36, 6, 0.06) !important;
+  background-color: rgba(255, 255, 255, 0.96) !important;
+  border: 1.5px solid rgba(30, 168, 18, 0.22) !important;
+  box-shadow: 0 4px 16px rgba(11, 29, 10, 0.045) !important;
   border-radius: 0.6rem !important;
 }
 [data-testid="stSidebar"] [data-testid="stVerticalBlockBorderWrapper"] {
-  background-color: rgba(16, 56, 13, 0.92) !important;
-  border: 1.5px solid rgba(46, 213, 29, 0.38) !important;
+  background-color: rgba(20, 48, 18, 0.90) !important;
+  border: 1px solid rgba(46, 213, 29, 0.25) !important;
   border-radius: 0.6rem !important;
 }
 h1, h2, h3, h4, [data-testid="stMarkdownContainer"] h1, [data-testid="stMarkdownContainer"] h2, [data-testid="stMarkdownContainer"] h3 {
-  font-family: "Space Grotesk", "Plus Jakarta Sans", sans-serif !important;
+  font-family: "Outfit", sans-serif !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.02em !important;
+}
+p, li, label, span, [data-testid="stMarkdownContainer"] p, [data-testid="stWidgetLabel"] p, [data-testid="stCaptionContainer"] p {
+  font-family: "Outfit", sans-serif !important;
+  font-weight: 650 !important;
+}
+button[kind="primary"], button[kind="secondary"], [data-testid="stBaseButton-primary"] p, [data-testid="stBaseButton-secondary"] p {
+  font-family: "Outfit", sans-serif !important;
   font-weight: 800 !important;
-  letter-spacing: -0.025em !important;
-}
-p, li, label, [data-testid="stMarkdownContainer"] p, [data-testid="stWidgetLabel"] p {
-  font-family: "Plus Jakarta Sans", sans-serif !important;
-  font-weight: 600 !important;
-  letter-spacing: -0.005em !important;
-}
-button[kind="primary"], button[kind="secondary"] {
-  font-family: "Space Grotesk", "Plus Jakarta Sans", sans-serif !important;
-  font-weight: 700 !important;
   letter-spacing: 0.01em !important;
-  border-width: 1.5px !important;
 }
 [data-testid="stMetricValue"] {
-  font-family: "Space Grotesk", sans-serif !important;
-  font-weight: 800 !important;
-  letter-spacing: -0.03em !important;
+  font-family: "Outfit", sans-serif !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.025em !important;
 }
-.stApp { --pises-grid-ready: 1"""
+.stApp { --subtle-grid-ready: 1"""
 
 [theme.sidebar]
-backgroundColor = "#082406"
-secondaryBackgroundColor = "#10380D"
-textColor = "#F0FDF0"
-primaryColor = "#28C71A"
-borderColor = "#1F6E18"
+backgroundColor = "#0B1F0A"
+secondaryBackgroundColor = "#143312"
+textColor = "#F2FAF2"
+primaryColor = "#25C417"
+borderColor = "#1F4D1C"
 showWidgetBorder = true
 linkColor = "#4ADE80"
-codeBackgroundColor = "#0D300A"
+codeBackgroundColor = "#0E290C"
 codeTextColor = "#86EFAC"
-headingFontWeights = [800, 800, 750, 700, 700, 700]
+baseFontWeight = 600
+headingFontWeights = [900, 850, 800, 800, 750, 750]
 
-greenColor = "#28C71A"
+greenColor = "#25C417"
 blueColor = "#2DD4BF"
 violetColor = "#4ADE80"
 orangeColor = "#FBBF24"
