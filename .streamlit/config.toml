@@ -11,9 +11,9 @@ headingFont = "Outfit:https://fonts.googleapis.com/css2?family=Outfit:wght@700;8
 codeFont = "JetBrains Mono:https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&display=swap"
 baseFontSize = 16
 baseFontWeight = 600
-headingFontWeights = [900, 850, 800, 800, 750, 750]
+headingFontWeights = [800, 800, 700, 700, 600, 600]
 headingFontSizes = ["2.25rem", "1.7rem", "1.32rem", "1.14rem", "1rem", "0.95rem"]
-metricValueFontWeight = 900
+metricValueFontWeight = 800
 codeFontWeight = 600
 
 borderColor = "#1E293B"
@@ -108,12 +108,12 @@ unicode_range = """U+0000-FFFF; }
   line-height: 1 !important;
 }
 h1, h2, h3, h4 {
-  font-weight: 850 !important;
+  font-weight: 800 !important;
   line-height: 1.28 !important;
   letter-spacing: -0.02em !important;
 }
 strong, b {
-  font-weight: 750 !important;
+  font-weight: 700 !important;
 }
 p, li, label {
   line-height: 1.48 !important;
@@ -142,8 +142,7 @@ showWidgetBorder = true
 linkColor = "#60A5FA"
 codeBackgroundColor = "#090E1A"
 codeTextColor = "#93C5FD"
-baseFontWeight = 600
-headingFontWeights = [900, 850, 800, 800, 750, 750]
+headingFontWeights = [800, 800, 700, 700, 600, 600]
 
 blueColor = "#3B82F6"
 greenColor = "#38BDF8"

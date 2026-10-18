@@ -67,6 +67,7 @@ def main():
     print("=" * 68, flush=True)
     print("[*] Opening Public HTTPS Tunnel (keep this window open)...", flush=True)
 
+    ssh_key = Path.home() / ".ssh" / "id_ed25519"
     tunnel_cmd = [
         "ssh",
         "-T",
@@ -74,9 +75,13 @@ def main():
         "-o", "UserKnownHostsFile=/dev/null",
         "-o", "ServerAliveInterval=30",
         "-o", "ExitOnForwardFailure=yes",
-        "-R", "80:127.0.0.1:8501",
-        "nokey@localhost.run",
     ]
+    if ssh_key.exists():
+        tunnel_cmd += ["-i", str(ssh_key), "-R", "80:127.0.0.1:8501", "localhost.run"]
+    else:
+        tunnel_cmd += ["-R", "80:127.0.0.1:8501", "nokey@localhost.run"]
+
+    last_url = None
     try:
         while True:
             proc = subprocess.Popen(
@@ -91,9 +96,10 @@ def main():
             )
             for line in proc.stdout:
                 m = re.search(r"(https://[a-zA-Z0-9.-]+\.lhr\.life)", line)
-                if m:
+                if m and m.group(1) != last_url:
+                    last_url = m.group(1)
                     print("\n" + "*" * 68, flush=True)
-                    print(f"  PUBLIC HTTPS WEBSITE URL:  {m.group(1)}", flush=True)
+                    print(f"  PUBLIC HTTPS WEBSITE URL:  {last_url}", flush=True)
                     print("*" * 68 + "\n", flush=True)
             proc.wait()
             time.sleep(2)

@@ -6,17 +6,10 @@ Run with:   python run.py
 """
 
 import streamlit as st
-from streamlit.config import get_config_options
 
 from classpilot import auth, school, seed, storage, ui
 from views import (admin, announcements, assignments, assistant, attendance, dashboard,
                    gradebook, lessons, login, profile, pulse, quizzes, search, support)
-
-# Ensure the monochrome White & Black theme in .streamlit/config.toml is active
-try:
-    get_config_options(force_reparse=True)
-except Exception:
-    pass
 
 st.set_page_config(
     page_title="Novarix",
