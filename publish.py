@@ -5,10 +5,10 @@ Run with:
     python publish.py
 
 What it does:
-  1. Ensures ClassPilot's Streamlit server is running on port 8501.
+  1. Ensures ClassPilot's Streamlit server is running on port 8501 with .streamlit/config.toml.
   2. Prints your Local Wi-Fi / LAN URL so anyone on your network can open it.
   3. Opens a free, encrypted Public HTTPS Tunnel (via localhost.run over SSH)
-     and prints your shareable public https://*.lhr.life link.
+     and automatically reconnects if the tunnel rotates.
 """
 
 import re
@@ -38,7 +38,7 @@ def main():
     streamlit_proc = None
 
     if not _port_open(8501):
-        print("[*] Starting ClassPilot Streamlit server on port 8501...")
+        print("[*] Starting ClassPilot Streamlit server on port 8501...", flush=True)
         streamlit_proc = subprocess.Popen(
             [
                 sys.executable,
@@ -50,11 +50,7 @@ def main():
                 "--server.headless=true",
                 "--server.enableCORS=false",
                 "--server.enableXsrfProtection=false",
-                "--theme.base=dark",
-                "--theme.primaryColor=#00E5FF",
-                "--theme.backgroundColor=#07080C",
-                "--theme.secondaryBackgroundColor=#11131A",
-                "--theme.textColor=#F8FAFC",
+                "--server.enableWebsocketCompression=false",
             ],
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
@@ -64,13 +60,12 @@ def main():
                 break
             time.sleep(0.5)
 
-    print("=" * 68)
-    print("[CLASSPILOT LIVE URLS]")
-    print(f"  * Local PC:        http://localhost:8501")
-    print(f"  * Same Wi-Fi/LAN:  http://{_lan_ip()}:8501")
-    print("=" * 68)
-    print("[*] Opening Public HTTPS Tunnel (keep this window open)...")
-    sys.stdout.flush()
+    print("=" * 68, flush=True)
+    print("[CLASSPILOT LIVE URLS]", flush=True)
+    print("  * Local PC:        http://localhost:8501", flush=True)
+    print(f"  * Same Wi-Fi/LAN:  http://{_lan_ip()}:8501", flush=True)
+    print("=" * 68, flush=True)
+    print("[*] Opening Public HTTPS Tunnel (keep this window open)...", flush=True)
 
     tunnel_cmd = [
         "ssh",
@@ -78,29 +73,32 @@ def main():
         "-o", "StrictHostKeyChecking=no",
         "-o", "UserKnownHostsFile=/dev/null",
         "-o", "ServerAliveInterval=30",
+        "-o", "ExitOnForwardFailure=yes",
         "-R", "80:127.0.0.1:8501",
         "nokey@localhost.run",
     ]
     try:
-        proc = subprocess.Popen(
-            tunnel_cmd,
-            stdin=subprocess.DEVNULL,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            text=True,
-            encoding="utf-8",
-            errors="replace",
-            bufsize=1,
-        )
-        for line in proc.stdout:
-            m = re.search(r"(https://[a-zA-Z0-9.-]+\.lhr\.life)", line)
-            if m:
-                print("\n" + "*" * 68)
-                print(f"  PUBLIC HTTPS WEBSITE URL:  {m.group(1)}")
-                print("*" * 68 + "\n")
-                sys.stdout.flush()
+        while True:
+            proc = subprocess.Popen(
+                tunnel_cmd,
+                stdin=subprocess.DEVNULL,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                bufsize=1,
+            )
+            for line in proc.stdout:
+                m = re.search(r"(https://[a-zA-Z0-9.-]+\.lhr\.life)", line)
+                if m:
+                    print("\n" + "*" * 68, flush=True)
+                    print(f"  PUBLIC HTTPS WEBSITE URL:  {m.group(1)}", flush=True)
+                    print("*" * 68 + "\n", flush=True)
+            proc.wait()
+            time.sleep(2)
     except KeyboardInterrupt:
-        print("\nShutting down public tunnel...")
+        print("\nShutting down public tunnel...", flush=True)
     finally:
         if streamlit_proc:
             streamlit_proc.terminate()
