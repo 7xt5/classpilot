@@ -1,8 +1,124 @@
-"""Login & Sign-Up portal — Technical High-Contrast Edition."""
+"""Landing Overview & Sign-Up / Sign-In Portal — Clean Dark Emerald Edition."""
 
 import streamlit as st
 
 from classpilot import auth, school, storage, ui
+
+
+def _render_landing_page(settings, existing_users):
+    """Full overview page explaining what ClassPilot is about before Sign Up / Log In."""
+    ui.page_transition("LANDING_OVERVIEW")
+
+    # Top Header Bar with direct button to Sign Up / Log In
+    top_l, top_r = st.columns([2.6, 1.1])
+    with top_l:
+        st.title(":green[■] ClassPilot")
+        st.caption(f"{settings['school_name']} · Modern Learning Management & Classroom Workspace")
+    with top_r:
+        st.write("")
+        if st.button(
+            "Sign Up / Log In",
+            icon=":material/login:",
+            type="primary",
+            width="stretch",
+            key="landing_top_auth_btn",
+        ):
+            st.session_state["show_auth_portal"] = True
+            st.rerun()
+
+    st.divider()
+
+    # Hero Section — What ClassPilot Is About
+    with st.container(border=True):
+        st.markdown(":green-badge[● LEARNING MANAGEMENT SYSTEM] :blue-badge[◆ TEACHER & STUDENT WORKSPACES] :violet-badge[▲ PILOTAI ENGINE]")
+        st.header("One Unified Workspace for Teaching, Learning, and Classroom AI")
+        st.markdown(
+            "**ClassPilot** is a complete digital school platform designed to give **Teachers** full control over their daily workflow "
+            "and give **Students** a clear, organized place to learn, submit coursework, and get step-by-step academic help."
+        )
+        cta1, cta2, _ = st.columns([1.3, 1.3, 1.4])
+        if cta1.button(
+            "Create an Account (Sign Up)",
+            icon=":material/person_add:",
+            type="primary",
+            width="stretch",
+            key="hero_signup_btn",
+        ):
+            st.session_state["auth_mode"] = "signup"
+            st.session_state["show_auth_portal"] = True
+            st.rerun()
+        if cta2.button(
+            "Log In to Existing Account",
+            icon=":material/login:",
+            type="secondary",
+            width="stretch",
+            key="hero_signin_btn",
+        ):
+            st.session_state["auth_mode"] = "signin"
+            st.session_state["show_auth_portal"] = True
+            st.rerun()
+
+    st.write("")
+    st.subheader(":green[◆] What ClassPilot Is Built For")
+
+    # 2x2 Feature Grid explaining the platform
+    row1_l, row1_r = st.columns(2)
+    with row1_l:
+        with st.container(border=True):
+            st.markdown(":green-badge[● FOR TEACHERS]")
+            st.markdown("### Custom Teacher Studio")
+            st.markdown(
+                "- **100% Teacher-Driven Dashboard:** Nothing is cluttered automatically — add the exact classes, assignments to check, and tasks you want to track.\n"
+                "- **Coursework & Grading:** Publish lessons with file attachments, create assignments, build auto-graded multiple-choice quizzes, and manage your gradebook.\n"
+                "- **Attendance & Planning:** Record daily class attendance in seconds and check for deadline pile-ups before assigning homework."
+            )
+    with row1_r:
+        with st.container(border=True):
+            st.markdown(":blue-badge[◆ FOR STUDENTS]")
+            st.markdown("### Guided Student Portal")
+            st.markdown(
+                "- **Clear To-Do & Deadlines:** See everything due this week, upcoming quizzes, and teacher announcements in one clean dashboard.\n"
+                "- **Lessons, Assignments & Quizzes:** Read lesson notes, upload assignment submissions, and take interactive quizzes with instant feedback.\n"
+                "- **Live Progress Tracking:** Track your subject averages, assignment scores, attendance percentage, and milestone badges."
+            )
+
+    row2_l, row2_r = st.columns(2)
+    with row2_l:
+        with st.container(border=True):
+            st.markdown(":violet-badge[▲ BUILT-IN AI ASSISTANT]")
+            st.markdown("### PilotAI Cognitive Workbench")
+            st.markdown(
+                "- **AI Copilot for Teachers:** Generate lesson plans, assignment rubrics, and quiz questions, or run the **AI Rubric Submission Grader**.\n"
+                "- **Socratic Tutor for Students:** Ask academic questions across Math, Science, English, CS, and History with expandable reasoning traces.\n"
+                "- **Symbolic Math & Stats Solver:** Step-by-step algebra, quadratic equations, calculus derivatives, and descriptive statistics."
+            )
+    with row2_r:
+        with st.container(border=True):
+            st.markdown(":orange-badge[■ CLASSROOM INSIGHTS]")
+            st.markdown("### Smart Classroom Signals")
+            st.markdown(
+                "- **ClassPulse Confidence Ratings:** Students privately rate how well they understood each lesson so teachers know which topics to review.\n"
+                "- **Early Support Alerts:** Automatically highlights students who may need extra support based on missing work, grade trends, or attendance.\n"
+                "- **Instant Role Setup:** Sign up in seconds as either a **Teacher** or a **Student** and launch straight into your tailored workspace."
+            )
+
+    st.write("")
+    with st.container(border=True):
+        bot_l, bot_r = st.columns([2.4, 1.2])
+        with bot_l:
+            st.markdown("### Ready to open your workspace?")
+            st.caption("Choose whether you are a Student or a Teacher on the next screen, or sign in to an existing account.")
+        with bot_r:
+            st.write("")
+            if st.button(
+                "Continue to Sign Up / Log In",
+                icon=":material/arrow_forward:",
+                type="primary",
+                width="stretch",
+                key="bottom_go_auth_btn",
+            ):
+                st.session_state["show_auth_portal"] = True
+                st.rerun()
 
 
 def login_page():
@@ -11,19 +127,31 @@ def login_page():
 
     if "auth_mode" not in st.session_state:
         st.session_state["auth_mode"] = "signup" if not existing_users else "signin"
+    if "show_auth_portal" not in st.session_state:
+        st.session_state["show_auth_portal"] = False
 
+    # Step 1: Show the Overview / About Landing Page first until the user clicks to Sign Up / Log In
+    if not st.session_state["show_auth_portal"]:
+        _render_landing_page(settings, existing_users)
+        return
+
+    # Step 2: Sign Up / Log In Page
     left, center, right = st.columns([0.4, 2.2, 0.4])
     with center:
         ui.page_transition(f"AUTH_{st.session_state['auth_mode'].upper()}")
-        st.markdown(
-            ":green-badge[● AUTH.GATEWAY] "
-            ":blue-badge[◆ CRYPTO // PBKDF2-SHA256] "
-            ":violet-badge[▲ DB // JSON.PERSIST] "
-            f":orange-badge[■ ACCOUNTS // {len(existing_users)}]"
-        )
 
-        st.title("■ :green[CLASSPILOT] :blue[OS]")
-        st.caption(f"▸ {settings['school_name'].upper()} · TECHNICAL LEARNING MANAGEMENT SYSTEM")
+        back_col, badge_col = st.columns([1.1, 2.4])
+        with back_col:
+            if st.button("Back to Overview", icon=":material/arrow_back:", type="secondary", width="stretch", key="back_to_landing_btn"):
+                st.session_state["show_auth_portal"] = False
+                st.rerun()
+        with badge_col:
+            st.markdown(
+                f":green-badge[● AUTH PORTAL] :blue-badge[◆ SECURE SESSION] :orange-badge[■ ACCOUNTS: {len(existing_users)}]"
+            )
+
+        st.title(":green[■] ClassPilot Account Portal")
+        st.caption(f"{settings['school_name']} · Sign in or create a new Student or Teacher account")
         st.divider()
 
         mode_col1, mode_col2 = st.columns(2)
@@ -51,8 +179,8 @@ def login_page():
         # ==================================================================
         if st.session_state["auth_mode"] == "signup":
             with st.container(border=True):
-                st.markdown(":blue-badge[◆ NEW OPERATOR REGISTRATION] :violet-badge[● INSTANT WORKSPACE PROVISIONING]")
-                st.subheader("■ Create Your Account")
+                st.markdown(":green-badge[● NEW ACCOUNT REGISTRATION]")
+                st.subheader("Create Your Account")
                 st.caption("Select whether you are a Student or a Teacher — your dashboard and AI workspace will be configured automatically.")
 
                 role_choice = st.radio(
@@ -107,7 +235,7 @@ def login_page():
                     )
 
                     create_submitted = st.form_submit_button(
-                        f"Initialize {role_choice.title()} Account & Launch Dashboard",
+                        f"Create {role_choice.title()} Account & Open Dashboard",
                         type="primary",
                         width="stretch",
                         icon=":material/person_add:",
@@ -128,7 +256,7 @@ def login_page():
                     else:
                         auth.login_session(new_user, remember=remember_signup)
                         st.session_state.setdefault("_flash", []).append((
-                            f"Account initialized! Welcome to your {role_choice.title()} Dashboard, {new_user['full_name'].split()[0]}.",
+                            f"Account created! Welcome to your {role_choice.title()} Dashboard, {new_user['full_name'].split()[0]}.",
                             ":material/check_circle:",
                         ))
                         st.rerun()
@@ -138,8 +266,8 @@ def login_page():
         # ==================================================================
         else:
             with st.container(border=True):
-                st.markdown(":green-badge[● AUTHENTICATION TERMINAL] :blue-badge[◆ SESSION LOGIN]")
-                st.subheader("■ Sign In")
+                st.markdown(":green-badge[● ACCOUNT SIGN IN]")
+                st.subheader("Sign In")
                 if not existing_users:
                     st.info("No accounts exist yet. Click **Create New Account (Sign Up)** above to register as a Teacher or Student.", icon=":material/person_add:")
                 with st.form("login_form"):
@@ -150,7 +278,7 @@ def login_page():
                         value=True,
                         help="Keep your account signed in on this browser/device so you don't have to log in every time.",
                     )
-                    submitted = st.form_submit_button("Sign In & Launch Workspace", type="primary", width="stretch", icon=":material/login:")
+                    submitted = st.form_submit_button("Sign In & Open Dashboard", type="primary", width="stretch", icon=":material/login:")
                 if submitted:
                     user, error = auth.authenticate(username, password)
                     if error:
@@ -158,5 +286,5 @@ def login_page():
                     else:
                         auth.login_session(user, remember=remember_signin)
                         st.session_state.setdefault("_flash", []).append(
-                            (f"Session authenticated. Welcome back, {user['full_name'].split()[0]}.", ":material/check_circle:"))
+                            (f"Welcome back, {user['full_name'].split()[0]}.", ":material/check_circle:"))
                         st.rerun()

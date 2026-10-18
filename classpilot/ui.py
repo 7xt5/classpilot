@@ -51,34 +51,11 @@ def mono_icon(icon, default=":material/circle:"):
 
 
 # --------------------------------------------------------------------------
-# Pure-Python Page-Switch Transition & Technical Telemetry Header
+# Pure-Python Page-Switch Transition & Clean Header
 # --------------------------------------------------------------------------
 def page_transition(title):
-    """Render a smooth, pure-Python kinetic telemetry transition when switching pages."""
-    prev = st.session_state.get("_active_route")
-    if prev == title:
-        return
+    """Track active route for smooth page transitions without interrupting chunk fetches."""
     st.session_state["_active_route"] = title
-
-    # Skip the sleep delay only if running inside headless unit tests
-    if st.session_state.get("_fast_test_mode"):
-        return
-
-    slot = st.empty()
-    stages = [
-        (32, "green", "ROUTING // INITIALIZING MODULE", title.upper()),
-        (74, "blue", "TELEMETRY // SYNCING WORKSPACE", title.upper()),
-        (100, "green", "READY // RENDERING VIEWPORT", title.upper()),
-    ]
-    for pct, color, phase, mod_name in stages:
-        with slot.container(border=True):
-            st.markdown(
-                f":{color}-badge[● {phase}] &nbsp; **Target:** `{mod_name}` &nbsp; "
-                f":gray[Frame sync {pct}%]"
-            )
-            st.progress(pct)
-        _time.sleep(0.045)
-    slot.empty()
 
 
 def badge(text):
@@ -90,35 +67,25 @@ def badge(text):
 
 
 def page_header(title, subtitle=None, icon=""):
-    """Technical HUD header with live telemetry ribbon, page transition, and divider."""
+    """Clean, modern header with subtle emerald accent and divider."""
     clean_title = str(title).strip()
     page_transition(clean_title)
-
-    module_code = clean_title.split("—")[0].split(",")[0].strip().upper().replace(" ", "_")[:18]
-    now_str = datetime.now().strftime("%H:%M:%S")
-
-    # Technical Telemetry Status Bar
-    st.markdown(
-        f":green-badge[● SYS.ONLINE] "
-        f":blue-badge[◆ MOD // {module_code}] "
-        f":violet-badge[▲ DB // JSON.PERSIST] "
-        f":orange-badge[■ CLK // {now_str}]"
-    )
-    st.title(f"■ :green[{clean_title}]")
+    st.title(f":green[■] {clean_title}")
     if subtitle:
-        st.caption(f"▸ {subtitle}")
+        st.caption(subtitle)
     st.divider()
 
 
 def section(title, caption=None):
-    st.subheader(f"◆ :green[{title}]" if not str(title).startswith(("■", "◆")) else title)
+    clean = str(title).lstrip("■◆ ").strip()
+    st.subheader(f":green[◆] {clean}")
     if caption:
         st.caption(caption)
 
 
 def empty_state(message, icon=None):
     with st.container(border=True):
-        st.markdown(f":green-badge[◆ STATUS // STANDBY] &nbsp; **{message}**")
+        st.markdown(f":green-badge[● STANDBY] &nbsp; {message}")
 
 
 def page_link(path, label, icon=":material/arrow_forward:"):
