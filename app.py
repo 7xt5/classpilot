@@ -1,5 +1,5 @@
 """
-app.py - ClassPilot entry point.
+app.py - Novarix entry point.
 
 Run with:   python run.py
         or: python -m streamlit run app.py
@@ -19,7 +19,7 @@ except Exception:
     pass
 
 st.set_page_config(
-    page_title="ClassPilot",
+    page_title="Novarix",
     page_icon=":material/school:",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -48,7 +48,7 @@ def build_pages(user):
         return {
             "Overview": [
                 page(dashboard.admin_dashboard, "Dashboard", ":material/dashboard:", "dashboard", True),
-                page(assistant.teacher_assistant_page, "PilotAI Copilot", ":material/smart_toy:", "assistant"),
+                page(assistant.teacher_assistant_page, "NovaAI Copilot", ":material/smart_toy:", "assistant"),
             ],
             "School setup": [
                 page(admin.users_page, "Users", ":material/group:", "users"),
@@ -67,7 +67,7 @@ def build_pages(user):
         return {
             "Overview": [
                 page(dashboard.teacher_dashboard, "Dashboard", ":material/dashboard:", "dashboard", True),
-                page(assistant.teacher_assistant_page, "PilotAI Copilot", ":material/smart_toy:", "assistant"),
+                page(assistant.teacher_assistant_page, "NovaAI Copilot", ":material/smart_toy:", "assistant"),
             ],
             "Teaching": [
                 page(lessons.teacher_lessons_page, "Lesson Hub", ":material/library_books:", "lessons"),
@@ -86,7 +86,7 @@ def build_pages(user):
     return {
         "Overview": [
             page(dashboard.student_dashboard, "Dashboard", ":material/dashboard:", "dashboard", True),
-            page(assistant.student_assistant_page, "PilotAI Tutor", ":material/smart_toy:", "assistant"),
+            page(assistant.student_assistant_page, "NovaAI Tutor", ":material/smart_toy:", "assistant"),
         ],
         "Learning": [
             page(lessons.student_lessons_page, "Lessons", ":material/library_books:", "lessons"),
@@ -100,7 +100,7 @@ def build_pages(user):
 
 
 def sidebar(user):
-    """Technical telemetry sidebar with custom ClassPilot logo, active operator badge, and logout."""
+    """Technical telemetry sidebar with custom Novarix logo, active operator badge, and logout."""
     settings = storage.load_settings()
     logo = ui.logo_path()
     with st.sidebar:
@@ -109,10 +109,10 @@ def sidebar(user):
             with c_logo:
                 st.image(logo, width="stretch")
             with c_txt:
-                st.markdown("### :blue[■ CLASSPILOT]")
+                st.markdown("### :blue[■ NOVARIX]")
                 st.caption(f"{settings['school_name']}")
         else:
-            st.markdown("## :blue[■ CLASSPILOT]")
+            st.markdown("## :blue[■ NOVARIX]")
             st.caption(f"{settings['school_name']} · {settings['academic_year']}")
         with st.container(border=True):
             st.markdown(
@@ -133,7 +133,7 @@ def main():
     try:
         seed.ensure_data()
     except OSError as exc:
-        st.error(f"ClassPilot could not create its data folder: {exc}", icon=":material/error:")
+        st.error(f"Novarix could not create its data folder: {exc}", icon=":material/error:")
         st.stop()
 
     ui.show_flash()

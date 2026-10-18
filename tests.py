@@ -1,5 +1,5 @@
 """
-tests.py - Automated verification of ClassPilot's backend and Streamlit views.
+tests.py - Automated verification of Novarix's backend and Streamlit views.
 
 Run with:   python tests.py
 """
@@ -10,7 +10,7 @@ from datetime import date, timedelta
 
 # Use an isolated temporary data folder before importing classpilot.
 TEMP_DIR = tempfile.mkdtemp(prefix="classpilot_test_")
-os.environ["CLASSPILOT_DATA_DIR"] = TEMP_DIR
+os.environ["NOVARIX_DATA_DIR"] = TEMP_DIR
 
 from streamlit.testing.v1 import AppTest
 
@@ -113,8 +113,8 @@ def test_backend_workflows():
     search_hits = insights.search(teacher, "Pythagoras")
     assert len(search_hits) > 0
 
-    # ---- Teacher Dashboard Customization & PilotAI ---------------------
-    print("8b. Testing Teacher-Driven Dashboard & PilotAI Assistant...")
+    # ---- Teacher Dashboard Customization & NovaAI ---------------------
+    print("8b. Testing Teacher-Driven Dashboard & NovaAI Assistant...")
     from classpilot import ai_assistant
     insights.clear_teacher_dashboard(teacher["id"])
     prefs = insights.get_teacher_prefs(teacher["id"])

@@ -129,7 +129,7 @@ def student_dashboard():
             with st.container(border=True):
                 st.markdown(f"**{spotlight['title']}**  \n:gray[{spotlight['subject']} · {spotlight['topic']}]")
                 st.markdown(spotlight["snippet"])
-                ui.page_link("assistant", "Ask PilotAI Tutor about this", ":material/smart_toy:")
+                ui.page_link("assistant", "Ask NovaAI Tutor about this", ":material/smart_toy:")
 
         st.subheader("■ Announcements")
         _announcement_feed(user)

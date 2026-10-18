@@ -1,5 +1,5 @@
 """
-assistant.py - PilotAI Cognitive Workbench for Teachers/Admins and Students.
+assistant.py - NovaAI Cognitive Workbench for Teachers/Admins and Students.
 
 Features:
   * Live Chain-of-Thought Reasoning Trace + Token Streaming (st.write_stream)
@@ -33,7 +33,7 @@ def _render_chat(user, ask_fn, quick_prompts, placeholder, modes):
             ":blue-badge[◆ MEMORY // MULTI-TURN] "
             ":violet-badge[▲ STREAM // LIVE]"
         )
-        st.caption("Grounded in live ClassPilot JSON telemetry + Multi-Subject Knowledge Graph.")
+        st.caption("Grounded in live Novarix JSON telemetry + Multi-Subject Knowledge Graph.")
     with ctrl_right:
         st.write("")
         if history and st.button("Clear Chat", key=f"clear_ai_{user['id']}", icon=":material/delete:", width="stretch"):
@@ -72,7 +72,7 @@ def _render_chat(user, ask_fn, quick_prompts, placeholder, modes):
                 reply = ask_fn(user, active_prompt, mode=selected_mode)
                 trace = ai_assistant.get_latest_trace(user["id"])
                 if trace:
-                    with st.status("◆ PilotAI Cognitive Reasoning Engine — Executed", expanded=False):
+                    with st.status("◆ NovaAI Cognitive Reasoning Engine — Executed", expanded=False):
                         for step in trace:
                             st.code(step, language="text")
                 if st.session_state.get("_fast_test_mode"):
@@ -138,7 +138,7 @@ def _render_symbolic_solver_panel(key_prefix):
 def teacher_assistant_page():
     user = auth.require_role("teacher", "admin")
     ui.page_header(
-        "PilotAI — Cognitive Teaching Copilot",
+        "NovaAI — Cognitive Teaching Copilot",
         "Multi-engine AI with Chain-of-Thought reasoning, symbolic math solving, AI submission grading, and 1-click LMS generators.",
     )
     subjects = (school.all_subjects() if user["role"] == "admin"
@@ -317,7 +317,7 @@ def teacher_assistant_page():
                     c1, c2 = st.columns(2)
                     a_day = c1.date_input("Due Date", default_day, format="DD/MM/YYYY", key="ed_ai_asg_day")
                     a_time = c2.time_input("Due Time", default_time, step=900, key="ed_ai_asg_time")
-                    if st.button("Create Assignment in ClassPilot", key="pub_ai_asg", type="primary", icon=":material/check:"):
+                    if st.button("Create Assignment in Novarix", key="pub_ai_asg", type="primary", icon=":material/check:"):
                         _, err = coursework.save_assignment(
                             user, asg_subj_id, a_title, a_desc, utils.combine(a_day, a_time), asg_draft["max_points"]
                         )
@@ -332,7 +332,7 @@ def teacher_assistant_page():
             with st.container(border=True):
                 st.markdown(":green-badge[● AUTO-GRADED QUIZ SYNTHESIS]")
                 st.subheader("■ One-Click AI Quiz Generator")
-                st.caption("Generates multiple-choice questions for any topic and saves them as a live quiz in ClassPilot.")
+                st.caption("Generates multiple-choice questions for any topic and saves them as a live quiz in Novarix.")
                 c1, c2, c3 = st.columns([2, 2, 1])
                 with c1:
                     q_subj_id = ui.subject_select(subjects, "ai_q_subj")
@@ -360,7 +360,7 @@ def teacher_assistant_page():
                     q_day = d1.date_input("Closing Date", default_day, format="DD/MM/YYYY", key="ai_q_day")
                     q_time = d2.time_input("Closing Time", default_time, step=900, key="ai_q_time")
                     publish_now = d3.checkbox("Publish immediately", value=True, key="ai_q_pub_now")
-                    if st.button("Save Quiz to ClassPilot", key="save_ai_quiz", type="primary", icon=":material/check:"):
+                    if st.button("Save Quiz to Novarix", key="save_ai_quiz", type="primary", icon=":material/check:"):
                         quiz_rec, err = coursework.save_quiz(
                             user, q_subj_id, q_title,
                             f"Auto-graded check on {q_topic or q_subj['name']}.",
@@ -384,7 +384,7 @@ def teacher_assistant_page():
 def student_assistant_page():
     user = auth.require_role("student")
     ui.page_header(
-        "PilotAI — Cognitive Study Tutor & Math Engine",
+        "NovaAI — Cognitive Study Tutor & Math Engine",
         "Ask questions with live Chain-of-Thought reasoning, solve algebra & calculus step-by-step, and practice with flashcards.",
     )
     subjects = school.subjects_for_student(user["id"])

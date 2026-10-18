@@ -51,7 +51,7 @@ def mono_icon(icon, default=":material/circle:"):
 
 
 def logo_path():
-    """Return the path to the custom ClassPilot emblem logo."""
+    """Return the path to the custom Novarix emblem logo."""
     p = storage.PROJECT_DIR / "classpilot" / "logo.png"
     return str(p) if p.exists() else None
 

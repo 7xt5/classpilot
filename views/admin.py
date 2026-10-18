@@ -251,7 +251,7 @@ def subjects_page():
 # ==========================================================================
 def settings_page():
     auth.require_role("admin")
-    ui.page_header("Settings", "School details and the thresholds behind ClassPilot's smart features.", "⚙️")
+    ui.page_header("Settings", "School details and the thresholds behind Novarix's smart features.", "⚙️")
     settings = storage.load_settings()
 
     with st.form("settings_form"):

@@ -1,5 +1,5 @@
 """
-ai_assistant.py - PilotAI Multi-Engine Cognitive Assistant (100% Pure Python).
+ai_assistant.py - NovaAI Multi-Engine Cognitive Assistant (100% Pure Python).
 
 Architecture:
   1. Intent & Entity Parser: Classifies queries into Math/Symbolic Solving,
@@ -802,12 +802,12 @@ def ask_teacher_ai(user, prompt, mode="Analytical & Data-Driven"):
         st_session_save_trace(user["id"], trace)
         if not alerts:
             return (
-                "### ■ PilotAI Risk Telemetry — All Clear\n"
+                "### ■ NovaAI Risk Telemetry — All Clear\n"
                 "No students currently cross the school's risk thresholds for missing work, low/declining grades, or attendance.\n\n"
                 "- **Recommendation:** Keep recording daily attendance and encourage students to submit ClassPulse ratings after lessons."
             )
         lines = [
-            f"### ■ PilotAI Early Support Telemetry ({len(alerts)} Flagged)\n"
+            f"### ■ NovaAI Early Support Telemetry ({len(alerts)} Flagged)\n"
             f"*Mode: {mode} · Ranked by composite concern points:*\n",
             "| Priority | Student | Subject | Trigger Reasons | Recommended Intervention |",
             "| :--- | :--- | :--- | :--- | :--- |",
@@ -824,7 +824,7 @@ def ask_teacher_ai(user, prompt, mode="Analytical & Data-Driven"):
         dash_asgs = prefs.get("added_assignments", [])
         trace.append(f"STAGE 03 // GRADING TELEMETRY: {len(queue)} LMS submission(s) + {len(dash_asgs)} dashboard assignment(s)")
         st_session_save_trace(user["id"], trace)
-        lines = ["### ■ PilotAI Grading & Assessment Telemetry\n"]
+        lines = ["### ■ NovaAI Grading & Assessment Telemetry\n"]
         if dash_asgs:
             pending_dash = [a for a in dash_asgs if not a.get("done")]
             lines.append(f"**Your Dashboard 'Assignments to Check':** `{len(pending_dash)}` pending of `{len(dash_asgs)}` added:")
@@ -879,11 +879,11 @@ def ask_teacher_ai(user, prompt, mode="Analytical & Data-Driven"):
             f"STAGE 03 // HYBRID RAG: Matched {len(matched_lessons)} school lesson(s) + {len(matched_kg)} Knowledge Graph node(s)"
         )
         st_session_save_trace(user["id"], trace)
-        parts = [f"### ■ PilotAI Curriculum & Knowledge Synthesis (`{mode}`)"]
+        parts = [f"### ■ NovaAI Curriculum & Knowledge Synthesis (`{mode}`)"]
         if matched_lessons:
             les = matched_lessons[0]
             parts.append(
-                f"**From Your ClassPilot Lesson Hub — *{les['title']}* ({school.subject_label(les['subject_id'])}):**\n\n"
+                f"**From Your Novarix Lesson Hub — *{les['title']}* ({school.subject_label(les['subject_id'])}):**\n\n"
                 f"{les['content']}"
             )
         if matched_kg:
@@ -908,7 +908,7 @@ def ask_teacher_ai(user, prompt, mode="Analytical & Data-Driven"):
     dash_classes = prefs.get("added_classes", [])
     dash_asgs = [a for a in prefs.get("added_assignments", []) if not a.get("done")]
     return (
-        f"### ■ PilotAI Executive Telemetry — {user['full_name']}\n"
+        f"### ■ NovaAI Executive Telemetry — {user['full_name']}\n"
         f"- **Dashboard Classes Added:** `{len(dash_classes)}` class card(s)\n"
         f"- **Dashboard Assignments to Check:** `{len(dash_asgs)}` pending check(s)\n"
         f"- **LMS Grading Queue:** `{len(queue)}` submission(s) awaiting scores\n"
@@ -1019,7 +1019,7 @@ def evaluate_submission_with_ai(assignment_title, max_points, student_text, rubr
     )
 
     report_md = (
-        f"### ■ PilotAI Submission Evaluation — *{assignment_title}*\n"
+        f"### ■ NovaAI Submission Evaluation — *{assignment_title}*\n"
         f"- **Recommended Score:** **`{suggested_score:g} / {max_pts:g}`** (**`{pct}%`**)\n"
         f"- **Submission Metrics:** `{word_count}` words · `{len(sentences)}` sentence(s)\n\n"
         "| Rubric Criterion | Weight | Assessment |\n"
@@ -1196,7 +1196,7 @@ def ask_student_ai(user, prompt, mode="Step-by-Step Deep Explainer"):
         if "Socratic" in mode:
             # In Socratic Hint Coach mode, guide the student first before showing the full solution
             return (
-                "### ■ PilotAI Socratic Coach — Guided Math Hint\n"
+                "### ■ NovaAI Socratic Coach — Guided Math Hint\n"
                 "Instead of spoiling the final answer right away, let's solve it together:\n"
                 "1. **Isolate the structure:** What type of expression or equation is this (linear, quadratic, derivative, or dataset)?\n"
                 "2. **First move:** Move all variable terms to one side or identify $a, b, c$.\n\n"
@@ -1246,7 +1246,7 @@ def ask_student_ai(user, prompt, mode="Step-by-Step Deep Explainer"):
             f"STAGE 03 // HYBRID RAG: Retrieved {len(matched_lessons)} class lesson(s) + {len(matched_kg)} encyclopedia concept(s)"
         )
         st_session_save_trace(user["id"], trace)
-        sections = [f"### ■ PilotAI Study Tutor (`{mode}`)"]
+        sections = [f"### ■ NovaAI Study Tutor (`{mode}`)"]
 
         if matched_lessons:
             best = matched_lessons[0]
@@ -1288,7 +1288,7 @@ def ask_student_ai(user, prompt, mode="Step-by-Step Deep Explainer"):
     st_session_save_trace(user["id"], trace)
     if len(raw_q.split()) >= 2 and raw_q.lower() != "summary":
         return (
-            f"### ■ PilotAI Study Breakdown: **{raw_q.strip('?.')}** (`{mode}`)\n\n"
+            f"### ■ NovaAI Study Breakdown: **{raw_q.strip('?.')}** (`{mode}`)\n\n"
             f"Here is a structured analytical framework for **{raw_q.strip('?.')}**:\n\n"
             f"1. **Core Definition & Purpose:** Identify the fundamental rule, mechanism, or thesis behind *{raw_q.strip('?.')}*.\n"
             f"2. **Governing Relationships:** Break the topic into **Inputs / Causes** $\\rightarrow$ **Process / Formula** $\\rightarrow$ **Outputs / Effects**.\n"
@@ -1301,7 +1301,7 @@ def ask_student_ai(user, prompt, mode="Step-by-Step Deep Explainer"):
     lessons = coursework.lessons_for_subjects(subject_ids)
     sample_titles = ", ".join(f"*{l['title']}*" for l in lessons[:4]) if lessons else "*Quadratic Equations*, *Newton's Laws*, *Photosynthesis*, or *Python Loops*"
     return (
-        f"### ■ Hi {user['full_name'].split()[0]}! I'm your PilotAI Cognitive Tutor.\n"
+        f"### ■ Hi {user['full_name'].split()[0]}! I'm your NovaAI Cognitive Tutor.\n"
         f"I combine a **Symbolic Math & Calculus Solver**, your teacher's **Lesson Hub notes**, and a **Multi-Subject Encyclopedia**.\n\n"
         f"- **Solve Math & Science Step-by-Step:** Try `Solve 2x^2 + 5x - 3 = 0`, `Solve 5x - 8 = 2x + 10`, `Derivative of 3x^3 - 6x^2 + 4x`, or `Mean and std of 82, 88, 91, 75, 95`\n"
         f"- **Master Any Concept:** Ask about {sample_titles}\n"
@@ -1417,7 +1417,7 @@ def generate_study_plan(user):
     if not steps:
         steps.append({
             "priority": "● ALL CAUGHT UP",
-            "task": "Practice 3 flashcards or test the Symbolic Math Solver in PilotAI",
+            "task": "Practice 3 flashcards or test the Symbolic Math Solver in NovaAI",
             "why": "You have zero missing items and all deadlines are under control!",
         })
     return steps

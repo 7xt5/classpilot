@@ -216,9 +216,11 @@
     "password_hash": "pbkdf2_sha256$200000$e1841dd1b4a626a3386890f42ba89f7b$6a56e54a1aec3243497bda98474562a0cebba2d1f022b31f0291bcb99f046011",
     "active": true,
     "created_at": "2026-10-16T17:54:53",
-    "last_login": "2026-10-17T16:26:44",
+    "last_login": "2026-10-18T12:41:55",
     "failed_attempts": 0,
-    "locked_until": null
+    "locked_until": null,
+    "remember_token": null,
+    "remember_expires": null
   },
   {
     "id": "usr_6a0a26eb",
@@ -229,7 +231,7 @@
     "password_hash": "pbkdf2_sha256$200000$58db5cac0783fc8e1bf7ccfbbf2983fc$0a85e388192f685ec34223924d03cd51f46c22d770994678152a2f437c2b832c",
     "active": true,
     "created_at": "2026-10-17T13:33:54",
-    "last_login": "2026-10-17T16:27:25",
+    "last_login": "2026-10-17T20:23:45",
     "failed_attempts": 0,
     "locked_until": null
   }

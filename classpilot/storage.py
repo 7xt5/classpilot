@@ -1,5 +1,5 @@
 """
-storage.py - The JSON "database" of ClassPilot.
+storage.py - The JSON "database" of Novarix.
 
 Every collection (users, classes, assignments, ...) lives in its own JSON
 file inside the ``data/`` folder.  Each file holds a list of dictionaries
@@ -23,7 +23,7 @@ from pathlib import Path
 
 # The data folder can be changed with an environment variable (used by tests).
 PROJECT_DIR = Path(__file__).resolve().parent.parent
-DATA_DIR = Path(os.environ.get("CLASSPILOT_DATA_DIR", PROJECT_DIR / "data"))
+DATA_DIR = Path(os.environ.get("NOVARIX_DATA_DIR", PROJECT_DIR / "data"))
 UPLOAD_DIR = DATA_DIR / "uploads"
 
 # All list-style collections used by the app.
@@ -45,7 +45,7 @@ COLLECTIONS = [
 
 # Default school settings (stored in settings.json, which is a dictionary).
 DEFAULT_SETTINGS = {
-    "school_name": "ClassPilot Academy",
+    "school_name": "Novarix Academy",
     "academic_year": "2026-2027",
     # Deadline Conflict Detector
     "conflict_window_days": 2,       # look this many days before/after a due date

@@ -1,5 +1,5 @@
 """
-seed.py - Realistic demo data for ClassPilot.
+seed.py - Realistic demo data for Novarix.
 
 Runs automatically the first time the app starts (when there are no users).
 All dates are calculated relative to *today*, so the demo always shows

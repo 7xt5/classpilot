@@ -1,6 +1,6 @@
-# 🧭 ClassPilot — School Learning Management System
+# 🧭 Novarix — School Learning Management System
 
-**ClassPilot** is a complete, beginner-friendly school Learning Management System (LMS) built in **100% Python** using **Streamlit** for the interface and **JSON files** for persistent storage.
+**Novarix** is a complete, beginner-friendly school Learning Management System (LMS) built in **100% Python** using **Streamlit** for the interface and **JSON files** for persistent storage.
 
 It includes role-based dashboards for **Admins**, **Teachers**, and **Students**, along with distinctive workflow features designed for real schools:
 - **ClassPulse** — private student confidence ratings (1–5) per lesson that aggregate anonymously for teachers to spot confusing topics early.
@@ -90,13 +90,13 @@ Open a terminal in the `classpilot` folder and run:
 python -m pip install -r requirements.txt
 ```
 
-### 3. Start ClassPilot
+### 3. Start Novarix
 ```bash
 python -m streamlit run app.py
 ```
 *(Or simply run `python run.py`, or double-click `run.bat` on Windows.)*
 
-On first launch, ClassPilot automatically generates realistic demo data in the `data/` directory relative to today's date.
+On first launch, Novarix automatically generates realistic demo data in the `data/` directory relative to today's date.
 
 ---
 

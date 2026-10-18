@@ -1,11 +1,11 @@
 """
-publish.py - Pure-Python 1-Click Public Publisher for ClassPilot.
+publish.py - Pure-Python 1-Click Public Publisher for Novarix.
 
 Run with:
     python publish.py
 
 What it does:
-  1. Ensures ClassPilot's Streamlit server is running on port 8501 with .streamlit/config.toml.
+  1. Ensures Novarix's Streamlit server is running on port 8501 with .streamlit/config.toml.
   2. Prints your Local Wi-Fi / LAN URL so anyone on your network can open it.
   3. Opens a free, encrypted Public HTTPS Tunnel (via localhost.run over SSH)
      and automatically reconnects if the tunnel rotates.
@@ -38,7 +38,7 @@ def main():
     streamlit_proc = None
 
     if not _port_open(8501):
-        print("[*] Starting ClassPilot Streamlit server on port 8501...", flush=True)
+        print("[*] Starting Novarix Streamlit server on port 8501...", flush=True)
         streamlit_proc = subprocess.Popen(
             [
                 sys.executable,
@@ -61,7 +61,7 @@ def main():
             time.sleep(0.5)
 
     print("=" * 68, flush=True)
-    print("[CLASSPILOT LIVE URLS]", flush=True)
+    print("[NOVARIX LIVE URLS]", flush=True)
     print("  * Local PC:        http://localhost:8501", flush=True)
     print(f"  * Same Wi-Fi/LAN:  http://{_lan_ip()}:8501", flush=True)
     print("=" * 68, flush=True)

@@ -1,5 +1,5 @@
 """
-run.py - Convenience launcher for ClassPilot (Technical High-Contrast Edition).
+run.py - Convenience launcher for Novarix (Technical High-Contrast Edition).
 
 Run with:   python run.py
 """

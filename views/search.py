@@ -17,7 +17,7 @@ def search_page():
     query = st.text_input("Search", placeholder="Type at least 2 characters, e.g. 'pythagoras' or 'Ali'",
                           key="search_query", label_visibility="collapsed")
     if len(query.strip()) < 2:
-        ui.empty_state("Start typing to search across ClassPilot.", "🔎")
+        ui.empty_state("Start typing to search across Novarix.", "🔎")
         return
 
     results = insights.search(user, query)

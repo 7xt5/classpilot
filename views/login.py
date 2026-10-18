@@ -6,11 +6,11 @@ from classpilot import auth, school, storage, ui
 
 
 def _render_landing_page(settings, existing_users):
-    """Short, bold, clean front page explaining ClassPilot before Sign Up / Log In."""
+    """Short, bold, clean front page explaining Novarix before Sign Up / Log In."""
     ui.page_transition("LANDING_OVERVIEW")
     logo = ui.logo_path()
 
-    # Top Header Bar with custom ClassPilot logo and direct button to Sign Up / Log In
+    # Top Header Bar with custom Novarix logo and direct button to Sign Up / Log In
     if logo:
         logo_col, top_l, top_r = st.columns([0.4, 2.4, 1.0])
         with logo_col:
@@ -18,7 +18,7 @@ def _render_landing_page(settings, existing_users):
     else:
         top_l, top_r = st.columns([2.6, 1.1])
     with top_l:
-        st.title(":blue[■] ClassPilot")
+        st.title(":blue[■] Novarix")
         st.markdown("**Smart Classroom & AI Learning Workspace**")
     with top_r:
         st.write("")
@@ -36,7 +36,7 @@ def _render_landing_page(settings, existing_users):
 
     # Clean, Bold Hero Card
     with st.container(border=True):
-        st.markdown(":blue-badge[● CLASSROOM OS] :green-badge[◆ TEACHERS & STUDENTS] :violet-badge[▲ PILOTAI]")
+        st.markdown(":blue-badge[● CLASSROOM OS] :green-badge[◆ TEACHERS & STUDENTS] :violet-badge[▲ NOVAAI]")
         st.header("Teach Smarter. Learn Faster.")
         st.markdown(
             "**One clean workspace to manage classes, submit coursework, track grades, and solve problems with AI.**"
@@ -81,7 +81,7 @@ def _render_landing_page(settings, existing_users):
     row2_l, row2_r = st.columns(2)
     with row2_l:
         with st.container(border=True):
-            st.markdown(":violet-badge[▲ PILOTAI]")
+            st.markdown(":violet-badge[▲ NOVAAI]")
             st.subheader("Built-In AI Assistant")
             st.markdown("**Step-by-step math & science solver, Socratic study tutor, and instant AI rubric grader.**")
     with row2_r:
@@ -144,10 +144,10 @@ def login_page():
             with lg_col:
                 st.image(logo, width="stretch")
             with tx_col:
-                st.title(":blue[■] ClassPilot Account Portal")
+                st.title(":blue[■] Novarix Account Portal")
                 st.caption(f"{settings['school_name']} · Sign in or create a new Student or Teacher account")
         else:
-            st.title(":blue[■] ClassPilot Account Portal")
+            st.title(":blue[■] Novarix Account Portal")
             st.caption(f"{settings['school_name']} · Sign in or create a new Student or Teacher account")
         st.divider()
 
