@@ -20,20 +20,13 @@ def _render_chat(user, ask_fn, quick_prompts, placeholder, modes):
     history = ai_assistant.get_chat_history(user["id"])
 
     # Top control bar: Reasoning Mode + Clear Chat
-    ctrl_left, ctrl_mid, ctrl_right = st.columns([2.6, 2.4, 1])
+    ctrl_left, ctrl_right = st.columns([4, 1])
     with ctrl_left:
         selected_mode = st.selectbox(
             "Cognitive Reasoning Mode",
             options=modes,
             key=f"ai_mode_{user['id']}",
         )
-    with ctrl_mid:
-        st.markdown(
-            ":green-badge[● ENGINE // SYMBOLIC + RAG] "
-            ":blue-badge[◆ MEMORY // MULTI-TURN] "
-            ":violet-badge[▲ STREAM // LIVE]"
-        )
-        st.caption("Grounded in live Novarix JSON telemetry + Multi-Subject Knowledge Graph.")
     with ctrl_right:
         st.write("")
         if history and st.button("Clear Chat", key=f"clear_ai_{user['id']}", icon=":material/delete:", width="stretch"):
@@ -87,13 +80,7 @@ def _render_chat(user, ask_fn, quick_prompts, placeholder, modes):
 def _render_symbolic_solver_panel(key_prefix):
     """Interactive Symbolic Algebra, Calculus & Statistics Solver panel."""
     with st.container(border=True):
-        st.markdown(
-            ":blue-badge[◆ SYMBOLIC ALGEBRA] "
-            ":green-badge[● CALCULUS DERIVATIVES] "
-            ":violet-badge[▲ DESCRIPTIVE STATISTICS] "
-            ":orange-badge[■ AST SCIENTIFIC EVAL]"
-        )
-        st.subheader("■ Symbolic Math, Calculus & Data Solver")
+        st.subheader("Symbolic Math, Calculus & Data Solver")
         st.caption("Enter any linear/quadratic equation, polynomial derivative, statistical dataset, or scientific expression for step-by-step working.")
 
         presets = [
@@ -122,7 +109,7 @@ def _render_symbolic_solver_panel(key_prefix):
         if st.button("Execute Symbolic Solver", type="primary", icon=":material/calculate:", key=f"{key_prefix}_run_math") or chosen_preset:
             sol, note = ai_assistant.solve_math_problem(expr_in)
             if sol:
-                st.markdown(f":green-badge[● SOLVER VERIFIED] &nbsp; `{note}`")
+                st.markdown(f"**Solver Verified:** `{note}`")
                 st.markdown(sol)
             else:
                 _, kg = ai_assistant.semantic_retrieve(expr_in, top_k=1)
@@ -145,11 +132,11 @@ def teacher_assistant_page():
                 else school.subjects_for_teacher(user["id"]))
 
     tab_chat, tab_grader, tab_studio, tab_quiz, tab_solver = st.tabs([
-        "■ Copilot Chat (Streaming)",
-        "■ AI Submission Grader",
-        "■ Lesson & Rubric Studio",
-        "■ AI Quiz Generator",
-        "■ Symbolic Math & Stats Lab",
+        "Copilot Chat",
+        "AI Submission Grader",
+        "Lesson & Rubric Studio",
+        "AI Quiz Generator",
+        "Symbolic Math & Stats Lab",
     ])
 
     with tab_chat:
@@ -160,10 +147,10 @@ def teacher_assistant_page():
             "Empathetic Mentor & Parent Outreach",
         ]
         quick = [
-            ("▲ Who needs support?", "Who is falling behind and needs support in my classes?"),
-            ("◆ Grading & Check Queue", "What assignments and submissions are waiting for me to check?"),
-            ("● Solve 2x^2 + 5x - 3 = 0", "Solve 2x^2 + 5x - 3 = 0"),
-            ("■ Photosynthesis vs Respiration", "Explain photosynthesis vs cellular respiration with a comparison table"),
+            ("Who needs support?", "Who is falling behind and needs support in my classes?"),
+            ("Grading & Check Queue", "What assignments and submissions are waiting for me to check?"),
+            ("Solve 2x^2 + 5x - 3 = 0", "Solve 2x^2 + 5x - 3 = 0"),
+            ("Photosynthesis vs Respiration", "Explain photosynthesis vs cellular respiration with a comparison table"),
         ]
         _render_chat(
             user,
@@ -175,8 +162,7 @@ def teacher_assistant_page():
 
     with tab_grader:
         with st.container(border=True):
-            st.markdown(":blue-badge[◆ AI RUBRIC EVALUATOR] :green-badge[● 1-CLICK GRADEBOOK SYNC]")
-            st.subheader("■ AI Submission Evaluator & Feedback Copilot")
+            st.subheader("AI Submission Evaluator & Feedback Copilot")
             st.caption("Evaluate a real student submission from your grading queue or paste any written work/code to generate a criterion score breakdown and feedback.")
 
             subject_ids = [s["id"] for s in subjects]
@@ -268,8 +254,7 @@ def teacher_assistant_page():
         else:
             col_les, col_asg = st.columns(2)
             with col_les.container(border=True):
-                st.markdown(":blue-badge[◆ LESSON ARCHITECT]")
-                st.subheader("■ AI Lesson Draft Generator")
+                st.subheader("AI Lesson Draft Generator")
                 st.caption("Generates structured Markdown notes with formulas and worked examples, and publishes straight to the Lesson Hub.")
                 subj_id = ui.subject_select(subjects, "ai_les_subj")
                 subj_obj = school.get_subject(subj_id)
@@ -296,8 +281,7 @@ def teacher_assistant_page():
                         ui.report(err, f"Lesson '{ed_title}' published to Lesson Hub.")
 
             with col_asg.container(border=True):
-                st.markdown(":violet-badge[▲ RUBRIC ARCHITECT]")
-                st.subheader("■ AI Assignment & Rubric Builder")
+                st.subheader("AI Assignment & Rubric Builder")
                 st.caption("Generates task instructions with a 3-tier Markdown grading rubric table.")
                 asg_subj_id = ui.subject_select(subjects, "ai_asg_subj")
                 asg_subj = school.get_subject(asg_subj_id)
@@ -330,8 +314,7 @@ def teacher_assistant_page():
             ui.empty_state("Add a Class & Subject on your Dashboard first to save quizzes.")
         else:
             with st.container(border=True):
-                st.markdown(":green-badge[● AUTO-GRADED QUIZ SYNTHESIS]")
-                st.subheader("■ One-Click AI Quiz Generator")
+                st.subheader("One-Click AI Quiz Generator")
                 st.caption("Generates multiple-choice questions for any topic and saves them as a live quiz in Novarix.")
                 c1, c2, c3 = st.columns([2, 2, 1])
                 with c1:
@@ -390,10 +373,10 @@ def student_assistant_page():
     subjects = school.subjects_for_student(user["id"])
 
     tab_tutor, tab_solver, tab_cards, tab_plan = st.tabs([
-        "■ Study Tutor Chat (Streaming)",
-        "■ Symbolic Math & Science Solver",
-        "■ Interactive Flashcards",
-        "■ Smart Study Roadmap",
+        "Study Tutor Chat",
+        "Symbolic Math & Science Solver",
+        "Interactive Flashcards",
+        "Smart Study Roadmap",
     ])
 
     with tab_tutor:
@@ -404,10 +387,10 @@ def student_assistant_page():
             "Exam Cram & Practice Quizzer",
         ]
         quick = [
-            ("■ Solve 2x^2 + 5x - 3 = 0", "Solve 2x^2 + 5x - 3 = 0"),
-            ("◆ Explain Photosynthesis", "Explain photosynthesis vs cellular respiration"),
-            ("● Python Binary Search", "Show me how binary search works in Python"),
-            ("▲ What's due soon?", "What assignments and quizzes do I have due soon?"),
+            ("Solve 2x^2 + 5x - 3 = 0", "Solve 2x^2 + 5x - 3 = 0"),
+            ("Explain Photosynthesis", "Explain photosynthesis vs cellular respiration"),
+            ("Python Binary Search", "Show me how binary search works in Python"),
+            ("What's due soon?", "What assignments and quizzes do I have due soon?"),
         ]
         _render_chat(
             user,
@@ -434,14 +417,15 @@ def student_assistant_page():
             if nav1.button("← Previous Card", width="stretch", key="fc_prev"):
                 st.session_state[idx_key] = (idx - 1) % len(cards)
                 st.rerun()
-            nav2.markdown(f":blue-badge[◆ CARD {idx + 1} / {len(cards)}] &nbsp; **{card['subject']}** · *{card['topic']}*")
+            nav2.markdown(f"**Card {idx + 1} / {len(cards)}** — **{card['subject']}** · *{card['topic']}*")
             if nav3.button("Next Card →", width="stretch", key="fc_next"):
                 st.session_state[idx_key] = (idx + 1) % len(cards)
                 st.rerun()
 
             with st.container(border=True):
                 conf_text = f"Your NovaPulse rating: {card['confidence']}/5" if card["confidence"] else "Built-in / Unrated Concept Card"
-                st.markdown(f"### ■ :blue[{card['front']}]  \n:gray[{conf_text}]")
+                st.markdown(f"### {card['front']}")
+                st.caption(conf_text)
                 st.markdown(f"**Active-Recall Prompt:** *{card['prompt']}*")
                 with st.expander("Flip Card — Reveal Full Notes, Formulas & Worked Example", expanded=False):
                     st.markdown(card["back"])
@@ -458,10 +442,10 @@ def student_assistant_page():
                             ui.done(f"Updated confidence to {level}/5 for '{card['front']}'.")
 
     with tab_plan:
-        st.subheader("■ Personalized Study Roadmap")
+        st.subheader("Personalized Study Roadmap")
         st.caption("Automatically prioritized from your upcoming deadlines, subject averages, and NovaPulse ratings.")
         steps = ai_assistant.generate_study_plan(user)
         for step in steps:
             with st.container(border=True):
-                st.markdown(f":blue-badge[{step['priority']}] &nbsp; {step['task']}")
-                st.caption(f"▸ Telemetry rationale: {step['why']}")
+                st.markdown(f"**[{step['priority']}]** {step['task']}")
+                st.caption(f"Rationale: {step['why']}")

@@ -96,7 +96,7 @@ def student_dashboard():
         st.markdown("**■ YOUR NOVARIX MILESTONES**")
         m_cols = st.columns(len(milestones))
         for col, (b_title, b_desc) in zip(m_cols, milestones):
-            col.markdown(f":gray-badge[{b_title}]")
+            col.markdown(f"**{b_title}**")
             col.caption(b_desc)
 
     left, right = st.columns([3, 2])

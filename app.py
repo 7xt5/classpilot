@@ -100,7 +100,7 @@ def build_pages(user):
 
 
 def sidebar(user):
-    """Technical telemetry sidebar with custom Novarix logo, active operator badge, and logout."""
+    """Clean sidebar with custom Novarix logo, active user profile, and logout."""
     settings = storage.load_settings()
     logo = ui.logo_path()
     with st.sidebar:
@@ -109,20 +109,19 @@ def sidebar(user):
             with c_logo:
                 st.image(logo, width="stretch")
             with c_txt:
-                st.markdown("### :blue[■ NOVARIX]")
+                st.markdown("### NOVARIX")
                 st.caption(f"{settings['school_name']}")
         else:
-            st.markdown("## :blue[■ NOVARIX]")
+            st.markdown("## NOVARIX")
             st.caption(f"{settings['school_name']} · {settings['academic_year']}")
         with st.container(border=True):
             st.markdown(
-                f":blue-badge[● ONLINE] {ui.badge(user['role'].title())}  \n"
-                f"**{user['full_name']}**  \n"
-                f":gray[`@{user['username']}`]"
+                f"**{user['full_name']}** ({user['role'].title()})  \n"
+                f"`@{user['username']}`"
             )
             if user["role"] == "student":
                 cls = school.student_class(user["id"])
-                st.caption(f"COHORT // {cls['name']}" if cls else "COHORT // UNASSIGNED")
+                st.caption(f"Class: {cls['name']}" if cls else "Class: Unassigned")
         if st.button("Disconnect / Log out", icon=":material/logout:", width="stretch"):
             auth.logout()
             st.rerun()

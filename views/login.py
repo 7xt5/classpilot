@@ -1,4 +1,4 @@
-"""Landing Overview & Sign-Up / Sign-In Portal — Clean Dark Emerald Edition."""
+"""Landing Overview & Sign-Up / Sign-In Portal — Clean Dark Blue Edition."""
 
 import streamlit as st
 
@@ -18,7 +18,7 @@ def _render_landing_page(settings, existing_users):
     else:
         top_l, top_r = st.columns([2.6, 1.1])
     with top_l:
-        st.title(":blue[■] Novarix")
+        st.title("Novarix")
         st.markdown("**Smart Classroom & AI Learning Workspace**")
     with top_r:
         st.write("")
@@ -36,7 +36,6 @@ def _render_landing_page(settings, existing_users):
 
     # Clean, Bold Hero Card
     with st.container(border=True):
-        st.markdown(":blue-badge[● CLASSROOM OS] :green-badge[◆ TEACHERS & STUDENTS] :violet-badge[▲ NOVAAI]")
         st.header("Teach Smarter. Learn Faster.")
         st.markdown(
             "**One clean workspace to manage classes, submit coursework, track grades, and solve problems with AI.**"
@@ -69,24 +68,20 @@ def _render_landing_page(settings, existing_users):
     row1_l, row1_r = st.columns(2)
     with row1_l:
         with st.container(border=True):
-            st.markdown(":blue-badge[● FOR TEACHERS]")
             st.subheader("Custom Teacher Studio")
             st.markdown("**Build your own dashboard. Add classes, track assignments to check, and grade work in one place.**")
     with row1_r:
         with st.container(border=True):
-            st.markdown(":green-badge[◆ FOR STUDENTS]")
             st.subheader("Student Learning Hub")
             st.markdown("**Join your class, study lessons, submit assignments, take quizzes, and track your live grades.**")
 
     row2_l, row2_r = st.columns(2)
     with row2_l:
         with st.container(border=True):
-            st.markdown(":violet-badge[▲ NOVAAI]")
-            st.subheader("Built-In AI Assistant")
+            st.subheader("Built-In NovaAI Assistant")
             st.markdown("**Step-by-step math & science solver, Socratic study tutor, and instant AI rubric grader.**")
     with row2_r:
         with st.container(border=True):
-            st.markdown(":orange-badge[■ INSIGHTS]")
             st.subheader("Live Classroom Signals")
             st.markdown("**Take attendance in seconds, check lesson confidence, and prevent deadline pile-ups.**")
 
@@ -128,15 +123,11 @@ def login_page():
     with center:
         ui.page_transition(f"AUTH_{st.session_state['auth_mode'].upper()}")
 
-        back_col, badge_col = st.columns([1.1, 2.4])
+        back_col, _ = st.columns([1.1, 2.4])
         with back_col:
             if st.button("Back to Overview", icon=":material/arrow_back:", type="secondary", width="stretch", key="back_to_landing_btn"):
                 st.session_state["show_auth_portal"] = False
                 st.rerun()
-        with badge_col:
-            st.markdown(
-                f":blue-badge[● AUTH PORTAL] :green-badge[◆ SECURE SESSION] :orange-badge[■ ACCOUNTS: {len(existing_users)}]"
-            )
 
         logo = ui.logo_path()
         if logo:
@@ -144,11 +135,11 @@ def login_page():
             with lg_col:
                 st.image(logo, width="stretch")
             with tx_col:
-                st.title(":blue[■] Novarix Account Portal")
-                st.caption(f"{settings['school_name']} · Sign in or create a new Student or Teacher account")
+                st.title("Novarix Account Portal")
+                st.markdown("**Sign in or create a new Student or Teacher account**")
         else:
-            st.title(":blue[■] Novarix Account Portal")
-            st.caption(f"{settings['school_name']} · Sign in or create a new Student or Teacher account")
+            st.title("Novarix Account Portal")
+            st.markdown("**Sign in or create a new Student or Teacher account**")
         st.divider()
 
         mode_col1, mode_col2 = st.columns(2)
@@ -176,17 +167,16 @@ def login_page():
         # ==================================================================
         if st.session_state["auth_mode"] == "signup":
             with st.container(border=True):
-                st.markdown(":green-badge[● NEW ACCOUNT REGISTRATION]")
                 st.subheader("Create Your Account")
-                st.caption("Select whether you are a Student or a Teacher — your dashboard and AI workspace will be configured automatically.")
+                st.markdown("**Select whether you are a Student or a Teacher.**")
 
                 role_choice = st.radio(
-                    "Select Account Role — Are you a Student or a Teacher?",
+                    "Account Role",
                     options=["teacher", "student"],
                     format_func=lambda r: (
-                        "◆ Teacher — Build my own custom dashboard, classes, assignments to check & AI Copilot"
+                        "Teacher — Custom dashboard, classes, assignments to check & NovaAI Copilot"
                         if r == "teacher"
-                        else "● Student — Access lessons, submit assignments, take quizzes, track grades & AI Tutor"
+                        else "Student — Lessons, assignments, quizzes, grades & NovaAI Tutor"
                     ),
                     horizontal=False,
                     key="signup_role_radio",
@@ -263,7 +253,6 @@ def login_page():
         # ==================================================================
         else:
             with st.container(border=True):
-                st.markdown(":green-badge[● ACCOUNT SIGN IN]")
                 st.subheader("Sign In")
                 if not existing_users:
                     st.info("No accounts exist yet. Click **Create New Account (Sign Up)** above to register as a Teacher or Student.", icon=":material/person_add:")

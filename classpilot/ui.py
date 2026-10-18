@@ -65,18 +65,16 @@ def page_transition(title):
 
 
 def badge(text):
-    """Return markdown for a saturated high-contrast technical badge."""
-    symbol = STATUS_SYMBOLS.get(text, "■")
-    color = STATUS_COLORS.get(text, "blue")
+    """Return clean bold text without multi-colored badge pills."""
     safe = str(text).replace("[", "(").replace("]", ")")
-    return f":{color}-badge[{symbol} {safe}]"
+    return f"**[{safe}]**"
 
 
 def page_header(title, subtitle=None, icon=""):
-    """Clean, modern header with subtle blue accent and divider."""
+    """Clean, modern header with divider."""
     clean_title = str(title).strip()
     page_transition(clean_title)
-    st.title(f":blue[■] {clean_title}")
+    st.title(clean_title)
     if subtitle:
         st.caption(subtitle)
     st.divider()
@@ -84,14 +82,14 @@ def page_header(title, subtitle=None, icon=""):
 
 def section(title, caption=None):
     clean = str(title).lstrip("■◆ ").strip()
-    st.subheader(f":blue[◆] {clean}")
+    st.subheader(clean)
     if caption:
         st.caption(caption)
 
 
 def empty_state(message, icon=None):
     with st.container(border=True):
-        st.markdown(f":blue-badge[● STANDBY] &nbsp; {message}")
+        st.markdown(f"**{message}**")
 
 
 def page_link(path, label, icon=":material/arrow_forward:"):
@@ -249,14 +247,14 @@ def deadline_check_panel(class_id, due_iso, date_key=None, time_key=None, exclud
     if result["conflict"]:
         with st.container(border=True):
             st.markdown(
-                f":red-badge[▲ CONFLICT DETECTED] &nbsp; **{result['load']} deadlines** for this class within "
+                f"**Conflict detected:** **{result['load']} deadlines** for this class within "
                 f"**{result['window']} days** (limit {result['limit'] - 1})."
             )
             for item in result["nearby"]:
                 st.markdown(f"- {badge(item['kind'])} **{item['title']}** — {item['subject']} · {utils.fmt_dt(item['due'])}")
             if result["suggestion"]:
                 suggestion = result["suggestion"]
-                st.markdown(f":green-badge[● RECOMMENDED SLOT] &nbsp; **{suggestion.strftime('%a %d %b')}**")
+                st.markdown(f"**Recommended slot:** **{suggestion.strftime('%a %d %b')}**")
                 if date_key and time_key:
                     def _apply():
                         st.session_state[date_key] = suggestion.date()
@@ -267,8 +265,8 @@ def deadline_check_panel(class_id, due_iso, date_key=None, time_key=None, exclud
         lines = ", ".join(f"{i['title']} ({i['subject'].split(' · ')[0]}, {utils.fmt_date(i['due'])})"
                           for i in result["nearby"])
         with st.container(border=True):
-            st.markdown(f":orange-badge[◆ NEARBY DEADLINES] &nbsp; {lines}. Still within the healthy limit.")
+            st.markdown(f"**Nearby deadlines:** {lines}. Still within the healthy limit.")
     else:
         with st.container(border=True):
-            st.markdown(":green-badge[● SCHEDULE CLEAR] &nbsp; No other deadlines for this class around this date.")
+            st.markdown("**Schedule clear:** No other deadlines for this class around this date.")
     return result
