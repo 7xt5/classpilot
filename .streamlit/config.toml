@@ -127,6 +127,9 @@ button[kind="primary"], button[kind="secondary"] {
   line-height: 1.3 !important;
   font-weight: 800 !important;
 }
+[data-testid="stMarkdownBadge"], span[data-testid="stMarkdownBadge"] {
+  display: none !important;
+}
 .stApp { --subtle-grid-ready: 1"""
 
 [theme.sidebar]
@@ -151,6 +154,7 @@ redColor = "#EF4444"
 grayColor = "#94A3B8"
 
 [server]
+runOnSave = true
 maxUploadSize = 10
 enableCORS = false
 enableXsrfProtection = false
