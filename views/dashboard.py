@@ -93,7 +93,7 @@ def student_dashboard():
     # Creative Milestone Badges
     milestones = insights.student_milestones(user["id"])
     with st.container(border=True):
-        st.markdown("**■ YOUR PILOT MILESTONES**")
+        st.markdown("**■ YOUR NOVARIX MILESTONES**")
         m_cols = st.columns(len(milestones))
         for col, (b_title, b_desc) in zip(m_cols, milestones):
             col.markdown(f":gray-badge[{b_title}]")
@@ -133,7 +133,7 @@ def student_dashboard():
 
         st.subheader("■ Announcements")
         _announcement_feed(user)
-        st.subheader("■ ClassPulse")
+        st.subheader("■ NovaPulse")
         subject_ids = [s["id"] for s in school.subjects_for_student(user["id"])]
         unrated = [l for l in coursework.lessons_for_subjects(subject_ids) if not tracking.my_pulse(user["id"], l["id"])]
         if unrated:
@@ -490,7 +490,7 @@ def teacher_dashboard():
                 ("To grade in LMS", len(queue), "Submissions waiting for a grade"),
                 ("Students to support", len({a["student_id"] for a in alerts}), "From Early Support Alerts"),
                 ("Deadline clusters", len(conflicts), "Upcoming pile-ups across your classes"),
-                ("Confusing lessons", len(flagged_lessons), "Flagged by ClassPulse"),
+                ("Confusing lessons", len(flagged_lessons), "Flagged by NovaPulse"),
             ])
 
         if "climate" in active_widgets:
@@ -541,7 +541,7 @@ def teacher_dashboard():
                 priorities += 1
                 with st.container(border=True):
                     st.markdown(
-                        f"**[ ◆ ClassPulse Flag ]** **{row['lesson']}** ({subject['name']}) has low confidence "
+                        f"**[ ◆ NovaPulse Flag ]** **{row['lesson']}** ({subject['name']}) has low confidence "
                         f"(avg {row['average']:.1f}/5 from {row['responses']} students)."
                     )
             if not priorities:

@@ -1,6 +1,6 @@
 """Lesson Hub - notes, files and links organised by subject and topic.
 
-Students also rate their confidence for each lesson here (ClassPulse).
+Students also rate their confidence for each lesson here (NovaPulse).
 """
 
 import streamlit as st
@@ -115,7 +115,7 @@ def teacher_lessons_page():
                             if st.button(f"Remove {item['name']}", key=f"rm_{lesson['id']}_{item['path']}", icon="✖️"):
                                 ui.report(coursework.remove_lesson_file(user, lesson["id"], item["path"]), "File removed.")
                         if ui.confirm_button("Delete lesson", f"del_lesson_{lesson['id']}",
-                                             "Delete this lesson, its files and its ClassPulse ratings?"):
+                                             "Delete this lesson, its files and its NovaPulse ratings?"):
                             ui.report(coursework.delete_lesson(user, lesson["id"]), "Lesson deleted.", "🗑️")
 
 
@@ -125,7 +125,7 @@ def teacher_lessons_page():
 def _pulse_widget(user, lesson):
     """Private confidence rating for one lesson."""
     current = tracking.my_pulse(user["id"], lesson["id"])
-    st.markdown("**💓 ClassPulse — how confident do you feel about this lesson?**")
+    st.markdown("**💓 NovaPulse — how confident do you feel about this lesson?**")
     st.caption("🔒 Private: your teacher only sees class totals, never your name.")
     with st.form(f"pulse_{lesson['id']}"):
         rating = st.select_slider("Confidence", options=list(tracking.CONFIDENCE_LABELS),
@@ -147,7 +147,7 @@ def student_lessons_page():
         return
     lessons = _lesson_filters(subjects, "s_lessons")
     unrated = [l for l in lessons if not tracking.my_pulse(user["id"], l["id"])]
-    st.caption(f"{len(lessons)} lesson(s) · {len(unrated)} not yet rated in ClassPulse")
+    st.caption(f"{len(lessons)} lesson(s) · {len(unrated)} not yet rated in NovaPulse")
     if not lessons:
         ui.empty_state("No lessons match your filters.")
     for (subject_label, topic), group in _group_by_topic(lessons).items():

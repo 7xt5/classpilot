@@ -298,7 +298,7 @@ def seed_demo_data():
         subjects.append(subject)
         students = [by_username[s[0]] for s in roster[spec["class"]]]
 
-        # ---- Lessons + ClassPulse ratings ------------------------------
+        # ---- Lessons + NovaPulse ratings ------------------------------
         for index, (topic, title, mood, content, resources, demo_file) in enumerate(spec["lessons"]):
             files = []
             if demo_file:

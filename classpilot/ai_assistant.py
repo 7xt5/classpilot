@@ -10,7 +10,7 @@ Architecture:
      equations (ax + b = cx + d), quadratic equations (ax^2 + bx + c = 0),
      polynomial derivatives/integrals, and statistical datasets step-by-step.
   3. Hybrid RAG (Retrieval-Augmented Generation): Combines live school JSON
-     records (lessons, assignments, quizzes, grades, attendance, ClassPulse)
+     records (lessons, assignments, quizzes, grades, attendance, NovaPulse)
      with a rich built-in Academic Knowledge Graph across Math, Physics,
      Chemistry, Biology, Computer Science, English, and Study Science using
      TF-IDF weighted token scoring and fuzzy matching.
@@ -348,9 +348,9 @@ KNOWLEDGE_GRAPH = [
             "**25-Minute High-Yield Study Sprint (Pomodoro):**\n"
             "- **Minutes 0–5:** Skim lesson headings and write 3 key questions.\n"
             "- **Minutes 5–20:** Solve 3–4 problems without looking at worked solutions.\n"
-            "- **Minutes 20–25:** Check answers, log mistakes, and rate your confidence in ClassPulse."
+            "- **Minutes 20–25:** Check answers, log mistakes, and rate your confidence in NovaPulse."
         ),
-        "practice": "Pick your lowest-rated ClassPulse lesson and summarize its core rule in one sentence without looking at your notes.",
+        "practice": "Pick your lowest-rated NovaPulse lesson and summarize its core rule in one sentence without looking at your notes.",
     },
 ]
 
@@ -795,7 +795,7 @@ def ask_teacher_ai(user, prompt, mode="Analytical & Data-Driven"):
             st_session_save_trace(user["id"], trace)
             return _student_brief_for_teacher(student, subjects, draft_email=("email" in q or "message" in q or "parent" in q or "note" in q))
 
-    # 3. Check LMS Telemetry Intents (Support Alerts, Grading Queue, Deadlines, ClassPulse, Announcements)
+    # 3. Check LMS Telemetry Intents (Support Alerts, Grading Queue, Deadlines, NovaPulse, Announcements)
     if any(w in q for w in ("support", "struggl", "behind", "alert", "failing", "risk", "missing", "flag")):
         alerts = insights.support_alerts(subjects)
         trace.append(f"STAGE 03 // RISK TELEMETRY: Scanned rosters -> {len(alerts)} early support alert(s)")
@@ -804,7 +804,7 @@ def ask_teacher_ai(user, prompt, mode="Analytical & Data-Driven"):
             return (
                 "### ■ NovaAI Risk Telemetry — All Clear\n"
                 "No students currently cross the school's risk thresholds for missing work, low/declining grades, or attendance.\n\n"
-                "- **Recommendation:** Keep recording daily attendance and encourage students to submit ClassPulse ratings after lessons."
+                "- **Recommendation:** Keep recording daily attendance and encourage students to submit NovaPulse ratings after lessons."
             )
         lines = [
             f"### ■ NovaAI Early Support Telemetry ({len(alerts)} Flagged)\n"
@@ -860,11 +860,11 @@ def ask_teacher_ai(user, prompt, mode="Analytical & Data-Driven"):
 
     if any(w in q for w in ("pulse", "confus", "confidence", "revisit", "re-teach", "reteach")):
         flagged = [(s, r) for s in subjects for r in tracking.pulse_summary(s["id"]) if r["flagged"]]
-        trace.append(f"STAGE 03 // CLASSPULSE SCAN: {len(flagged)} low-confidence lesson(s)")
+        trace.append(f"STAGE 03 // NOVAPULSE SCAN: {len(flagged)} low-confidence lesson(s)")
         st_session_save_trace(user["id"], trace)
         if not flagged:
-            return "### ■ ClassPulse Telemetry\nNo lessons are currently flagged for low student confidence (all rated lessons are $\\ge 2.5/5$)."
-        lines = ["### ■ ClassPulse — Lessons Flagged for Review\n"]
+            return "### ■ NovaPulse Telemetry\nNo lessons are currently flagged for low student confidence (all rated lessons are $\\ge 2.5/5$)."
+        lines = ["### ■ NovaPulse — Lessons Flagged for Review\n"]
         for s, r in flagged:
             lines.append(
                 f"- **{r['lesson']}** (*{r['topic']}* — {school.subject_label(s)}): "
@@ -1081,7 +1081,7 @@ def generate_lesson_draft(subject_name, topic, title, focus_points=""):
         f"## 4. Quick Self-Check (Exit Ticket)\n"
         f"- **Question 1:** In your own words, what is the most important rule in *{title}*?\n"
         f"- **Question 2:** Where do mistakes most commonly happen when solving *{topic}* problems, and how can you prevent them?\n"
-        f"- *Remember to rate your confidence (1–5) in **ClassPulse** after reviewing these notes!*"
+        f"- *Remember to rate your confidence (1–5) in **NovaPulse** after reviewing these notes!*"
     )
     resources = f"{title} — Reference Guide | https://en.wikipedia.org/wiki/{topic.replace(' ', '_')}"
     return {"topic": topic, "title": title, "content": content, "resources": resources}
@@ -1404,13 +1404,13 @@ def generate_study_plan(user):
         steps.append({
             "priority": "3 · CONCEPT REVIEW",
             "task": f"Review flashcards & notes for **{les['title']}** ({school.subject_label(les['subject_id'])})",
-            "why": f"You rated your confidence {rating}/5 on ClassPulse.",
+            "why": f"You rated your confidence {rating}/5 on NovaPulse.",
         })
 
     if unrated:
         steps.append({
             "priority": "4 · SELF-CHECK",
-            "task": f"Read and rate **{unrated[0]['title']}** on ClassPulse",
+            "task": f"Read and rate **{unrated[0]['title']}** on NovaPulse",
             "why": f"You have {len(unrated)} unrated lesson(s).",
         })
 

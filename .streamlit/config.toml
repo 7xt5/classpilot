@@ -57,7 +57,7 @@ chartCategoricalColors = ["#3B82F6", "#38BDF8", "#6366F1", "#F59E0B", "#10B981",
 
 # Single Clean 48px Architectural Grid, Solid Cards & Bold Typography
 [[theme.fontFaces]]
-family = "ClassPilotGrid"
+family = "NovarixGrid"
 url = "data:font/woff2;base64,"
 weight_range = "400 900"
 style = "normal"

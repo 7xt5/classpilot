@@ -139,7 +139,7 @@ def support_alerts(subjects):
     """Build a prioritised list of students who may need support.
 
     Each reason adds "concern points"; more points = higher priority.
-    ClassPulse ratings are deliberately NOT used here because students were
+    NovaPulse ratings are deliberately NOT used here because students were
     promised that their individual confidence ratings stay private.
     """
     settings = storage.load_settings()
@@ -559,7 +559,7 @@ def clear_teacher_dashboard(teacher_id):
 # Creative Features: Class Climate Report & Student Milestones
 # ==========================================================================
 def class_climate_report(subjects):
-    """Synthesize ClassPulse confidence, attendance, and grades into a creative
+    """Synthesize NovaPulse confidence, attendance, and grades into a creative
     monochrome Class Climate forecast for each subject."""
     reports = []
     for s in subjects:
@@ -621,7 +621,7 @@ def student_milestones(student_id):
     if att["percent"] is not None and att["percent"] >= 90:
         badges.append(("■ Attendance Star", f"{att['percent']:.0f}% attendance rate across subjects"))
     if not badges:
-        badges.append(("○ Rising Pilot", "Complete your next assignment or rate a lesson to unlock badges!"))
+        badges.append(("○ Rising Scholar", "Complete your next assignment or rate a lesson to unlock badges!"))
     return badges
 
 

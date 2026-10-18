@@ -55,7 +55,7 @@ DEFAULT_SETTINGS = {
     "alert_low_grade": 60,           # average (%) below this is a concern
     "alert_attendance": 85,          # attendance (%) below this is a concern
     "alert_decline_points": 10,      # grade drop (percentage points) that counts as declining
-    # ClassPulse
+    # NovaPulse
     "pulse_low_threshold": 2.5,      # average confidence (1-5) below this is flagged
     # Assignments
     "default_late_penalty": 10,      # % deducted from late work by default

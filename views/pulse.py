@@ -1,4 +1,4 @@
-"""ClassPulse - class-wide confidence per lesson (students stay anonymous)."""
+"""NovaPulse - class-wide confidence per lesson (students stay anonymous)."""
 
 import streamlit as st
 
@@ -7,7 +7,7 @@ from classpilot import auth, school, storage, tracking, ui, utils
 
 def teacher_pulse_page():
     user = auth.require_role("teacher")
-    ui.page_header("ClassPulse", "How confident does the class feel about each lesson? "
+    ui.page_header("NovaPulse", "How confident does the class feel about each lesson? "
                    "Students rate privately (1-5); you only ever see totals.", "💓")
     subjects = school.subjects_for_teacher(user["id"])
     if not subjects:

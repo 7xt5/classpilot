@@ -1,5 +1,5 @@
 """
-tracking.py - Gradebook, attendance and ClassPulse.
+tracking.py - Gradebook, attendance and NovaPulse.
 
 Grade rule (simple and transparent for teachers and parents):
   * Every graded assignment and every completed quiz becomes one "grade item"
@@ -196,7 +196,7 @@ def attendance_by_date(subject_id):
 
 
 # ==========================================================================
-# ClassPulse - private confidence ratings per lesson
+# NovaPulse - private confidence ratings per lesson
 # ==========================================================================
 def my_pulse(student_id, lesson_id):
     found = storage.find("pulse", student_id=student_id, lesson_id=lesson_id)

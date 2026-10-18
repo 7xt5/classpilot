@@ -77,7 +77,7 @@ def build_pages(user):
                 page(gradebook.teacher_gradebook_page, "Gradebook", ":material/bar_chart:", "gradebook"),
             ],
             "Insights": [
-                page(pulse.teacher_pulse_page, "ClassPulse", ":material/monitor_heart:", "classpulse"),
+                page(pulse.teacher_pulse_page, "NovaPulse", ":material/monitor_heart:", "classpulse"),
                 page(support.alerts_page, "Early Support Alerts", ":material/flag:", "alerts"),
                 page(support.deadline_planner_page, "Deadline Planner", ":material/event:", "deadlines"),
             ],

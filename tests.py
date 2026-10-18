@@ -54,8 +54,8 @@ def test_backend_workflows():
     updated_ann = storage.get("announcements", ann["id"])
     assert not school.is_unread(updated_ann, student["id"])
 
-    # ---- Lessons & ClassPulse ------------------------------------------
-    print("5. Testing Lesson Hub & ClassPulse...")
+    # ---- Lessons & NovaPulse ------------------------------------------
+    print("5. Testing Lesson Hub & NovaPulse...")
     t_subjects = school.subjects_for_teacher(teacher["id"])
     subj_9a = next(s for s in t_subjects if "9" in school.class_name(s["class_id"]))
     lesson, err = coursework.save_lesson(

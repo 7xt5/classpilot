@@ -3,7 +3,7 @@
 **Novarix** is a complete, beginner-friendly school Learning Management System (LMS) built in **100% Python** using **Streamlit** for the interface and **JSON files** for persistent storage.
 
 It includes role-based dashboards for **Admins**, **Teachers**, and **Students**, along with distinctive workflow features designed for real schools:
-- **ClassPulse** — private student confidence ratings (1–5) per lesson that aggregate anonymously for teachers to spot confusing topics early.
+- **NovaPulse** — private student confidence ratings (1–5) per lesson that aggregate anonymously for teachers to spot confusing topics early.
 - **Deadline Conflict Detector** — warns teachers across *all* subjects taught to the same class when deadlines pile up within a configurable day window, and suggests the nearest calmer weekday.
 - **Early Support Alerts** — automatically ranks students needing attention based on missing work, low averages, declining grade trends, and low attendance.
 
@@ -16,7 +16,7 @@ It includes role-based dashboards for **Admins**, **Teachers**, and **Students**
 - **User Management:** Create, edit, activate/deactivate, reset passwords, delete accounts (with cascading cleanup), and bulk-import users via CSV lines.
 - **Class & Roster Management:** Create classes, assign rooms/grade levels, and manage rosters (automatically moving students if reassigned).
 - **Subject Management:** Link courses to classes and teachers.
-- **School Settings & Backups:** Customize school name, academic year, grading scale, and thresholds for Deadline Conflict Detector, Early Support Alerts, and ClassPulse. Download a full JSON backup or reset demo data with one click.
+- **School Settings & Backups:** Customize school name, academic year, grading scale, and thresholds for Deadline Conflict Detector, Early Support Alerts, and NovaPulse. Download a full JSON backup or reset demo data with one click.
 
 ### 👩‍🏫 Teacher
 - **Priority Dashboard:** Instant summary of ungraded submissions, today's missing attendance registers, high-priority student alerts, deadline clusters, and low-confidence lessons.
@@ -25,11 +25,11 @@ It includes role-based dashboards for **Admins**, **Teachers**, and **Students**
 - **Quiz Builder:** Create multiple-choice quizzes with auto-grading, configurable attempt limits, publish/draft controls, and question-level item analysis (identifying the most common wrong answers).
 - **Gradebook:** Full student × assessment matrix with letter grades, progress bars, per-item averages chart, individual student trend charts, and CSV export.
 - **Attendance:** Fast daily register with one-click "Mark everyone present", attendance percentage reports (Present & Late count as attended; Excused is excluded), and a 15-session history grid.
-- **ClassPulse, Early Support Alerts & Deadline Planner:** Dedicated analytics views to act on student confidence, support needs, and workload balance.
+- **NovaPulse, Early Support Alerts & Deadline Planner:** Dedicated analytics views to act on student confidence, support needs, and workload balance.
 
 ### 🎒 Student
-- **Smart Student Dashboard:** Upcoming deadlines, missing-work warnings, overall average with trend indicator, attendance rate, announcements, and ClassPulse reminders.
-- **Lessons & ClassPulse:** Read notes, open links, download worksheets, and privately rate lesson confidence (1–5) with optional anonymous comments.
+- **Smart Student Dashboard:** Upcoming deadlines, missing-work warnings, overall average with trend indicator, attendance rate, announcements, and NovaPulse reminders.
+- **Lessons & NovaPulse:** Read notes, open links, download worksheets, and privately rate lesson confidence (1–5) with optional anonymous comments.
 - **Assignments:** Filter by status, submit text/links/files, resubmit before grading, see late penalty calculations, and read teacher feedback.
 - **Quizzes:** Take multiple-choice quizzes, get instant auto-graded scores, retry if extra attempts are allowed (best score counts), and review correct answers.
 - **My Grades & My Attendance:** Track subject averages, letter grades, score trends over time, and session-by-session attendance records.
@@ -55,7 +55,7 @@ classpilot/
 │   ├── auth.py             # PBKDF2 password hashing, lockout & role guards
 │   ├── school.py           # Users, classes, subjects & announcements logic
 │   ├── coursework.py       # Lessons, assignments, submissions & quizzes logic
-│   ├── tracking.py         # Gradebook, attendance & ClassPulse calculations
+│   ├── tracking.py         # Gradebook, attendance & NovaPulse calculations
 │   ├── insights.py         # Conflict detector, support alerts & search
 │   ├── seed.py             # Realistic, date-relative demo data generator
 │   └── ui.py               # Reusable native Streamlit UI components
@@ -63,12 +63,12 @@ classpilot/
 │   ├── login.py            # Sign-in screen & demo account table
 │   ├── dashboard.py        # Admin, Teacher & Student dashboards
 │   ├── admin.py            # Users, classes, subjects & settings pages
-│   ├── lessons.py          # Teacher & Student Lesson Hub + ClassPulse input
+│   ├── lessons.py          # Teacher & Student Lesson Hub + NovaPulse input
 │   ├── assignments.py      # Assignment manager, grading & student submissions
 │   ├── quizzes.py          # Quiz Builder, item analysis & student quiz taker
 │   ├── gradebook.py        # Teacher gradebook & Student grades view
 │   ├── attendance.py       # Register, reports & Student attendance view
-│   ├── pulse.py            # Teacher ClassPulse analytics
+│   ├── pulse.py            # Teacher NovaPulse analytics
 │   ├── support.py          # Early Support Alerts & Deadline Planner
 │   ├── announcements.py    # Announcements feed & read receipts
 │   ├── search.py           # Role-scoped search page

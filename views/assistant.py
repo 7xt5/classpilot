@@ -440,7 +440,7 @@ def student_assistant_page():
                 st.rerun()
 
             with st.container(border=True):
-                conf_text = f"Your ClassPulse rating: {card['confidence']}/5" if card["confidence"] else "Built-in / Unrated Concept Card"
+                conf_text = f"Your NovaPulse rating: {card['confidence']}/5" if card["confidence"] else "Built-in / Unrated Concept Card"
                 st.markdown(f"### ■ :blue[{card['front']}]  \n:gray[{conf_text}]")
                 st.markdown(f"**Active-Recall Prompt:** *{card['prompt']}*")
                 with st.expander("Flip Card — Reveal Full Notes, Formulas & Worked Example", expanded=False):
@@ -449,7 +449,7 @@ def student_assistant_page():
                         st.markdown(f"- [{r['label']}]({r['url']})")
                 if card.get("lesson_id"):
                     st.divider()
-                    st.caption("Update your ClassPulse confidence after reviewing this card:")
+                    st.caption("Update your NovaPulse confidence after reviewing this card:")
                     r_cols = st.columns(5)
                     for level in range(1, 6):
                         label = f"{level}★" + (" (current)" if card["confidence"] == level else "")
@@ -459,7 +459,7 @@ def student_assistant_page():
 
     with tab_plan:
         st.subheader("■ Personalized Study Roadmap")
-        st.caption("Automatically prioritized from your upcoming deadlines, subject averages, and ClassPulse ratings.")
+        st.caption("Automatically prioritized from your upcoming deadlines, subject averages, and NovaPulse ratings.")
         steps = ai_assistant.generate_study_plan(user)
         for step in steps:
             with st.container(border=True):

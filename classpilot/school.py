@@ -101,7 +101,7 @@ def register_account(username, full_name, email, role, password, confirm_passwor
     if role not in ("student", "teacher"):
         return None, "Please select whether you are a Student or a Teacher."
     if not email and username:
-        email = f"{username}@classpilot.edu"
+        email = f"{username}@novarix.edu"
     if (password or "") != (confirm_password or ""):
         return None, "Passwords do not match."
     user, error = create_user(username, full_name, email, role, password)

@@ -273,7 +273,7 @@ def settings_page():
         low_attendance = col3.number_input("Low attendance (%)", 0, 100, int(settings["alert_attendance"]))
         decline = col4.number_input("Grade drop (points)", 1, 50, int(settings["alert_decline_points"]))
 
-        st.subheader("💓 ClassPulse & assignments")
+        st.subheader("💓 NovaPulse & assignments")
         col1, col2 = st.columns(2)
         pulse_low = col1.slider("Flag lessons with average confidence below", 1.0, 5.0,
                                 float(settings["pulse_low_threshold"]), 0.1)
@@ -312,7 +312,7 @@ def settings_page():
         st.markdown("**Backup**")
         st.caption("Download every collection as one JSON file.")
         st.download_button("Download backup", json.dumps(storage.export_all(), indent=2),
-                           file_name="classpilot_backup.json", mime="application/json", icon="⬇️")
+                           file_name="novarix_backup.json", mime="application/json", icon="⬇️")
     with col2.container(border=True):
         st.markdown("**Reset demo data**")
         st.caption("Erases everything and recreates the demo school. You will be signed out.")
