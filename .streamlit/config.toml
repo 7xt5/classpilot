@@ -1,8 +1,8 @@
 [theme]
 base = "dark"
 primaryColor = "#3B82F6"
-backgroundColor = "#080C14"
-secondaryBackgroundColor = "#0F172A"
+backgroundColor = "#070B12"
+secondaryBackgroundColor = "#0D1526"
 textColor = "#F1F5F9"
 
 # Modern, fatter geometric typography
@@ -19,13 +19,13 @@ codeFontWeight = 600
 borderColor = "#1E293B"
 showWidgetBorder = true
 showSidebarBorder = true
-baseRadius = "0.6rem"
+baseRadius = "0.65rem"
 buttonRadius = "0.5rem"
 linkColor = "#60A5FA"
-codeBackgroundColor = "#0B1120"
+codeBackgroundColor = "#0A101E"
 codeTextColor = "#93C5FD"
 dataframeBorderColor = "#1E293B"
-dataframeHeaderBackgroundColor = "#131E36"
+dataframeHeaderBackgroundColor = "#111C33"
 dataframeHeaderTextColor = "#E2E8F0"
 
 # Clean Dark Sapphire Blue & Modern Semantic Accents
@@ -55,7 +55,7 @@ grayTextColor = "#CBD5E1"
 
 chartCategoricalColors = ["#3B82F6", "#38BDF8", "#6366F1", "#F59E0B", "#10B981", "#EF4444"]
 
-# Darker Subtle Blue Grid Background, Smooth Page Animation & Anti-Overlap Rules
+# Single Clean 48px Architectural Grid, Solid Cards & Bold Typography
 [[theme.fontFaces]]
 family = "ClassPilotGrid"
 url = "data:font/woff2;base64,"
@@ -63,46 +63,43 @@ weight_range = "400 900"
 style = "normal"
 unicode_range = """U+0000-FFFF; }
 @keyframes cpFadeSlideIn {
-  from { opacity: 0.72; transform: translateY(4px); }
+  from { opacity: 0.75; transform: translateY(3px); }
   to { opacity: 1; transform: translateY(0); }
 }
 [data-testid="stAppViewContainer"], .stApp {
-  background-color: #080C14 !important;
+  background-color: #070B12 !important;
   background-image:
-    radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.08), transparent 60%),
-    linear-gradient(to right, rgba(59, 130, 246, 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(59, 130, 246, 0.035) 1px, transparent 1px),
-    linear-gradient(to right, rgba(56, 189, 248, 0.07) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(56, 189, 248, 0.07) 1px, transparent 1px) !important;
-  background-size: 100% 100%, 32px 32px, 32px 32px, 160px 160px, 160px 160px !important;
+    radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.09), transparent 65%),
+    linear-gradient(to right, rgba(59, 130, 246, 0.048) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(59, 130, 246, 0.048) 1px, transparent 1px) !important;
+  background-size: 100% 100%, 48px 48px, 48px 48px !important;
+  background-position: center top !important;
   background-attachment: fixed !important;
 }
 [data-testid="stMainBlockContainer"] {
-  animation: cpFadeSlideIn 0.22s ease-out;
+  animation: cpFadeSlideIn 0.2s ease-out;
 }
 [data-testid="stHeader"] {
-  background: rgba(8, 12, 20, 0.85) !important;
-  backdrop-filter: blur(8px) !important;
-  border-bottom: 1px solid rgba(59, 130, 246, 0.16) !important;
+  background: rgba(7, 11, 18, 0.88) !important;
+  backdrop-filter: blur(10px) !important;
+  border-bottom: 1px solid rgba(59, 130, 246, 0.14) !important;
 }
 [data-testid="stSidebar"] {
-  background-color: #05080F !important;
-  background-image:
-    linear-gradient(to right, rgba(59, 130, 246, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(59, 130, 246, 0.03) 1px, transparent 1px) !important;
-  background-size: 32px 32px !important;
-  border-right: 1px solid rgba(59, 130, 246, 0.24) !important;
+  background-color: #05080E !important;
+  background-image: none !important;
+  border-right: 1px solid rgba(59, 130, 246, 0.20) !important;
 }
 [data-testid="stMain"] [data-testid="stVerticalBlockBorderWrapper"] {
-  background-color: rgba(15, 23, 42, 0.94) !important;
-  border: 1px solid rgba(59, 130, 246, 0.24) !important;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.32) !important;
-  border-radius: 0.65rem !important;
+  background-color: #0D1526 !important;
+  border: 1px solid rgba(59, 130, 246, 0.22) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.42) !important;
+  border-radius: 0.7rem !important;
+  padding: 1.15rem !important;
 }
 [data-testid="stSidebar"] [data-testid="stVerticalBlockBorderWrapper"] {
-  background-color: rgba(15, 23, 42, 0.95) !important;
-  border: 1px solid rgba(56, 189, 248, 0.26) !important;
-  border-radius: 0.6rem !important;
+  background-color: #0D1526 !important;
+  border: 1px solid rgba(59, 130, 246, 0.22) !important;
+  border-radius: 0.65rem !important;
 }
 [data-testid="stIconMaterial"], .material-symbols-rounded {
   font-family: "Material Symbols Rounded" !important;
@@ -133,8 +130,8 @@ button[kind="primary"], button[kind="secondary"] {
 .stApp { --subtle-grid-ready: 1"""
 
 [theme.sidebar]
-backgroundColor = "#05080F"
-secondaryBackgroundColor = "#0F172A"
+backgroundColor = "#05080E"
+secondaryBackgroundColor = "#0D1526"
 textColor = "#F1F5F9"
 primaryColor = "#3B82F6"
 borderColor = "#1E293B"
@@ -143,7 +140,7 @@ linkColor = "#60A5FA"
 codeBackgroundColor = "#090E1A"
 codeTextColor = "#93C5FD"
 baseFontWeight = 600
-headingFontWeights = [800, 750, 700, 700, 650, 650]
+headingFontWeights = [900, 850, 800, 800, 750, 750]
 
 blueColor = "#3B82F6"
 greenColor = "#38BDF8"
