@@ -50,6 +50,12 @@ def mono_icon(icon, default=":material/circle:"):
     return default
 
 
+def logo_path():
+    """Return the path to the custom ClassPilot emblem logo."""
+    p = storage.PROJECT_DIR / "classpilot" / "logo.png"
+    return str(p) if p.exists() else None
+
+
 # --------------------------------------------------------------------------
 # Pure-Python Page-Switch Transition & Clean Header
 # --------------------------------------------------------------------------
@@ -61,16 +67,16 @@ def page_transition(title):
 def badge(text):
     """Return markdown for a saturated high-contrast technical badge."""
     symbol = STATUS_SYMBOLS.get(text, "■")
-    color = STATUS_COLORS.get(text, "green")
+    color = STATUS_COLORS.get(text, "blue")
     safe = str(text).replace("[", "(").replace("]", ")")
     return f":{color}-badge[{symbol} {safe}]"
 
 
 def page_header(title, subtitle=None, icon=""):
-    """Clean, modern header with subtle emerald accent and divider."""
+    """Clean, modern header with subtle blue accent and divider."""
     clean_title = str(title).strip()
     page_transition(clean_title)
-    st.title(f":green[■] {clean_title}")
+    st.title(f":blue[■] {clean_title}")
     if subtitle:
         st.caption(subtitle)
     st.divider()
@@ -78,14 +84,14 @@ def page_header(title, subtitle=None, icon=""):
 
 def section(title, caption=None):
     clean = str(title).lstrip("■◆ ").strip()
-    st.subheader(f":green[◆] {clean}")
+    st.subheader(f":blue[◆] {clean}")
     if caption:
         st.caption(caption)
 
 
 def empty_state(message, icon=None):
     with st.container(border=True):
-        st.markdown(f":green-badge[● STANDBY] &nbsp; {message}")
+        st.markdown(f":blue-badge[● STANDBY] &nbsp; {message}")
 
 
 def page_link(path, label, icon=":material/arrow_forward:"):
@@ -167,7 +173,7 @@ def bar_chart(rows, x, y, color=None, horizontal=False, height=280):
     if not rows:
         empty_state("No data for this chart yet.")
         return
-    chart_color = color if color is not None else "#1EA812"
+    chart_color = color if color is not None else "#3B82F6"
     st.bar_chart(pd.DataFrame(rows), x=x, y=y, color=chart_color, horizontal=horizontal, height=height)
 
 
@@ -175,7 +181,7 @@ def line_chart(rows, x, y, height=280):
     if not rows:
         empty_state("No data for this chart yet.")
         return
-    st.line_chart(pd.DataFrame(rows), x=x, y=y, color="#0D9488", height=height)
+    st.line_chart(pd.DataFrame(rows), x=x, y=y, color="#38BDF8", height=height)
 
 
 # --------------------------------------------------------------------------

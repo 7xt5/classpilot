@@ -8,11 +8,17 @@ from classpilot import auth, school, storage, ui
 def _render_landing_page(settings, existing_users):
     """Full overview page explaining what ClassPilot is about before Sign Up / Log In."""
     ui.page_transition("LANDING_OVERVIEW")
+    logo = ui.logo_path()
 
-    # Top Header Bar with direct button to Sign Up / Log In
-    top_l, top_r = st.columns([2.6, 1.1])
+    # Top Header Bar with custom ClassPilot logo and direct button to Sign Up / Log In
+    if logo:
+        logo_col, top_l, top_r = st.columns([0.45, 2.35, 1.05])
+        with logo_col:
+            st.image(logo, width="stretch")
+    else:
+        top_l, top_r = st.columns([2.6, 1.1])
     with top_l:
-        st.title(":green[■] ClassPilot")
+        st.title(":blue[■] ClassPilot")
         st.caption(f"{settings['school_name']} · Modern Learning Management & Classroom Workspace")
     with top_r:
         st.write("")
@@ -30,7 +36,7 @@ def _render_landing_page(settings, existing_users):
 
     # Hero Section — What ClassPilot Is About
     with st.container(border=True):
-        st.markdown(":green-badge[● LEARNING MANAGEMENT SYSTEM] :blue-badge[◆ TEACHER & STUDENT WORKSPACES] :violet-badge[▲ PILOTAI ENGINE]")
+        st.markdown(":blue-badge[● LEARNING MANAGEMENT SYSTEM] :green-badge[◆ TEACHER & STUDENT WORKSPACES] :violet-badge[▲ PILOTAI ENGINE]")
         st.header("One Unified Workspace for Teaching, Learning, and Classroom AI")
         st.markdown(
             "**ClassPilot** is a complete digital school platform designed to give **Teachers** full control over their daily workflow "
@@ -59,13 +65,13 @@ def _render_landing_page(settings, existing_users):
             st.rerun()
 
     st.write("")
-    st.subheader(":green[◆] What ClassPilot Is Built For")
+    st.subheader(":blue[◆] What ClassPilot Is Built For")
 
     # 2x2 Feature Grid explaining the platform
     row1_l, row1_r = st.columns(2)
     with row1_l:
         with st.container(border=True):
-            st.markdown(":green-badge[● FOR TEACHERS]")
+            st.markdown(":blue-badge[● FOR TEACHERS]")
             st.markdown("### Custom Teacher Studio")
             st.markdown(
                 "- **100% Teacher-Driven Dashboard:** Nothing is cluttered automatically — add the exact classes, assignments to check, and tasks you want to track.\n"
@@ -74,7 +80,7 @@ def _render_landing_page(settings, existing_users):
             )
     with row1_r:
         with st.container(border=True):
-            st.markdown(":blue-badge[◆ FOR STUDENTS]")
+            st.markdown(":green-badge[◆ FOR STUDENTS]")
             st.markdown("### Guided Student Portal")
             st.markdown(
                 "- **Clear To-Do & Deadlines:** See everything due this week, upcoming quizzes, and teacher announcements in one clean dashboard.\n"
@@ -147,11 +153,20 @@ def login_page():
                 st.rerun()
         with badge_col:
             st.markdown(
-                f":green-badge[● AUTH PORTAL] :blue-badge[◆ SECURE SESSION] :orange-badge[■ ACCOUNTS: {len(existing_users)}]"
+                f":blue-badge[● AUTH PORTAL] :green-badge[◆ SECURE SESSION] :orange-badge[■ ACCOUNTS: {len(existing_users)}]"
             )
 
-        st.title(":green[■] ClassPilot Account Portal")
-        st.caption(f"{settings['school_name']} · Sign in or create a new Student or Teacher account")
+        logo = ui.logo_path()
+        if logo:
+            lg_col, tx_col = st.columns([0.45, 2.55])
+            with lg_col:
+                st.image(logo, width="stretch")
+            with tx_col:
+                st.title(":blue[■] ClassPilot Account Portal")
+                st.caption(f"{settings['school_name']} · Sign in or create a new Student or Teacher account")
+        else:
+            st.title(":blue[■] ClassPilot Account Portal")
+            st.caption(f"{settings['school_name']} · Sign in or create a new Student or Teacher account")
         st.divider()
 
         mode_col1, mode_col2 = st.columns(2)

@@ -100,14 +100,23 @@ def build_pages(user):
 
 
 def sidebar(user):
-    """Technical telemetry sidebar with branding, active operator badge, and logout."""
+    """Technical telemetry sidebar with custom ClassPilot logo, active operator badge, and logout."""
     settings = storage.load_settings()
+    logo = ui.logo_path()
     with st.sidebar:
-        st.markdown("## ■ :green[CLASSPILOT] :blue[OS]")
-        st.caption(f"NODE // {settings['school_name'].upper()} · {settings['academic_year']}")
+        if logo:
+            c_logo, c_txt = st.columns([0.9, 2.3])
+            with c_logo:
+                st.image(logo, width="stretch")
+            with c_txt:
+                st.markdown("### :blue[■ CLASSPILOT]")
+                st.caption(f"{settings['school_name']}")
+        else:
+            st.markdown("## :blue[■ CLASSPILOT]")
+            st.caption(f"{settings['school_name']} · {settings['academic_year']}")
         with st.container(border=True):
             st.markdown(
-                f":green-badge[● ONLINE] {ui.badge(user['role'].title())}  \n"
+                f":blue-badge[● ONLINE] {ui.badge(user['role'].title())}  \n"
                 f"**{user['full_name']}**  \n"
                 f":gray[`@{user['username']}`]"
             )

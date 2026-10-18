@@ -1,9 +1,9 @@
 [theme]
 base = "dark"
-primaryColor = "#22C55E"
-backgroundColor = "#0B110E"
-secondaryBackgroundColor = "#121C17"
-textColor = "#F1F7F3"
+primaryColor = "#3B82F6"
+backgroundColor = "#080C14"
+secondaryBackgroundColor = "#0F172A"
+textColor = "#F1F5F9"
 
 # Modern, fatter geometric typography
 font = "Outfit:https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&display=swap"
@@ -16,46 +16,46 @@ headingFontSizes = ["2.2rem", "1.65rem", "1.3rem", "1.12rem", "1rem", "0.95rem"]
 metricValueFontWeight = 800
 codeFontWeight = 600
 
-borderColor = "#1F3528"
+borderColor = "#1E293B"
 showWidgetBorder = true
 showSidebarBorder = true
 baseRadius = "0.6rem"
 buttonRadius = "0.5rem"
-linkColor = "#4ADE80"
-codeBackgroundColor = "#0E1712"
-codeTextColor = "#86EFAC"
-dataframeBorderColor = "#1F3528"
-dataframeHeaderBackgroundColor = "#15231B"
-dataframeHeaderTextColor = "#E2F2E7"
+linkColor = "#60A5FA"
+codeBackgroundColor = "#0B1120"
+codeTextColor = "#93C5FD"
+dataframeBorderColor = "#1E293B"
+dataframeHeaderBackgroundColor = "#131E36"
+dataframeHeaderTextColor = "#E2E8F0"
 
-# Clean Dark Emerald & Modern Semantic Accents
-greenColor = "#22C55E"
-blueColor = "#14B8A6"
-violetColor = "#34D399"
+# Clean Dark Sapphire Blue & Modern Semantic Accents
+blueColor = "#3B82F6"
+greenColor = "#0EA5E9"
+violetColor = "#6366F1"
 orangeColor = "#F59E0B"
 yellowColor = "#EAB308"
 redColor = "#EF4444"
-grayColor = "#94A89B"
+grayColor = "#94A3B8"
 
-greenBackgroundColor = "#0D2E1B"
-blueBackgroundColor = "#0C2D2B"
-violetBackgroundColor = "#102E24"
+blueBackgroundColor = "#0F2447"
+greenBackgroundColor = "#0C293D"
+violetBackgroundColor = "#1B1E4B"
 orangeBackgroundColor = "#332207"
 yellowBackgroundColor = "#302707"
 redBackgroundColor = "#361111"
-grayBackgroundColor = "#16211B"
+grayBackgroundColor = "#131C2E"
 
-greenTextColor = "#86EFAC"
-blueTextColor = "#5EEAD4"
-violetTextColor = "#6EE7B7"
+blueTextColor = "#93C5FD"
+greenTextColor = "#7DD3FC"
+violetTextColor = "#A5B4FC"
 orangeTextColor = "#FCD34D"
 yellowTextColor = "#FDE047"
 redTextColor = "#FCA5A5"
 grayTextColor = "#CBD5E1"
 
-chartCategoricalColors = ["#22C55E", "#14B8A6", "#F59E0B", "#38BDF8", "#A855F7", "#EF4444"]
+chartCategoricalColors = ["#3B82F6", "#38BDF8", "#6366F1", "#F59E0B", "#10B981", "#EF4444"]
 
-# Darker Subtle Grid Background, Smooth Page Animation & Anti-Overlap Rules
+# Darker Subtle Blue Grid Background, Smooth Page Animation & Anti-Overlap Rules
 [[theme.fontFaces]]
 family = "ClassPilotGrid"
 url = "data:font/woff2;base64,"
@@ -67,13 +67,13 @@ unicode_range = """U+0000-FFFF; }
   to { opacity: 1; transform: translateY(0); }
 }
 [data-testid="stAppViewContainer"], .stApp {
-  background-color: #0B110E !important;
+  background-color: #080C14 !important;
   background-image:
-    radial-gradient(circle at 50% 0%, rgba(34, 197, 94, 0.07), transparent 60%),
-    linear-gradient(to right, rgba(34, 197, 94, 0.032) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(34, 197, 94, 0.032) 1px, transparent 1px),
-    linear-gradient(to right, rgba(34, 197, 94, 0.065) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(34, 197, 94, 0.065) 1px, transparent 1px) !important;
+    radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.08), transparent 60%),
+    linear-gradient(to right, rgba(59, 130, 246, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(59, 130, 246, 0.035) 1px, transparent 1px),
+    linear-gradient(to right, rgba(56, 189, 248, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(56, 189, 248, 0.07) 1px, transparent 1px) !important;
   background-size: 100% 100%, 32px 32px, 32px 32px, 160px 160px, 160px 160px !important;
   background-attachment: fixed !important;
 }
@@ -81,27 +81,27 @@ unicode_range = """U+0000-FFFF; }
   animation: cpFadeSlideIn 0.22s ease-out;
 }
 [data-testid="stHeader"] {
-  background: rgba(11, 17, 14, 0.85) !important;
+  background: rgba(8, 12, 20, 0.85) !important;
   backdrop-filter: blur(8px) !important;
-  border-bottom: 1px solid rgba(34, 197, 94, 0.14) !important;
+  border-bottom: 1px solid rgba(59, 130, 246, 0.16) !important;
 }
 [data-testid="stSidebar"] {
-  background-color: #070C09 !important;
+  background-color: #05080F !important;
   background-image:
-    linear-gradient(to right, rgba(34, 197, 94, 0.025) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(34, 197, 94, 0.025) 1px, transparent 1px) !important;
+    linear-gradient(to right, rgba(59, 130, 246, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(59, 130, 246, 0.03) 1px, transparent 1px) !important;
   background-size: 32px 32px !important;
-  border-right: 1px solid rgba(34, 197, 94, 0.22) !important;
+  border-right: 1px solid rgba(59, 130, 246, 0.24) !important;
 }
 [data-testid="stMain"] [data-testid="stVerticalBlockBorderWrapper"] {
-  background-color: rgba(18, 28, 23, 0.94) !important;
-  border: 1px solid rgba(34, 197, 94, 0.22) !important;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28) !important;
+  background-color: rgba(15, 23, 42, 0.94) !important;
+  border: 1px solid rgba(59, 130, 246, 0.24) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.32) !important;
   border-radius: 0.65rem !important;
 }
 [data-testid="stSidebar"] [data-testid="stVerticalBlockBorderWrapper"] {
-  background-color: rgba(16, 26, 20, 0.95) !important;
-  border: 1px solid rgba(34, 197, 94, 0.24) !important;
+  background-color: rgba(15, 23, 42, 0.95) !important;
+  border: 1px solid rgba(56, 189, 248, 0.26) !important;
   border-radius: 0.6rem !important;
 }
 [data-testid="stIconMaterial"], .material-symbols-rounded {
@@ -128,25 +128,25 @@ button[kind="primary"], button[kind="secondary"] {
 .stApp { --subtle-grid-ready: 1"""
 
 [theme.sidebar]
-backgroundColor = "#070C09"
-secondaryBackgroundColor = "#101A14"
-textColor = "#F1F7F3"
-primaryColor = "#22C55E"
-borderColor = "#1C3024"
+backgroundColor = "#05080F"
+secondaryBackgroundColor = "#0F172A"
+textColor = "#F1F5F9"
+primaryColor = "#3B82F6"
+borderColor = "#1E293B"
 showWidgetBorder = true
-linkColor = "#4ADE80"
-codeBackgroundColor = "#0B130E"
-codeTextColor = "#86EFAC"
+linkColor = "#60A5FA"
+codeBackgroundColor = "#090E1A"
+codeTextColor = "#93C5FD"
 baseFontWeight = 600
 headingFontWeights = [800, 750, 700, 700, 650, 650]
 
-greenColor = "#22C55E"
-blueColor = "#14B8A6"
-violetColor = "#34D399"
+blueColor = "#3B82F6"
+greenColor = "#38BDF8"
+violetColor = "#818CF8"
 orangeColor = "#F59E0B"
 yellowColor = "#EAB308"
 redColor = "#EF4444"
-grayColor = "#94A89B"
+grayColor = "#94A3B8"
 
 [server]
 maxUploadSize = 10
