@@ -16,22 +16,52 @@ from classpilot import ai_assistant, auth, coursework, insights, school, storage
 
 
 def _render_chat(user, ask_fn, quick_prompts, placeholder, modes):
-    """Shared persistent chat UI with Cognitive Persona selector, Chain-of-Thought trace, and live token streaming."""
+    """Shared persistent chat UI with Live LLM Model selector, Cognitive Persona, Chain-of-Thought trace, and streaming."""
     history = ai_assistant.get_chat_history(user["id"])
 
-    # Top control bar: Reasoning Mode + Clear Chat
-    ctrl_left, ctrl_right = st.columns([4, 1])
+    # Top control bar: Reasoning Mode + Live LLM Model + Clear Chat
+    ctrl_left, ctrl_mid, ctrl_right = st.columns([2.2, 2.0, 0.9])
     with ctrl_left:
         selected_mode = st.selectbox(
             "Cognitive Reasoning Mode",
             options=modes,
             key=f"ai_mode_{user['id']}",
         )
+    with ctrl_mid:
+        model_keys = list(ai_assistant.LLM_MODELS.keys())
+        chosen_model = st.selectbox(
+            "Live AI Model",
+            options=model_keys,
+            format_func=lambda k: ai_assistant.LLM_MODELS.get(k, k),
+            key=f"ai_model_sel_{user['id']}",
+        )
+        st.session_state["novarix_ai_model"] = chosen_model
     with ctrl_right:
         st.write("")
         if history and st.button("Clear Chat", key=f"clear_ai_{user['id']}", icon=":material/delete:", width="stretch"):
             ai_assistant.clear_chat_history(user["id"])
             st.rerun()
+
+    with st.expander("Optional: Custom API Key (OpenAI / Groq / OpenRouter)", expanded=False):
+        st.caption("NovaAI works out-of-the-box with its built-in Cloud LLM (no key needed). You can optionally connect your own API key below.")
+        k1, k2, k3 = st.columns([2, 2, 1.2])
+        st.session_state["novarix_custom_api_key"] = k1.text_input(
+            "API Key (optional)",
+            value=st.session_state.get("novarix_custom_api_key", ""),
+            type="password",
+            placeholder="sk-...",
+            key=f"cust_key_{user['id']}",
+        )
+        st.session_state["novarix_custom_base_url"] = k2.text_input(
+            "Endpoint URL",
+            value=st.session_state.get("novarix_custom_base_url", "https://api.openai.com/v1/chat/completions"),
+            key=f"cust_url_{user['id']}",
+        )
+        st.session_state["novarix_custom_model"] = k3.text_input(
+            "Model Name",
+            value=st.session_state.get("novarix_custom_model", "gpt-4o-mini"),
+            key=f"cust_mod_{user['id']}",
+        )
 
     # Quick-prompt buttons in a spacious 2-column grid
     triggered_prompt = None
@@ -52,7 +82,7 @@ def _render_chat(user, ask_fn, quick_prompts, placeholder, modes):
         for msg in history:
             with st.chat_message(msg["role"]):
                 if msg.get("trace"):
-                    with st.expander("◆ Chain-of-Thought Reasoning Trace", expanded=False):
+                    with st.expander("Chain-of-Thought & RAG Reasoning Trace", expanded=False):
                         for step in msg["trace"]:
                             st.code(step, language="text")
                 st.markdown(msg["content"])
@@ -62,30 +92,31 @@ def _render_chat(user, ask_fn, quick_prompts, placeholder, modes):
                 st.markdown(active_prompt)
 
             with st.chat_message("assistant"):
-                reply = ask_fn(user, active_prompt, mode=selected_mode)
+                with st.spinner("NovaAI is thinking..."):
+                    reply = ask_fn(user, active_prompt, mode=selected_mode)
                 trace = ai_assistant.get_latest_trace(user["id"])
                 if trace:
-                    with st.status("◆ NovaAI Cognitive Reasoning Engine — Executed", expanded=False):
+                    with st.status("NovaAI Live LLM & RAG Reasoning Trace", expanded=False):
                         for step in trace:
                             st.code(step, language="text")
                 if st.session_state.get("_fast_test_mode"):
                     st.markdown(reply)
                 else:
-                    st.write_stream(ai_assistant.stream_markdown(reply, delay=0.006))
+                    st.write_stream(ai_assistant.stream_markdown(reply, delay=0.004))
 
             ai_assistant.append_chat_message(user["id"], "user", active_prompt)
             ai_assistant.append_chat_message(user["id"], "assistant", reply, trace=trace)
 
 
 def _render_symbolic_solver_panel(key_prefix):
-    """Interactive Symbolic Algebra, Calculus & Statistics Solver panel."""
+    """Interactive Live AI + Symbolic Algebra, Calculus, Science & Statistics Solver panel."""
     with st.container(border=True):
-        st.subheader("Symbolic Math, Calculus & Data Solver")
-        st.caption("Enter any linear/quadratic equation, polynomial derivative, statistical dataset, or scientific expression for step-by-step working.")
+        st.subheader("AI Math, Science, Calculus & Problem Solver")
+        st.caption("Enter any math equation, word problem, physics/chemistry problem, calculus derivative/integral, or dataset for step-by-step AI + symbolic solving.")
 
         presets = [
             ("Quadratic: 2x^2 + 5x - 3 = 0", "Solve 2x^2 + 5x - 3 = 0"),
-            ("Linear: 5x - 8 = 2x + 10", "Solve 5x - 8 = 2x + 10"),
+            ("Physics: Projectile launched at 25 m/s at 30°", "A projectile is launched at 25 m/s at 30 degrees above horizontal. Find max height and range."),
             ("Calculus: d/dx (3x^3 - 6x^2 + 4x - 9)", "Derivative of 3x^3 - 6x^2 + 4x - 9"),
             ("Statistics: 74, 82, 88, 91, 95, 68", "Mean, median, std of 74, 82, 88, 91, 95, 68"),
         ]
@@ -102,21 +133,18 @@ def _render_symbolic_solver_panel(key_prefix):
             st.session_state[f"{key_prefix}_math_in"] = chosen_preset
 
         expr_in = st.text_input(
-            "Mathematical Equation, Derivative, Dataset, or Expression",
+            "Problem, Equation, Word Problem, Derivative, or Dataset",
             value=default_val,
             key=f"{key_prefix}_math_input_box",
         )
-        if st.button("Execute Symbolic Solver", type="primary", icon=":material/calculate:", key=f"{key_prefix}_run_math") or chosen_preset:
-            sol, note = ai_assistant.solve_math_problem(expr_in)
+        if st.button("Solve Problem Step-by-Step", type="primary", icon=":material/calculate:", key=f"{key_prefix}_run_math") or chosen_preset:
+            with st.spinner("Solving step-by-step with NovaAI Live LLM + Symbolic Engine..."):
+                sol, note = ai_assistant.solve_any_problem_with_ai(expr_in)
             if sol:
-                st.markdown(f"**Solver Verified:** `{note}`")
+                st.markdown(f"**Solver Engine:** `{note}`")
                 st.markdown(sol)
             else:
-                _, kg = ai_assistant.semantic_retrieve(expr_in, top_k=1)
-                if kg:
-                    st.markdown(kg[0]["summary"] + "\n\n" + kg[0]["example"])
-                else:
-                    st.warning("Could not parse a standard equation or expression. Try `2x^2 + 5x - 3 = 0`, `3x + 7 = 22`, `Derivative of 4x^3 - 2x`, or `Mean of 10, 20, 30, 40`.")
+                st.warning("Please enter a problem or question to solve.")
 
 
 # ==========================================================================
@@ -225,9 +253,10 @@ def teacher_assistant_page():
             )
 
             if st.button("Run AI Rubric Evaluation", type="primary", icon=":material/fact_check:", key="btn_run_ai_eval"):
-                st.session_state["ai_eval_result"] = ai_assistant.evaluate_submission_with_ai(
-                    asg_title_in, max_pts_in, stu_text_in, rubric_focus_in
-                )
+                with st.spinner("Evaluating submission with NovaAI Live LLM..."):
+                    st.session_state["ai_eval_result"] = ai_assistant.evaluate_submission_with_ai(
+                        asg_title_in, max_pts_in, stu_text_in, rubric_focus_in
+                    )
 
             eval_res = st.session_state.get("ai_eval_result")
             if eval_res:
@@ -262,10 +291,11 @@ def teacher_assistant_page():
                 title = st.text_input("Lesson Title", placeholder="e.g. Mastering the Discriminant", key="ai_les_title")
                 focus = st.text_input("Key focus (optional)", placeholder="e.g. Step-by-step sign rules", key="ai_les_focus")
                 if st.button("Generate Lesson Draft", key="btn_gen_les", type="primary", icon=":material/auto_awesome:"):
-                    st.session_state["ai_lesson_draft"] = ai_assistant.generate_lesson_draft(
-                        subj_obj["name"], topic or "Core Unit", title or f"{topic or 'Core'} Essentials", focus
-                    )
-                    st.session_state["ai_lesson_subj"] = subj_id
+                    with st.spinner("Generating custom lesson with NovaAI Live LLM..."):
+                        st.session_state["ai_lesson_draft"] = ai_assistant.generate_lesson_draft(
+                            subj_obj["name"], topic or "Core Unit", title or f"{topic or 'Core'} Essentials", focus
+                        )
+                        st.session_state["ai_lesson_subj"] = subj_id
 
                 draft = st.session_state.get("ai_lesson_draft")
                 if draft:
@@ -288,9 +318,10 @@ def teacher_assistant_page():
                 asg_topic = st.text_input("Assignment Topic", placeholder="e.g. Newton's Laws in Everyday Life", key="ai_asg_topic")
                 asg_pts = st.number_input("Max Points", 10, 200, 30, step=5, key="ai_asg_pts")
                 if st.button("Generate Assignment & Rubric", key="btn_gen_asg", type="primary", icon=":material/auto_awesome:"):
-                    st.session_state["ai_asg_draft"] = ai_assistant.generate_assignment_and_rubric(
-                        asg_subj["name"], asg_topic or asg_subj["name"], asg_pts
-                    )
+                    with st.spinner("Designing custom assignment & rubric with NovaAI Live LLM..."):
+                        st.session_state["ai_asg_draft"] = ai_assistant.generate_assignment_and_rubric(
+                            asg_subj["name"], asg_topic or asg_subj["name"], asg_pts
+                        )
 
                 asg_draft = st.session_state.get("ai_asg_draft")
                 if asg_draft:
@@ -321,13 +352,14 @@ def teacher_assistant_page():
                     q_subj_id = ui.subject_select(subjects, "ai_q_subj")
                 q_subj = school.get_subject(q_subj_id)
                 q_topic = c2.text_input("Topic to Quiz", placeholder="e.g. Pythagoras' Theorem", key="ai_q_topic")
-                q_count = c3.number_input("Questions", 2, 4, 4, key="ai_q_count")
+                q_count = c3.number_input("Questions", 2, 6, 4, key="ai_q_count")
                 if st.button("Generate Quiz Questions", key="btn_gen_quiz", type="primary", icon=":material/auto_awesome:"):
                     topic_val = q_topic.strip() or q_subj["name"]
-                    st.session_state["ai_quiz_questions"] = ai_assistant.generate_quiz_questions(
-                        q_subj["name"], topic_val, q_count
-                    )
-                    st.session_state["ai_quiz_title"] = f"{topic_val} Quick Check"
+                    with st.spinner("Generating multiple-choice quiz with NovaAI Live LLM..."):
+                        st.session_state["ai_quiz_questions"] = ai_assistant.generate_quiz_questions(
+                            q_subj["name"], topic_val, q_count
+                        )
+                        st.session_state["ai_quiz_title"] = f"{topic_val} Quick Check"
 
                 q_list = st.session_state.get("ai_quiz_questions")
                 if q_list:

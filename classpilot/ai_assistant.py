@@ -20,15 +20,160 @@ Architecture:
 
 import ast
 import difflib
+import json
 import math
 import operator
+import os
 import re
 import statistics
 import time
+import urllib.error
+import urllib.parse
+import urllib.request
 from collections import Counter
 from fractions import Fraction
 
 from classpilot import coursework, insights, school, storage, tracking, utils
+
+
+# ==========================================================================
+# Live LLM Inference Engine (Zero-Key Cloud LLM + Optional Custom API Keys)
+# ==========================================================================
+LLM_MODELS = {
+    "openai": "OpenAI GPT (Cloud LLM — Default)",
+    "mistral": "Mistral Large (Fast Reasoning)",
+    "deepseek": "DeepSeek R1 / V3 (Math & Code Specialist)",
+}
+
+
+def get_ai_config():
+    """Return active AI provider settings from session_state, settings.json, or env."""
+    cfg = {
+        "model": "openai",
+        "custom_api_key": os.environ.get("OPENAI_API_KEY", ""),
+        "custom_base_url": os.environ.get("OPENAI_BASE_URL", "https://api.openai.com/v1/chat/completions"),
+        "custom_model": os.environ.get("OPENAI_MODEL", "gpt-4o-mini"),
+    }
+    try:
+        import streamlit as st
+        if "novarix_ai_model" in st.session_state:
+            cfg["model"] = st.session_state["novarix_ai_model"]
+        if st.session_state.get("novarix_custom_api_key"):
+            cfg["custom_api_key"] = st.session_state["novarix_custom_api_key"].strip()
+        if st.session_state.get("novarix_custom_base_url"):
+            cfg["custom_base_url"] = st.session_state["novarix_custom_base_url"].strip()
+        if st.session_state.get("novarix_custom_model"):
+            cfg["custom_model"] = st.session_state["novarix_custom_model"].strip()
+    except Exception:
+        pass
+    return cfg
+
+
+def call_live_llm(messages, temperature=0.4, max_tokens=1500, timeout=25):
+    """Call a real Large Language Model over HTTPS using pure Python stdlib.
+
+    1. If a custom OpenAI/Groq/OpenRouter API key is provided, calls that endpoint.
+    2. Otherwise, calls the free, no-key Pollinations OpenAI-compatible LLM endpoint
+       (``https://text.pollinations.ai/openai``) with automatic fallback.
+
+    Returns ``(reply_text, reasoning_text, model_used)`` or ``(None, None, error_str)``.
+    """
+    try:
+        import streamlit as st
+        if st.session_state.get("_fast_test_mode"):
+            return None, None, "fast_test_mode"
+    except Exception:
+        pass
+
+    cfg = get_ai_config()
+
+    # Route 1: Custom API Key (OpenAI / Groq / OpenRouter compatible)
+    if cfg["custom_api_key"]:
+        payload = {
+            "model": cfg["custom_model"] or "gpt-4o-mini",
+            "messages": messages,
+            "temperature": temperature,
+            "max_tokens": max_tokens,
+        }
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {cfg['custom_api_key']}",
+            "User-Agent": "Novarix-LMS/2.0",
+        }
+        try:
+            req = urllib.request.Request(
+                cfg["custom_base_url"],
+                data=json.dumps(payload).encode("utf-8"),
+                headers=headers,
+                method="POST",
+            )
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                data = json.loads(resp.read().decode("utf-8", errors="replace"))
+            choice = (data.get("choices") or [{}])[0].get("message", {})
+            content = (choice.get("content") or "").strip()
+            reasoning = (choice.get("reasoning") or choice.get("reasoning_content") or "").strip()
+            if content:
+                return content, reasoning, data.get("model", cfg["custom_model"])
+        except Exception:
+            pass  # Fall through to built-in cloud LLM
+
+    # Route 2: Built-in Zero-Key Cloud LLM (OpenAI-compatible endpoint)
+    payload = {
+        "model": cfg.get("model") or "openai",
+        "messages": messages,
+        "temperature": temperature,
+    }
+    headers = {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "User-Agent": "Novarix-LMS/2.0",
+    }
+    try:
+        req = urllib.request.Request(
+            "https://text.pollinations.ai/openai",
+            data=json.dumps(payload).encode("utf-8"),
+            headers=headers,
+            method="POST",
+        )
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            raw = resp.read().decode("utf-8", errors="replace")
+        data = json.loads(raw)
+        choice = (data.get("choices") or [{}])[0].get("message", {})
+        content = (choice.get("content") or "").strip()
+        reasoning = (choice.get("reasoning") or choice.get("reasoning_content") or "").strip()
+        model_used = data.get("model") or cfg.get("model") or "gpt-oss-20b"
+        if content:
+            return content, reasoning, model_used
+    except Exception as exc:
+        err_msg = str(exc)
+    else:
+        err_msg = "Empty response"
+
+    # Route 3: Direct plain-text POST fallback to text.pollinations.ai
+    try:
+        req2 = urllib.request.Request(
+            "https://text.pollinations.ai/",
+            data=json.dumps({"messages": messages, "model": "openai"}).encode("utf-8"),
+            headers=headers,
+            method="POST",
+        )
+        with urllib.request.urlopen(req2, timeout=timeout) as resp2:
+            txt = resp2.read().decode("utf-8", errors="replace").strip()
+        if txt:
+            if txt.startswith("{"):
+                try:
+                    d2 = json.loads(txt)
+                    c2 = (d2.get("choices") or [{}])[0].get("message", {}).get("content", "").strip()
+                    if c2:
+                        return c2, "", d2.get("model", "openai-cloud")
+                except Exception:
+                    pass
+            return txt, "", "openai-cloud"
+    except Exception as exc2:
+        err_msg = f"{err_msg}; {exc2}"
+
+    return None, None, err_msg
+
 
 STOP_WORDS = {
     "a", "an", "the", "is", "are", "was", "were", "be", "been", "to", "of",
@@ -758,211 +903,194 @@ def _resolve_conversation_context(user_id, query):
 
 
 # ==========================================================================
-# Teacher AI Copilot Engine (Multi-Turn + Chain-of-Thought + RAG + Math)
+# Live RAG Context Builders for Real LLM Calls
 # ==========================================================================
-def ask_teacher_ai(user, prompt, mode="Analytical & Data-Driven"):
-    """Answer a teacher's question using live LMS telemetry, symbolic solving,
-    curriculum knowledge graph, and conversational memory."""
-    raw_q = (prompt or "").strip()
-    enriched_q, prior_topic = _resolve_conversation_context(user["id"], raw_q)
-    q = enriched_q.lower()
-
+def _build_teacher_rag_context(user, query):
+    """Build a live Novarix school context string to ground the LLM for a teacher/admin."""
     subjects = (school.all_subjects() if user["role"] == "admin"
                 else school.subjects_for_teacher(user["id"]))
     subject_ids = [s["id"] for s in subjects]
+    subj_names = [school.subject_label(s) for s in subjects]
 
-    trace = [
-        f"STAGE 01 // INTENT PARSER: Query='{raw_q[:60]}' | Persona='{mode}'",
-        f"STAGE 02 // TELEMETRY SCOPE: {len(subjects)} active subject(s) linked to @{user['username']}",
-    ]
-    if prior_topic:
-        trace.append(f"STAGE 02b // MEMORY LINK: Resolved follow-up reference -> '{prior_topic[:50]}'")
-
-    # 1. Check if it's a mathematical / statistical calculation
-    math_sol, math_note = solve_math_problem(raw_q)
-    if math_sol:
-        trace.append(f"STAGE 03 // SYMBOLIC ENGINE: {math_note}")
-        st_session_save_trace(user["id"], trace)
-        return math_sol
-
-    # 2. Check if the teacher is asking about a specific student by name
-    all_students = (school.users_by_role("student", True) if user["role"] == "admin"
-                    else school.teacher_students(user["id"]))
-    for student in all_students:
-        first_name = student["full_name"].split()[0].lower()
-        if student["full_name"].lower() in q or (len(first_name) >= 3 and first_name in re.findall(r"[a-z]+", q)):
-            trace.append(f"STAGE 03 // ENTITY MATCH: Student record '{student['full_name']}' ({student['id']})")
-            st_session_save_trace(user["id"], trace)
-            return _student_brief_for_teacher(student, subjects, draft_email=("email" in q or "message" in q or "parent" in q or "note" in q))
-
-    # 3. Check LMS Telemetry Intents (Support Alerts, Grading Queue, Deadlines, NovaPulse, Announcements)
-    if any(w in q for w in ("support", "struggl", "behind", "alert", "failing", "risk", "missing", "flag")):
-        alerts = insights.support_alerts(subjects)
-        trace.append(f"STAGE 03 // RISK TELEMETRY: Scanned rosters -> {len(alerts)} early support alert(s)")
-        st_session_save_trace(user["id"], trace)
-        if not alerts:
-            return (
-                "### ■ NovaAI Risk Telemetry — All Clear\n"
-                "No students currently cross the school's risk thresholds for missing work, low/declining grades, or attendance.\n\n"
-                "- **Recommendation:** Keep recording daily attendance and encourage students to submit NovaPulse ratings after lessons."
-            )
-        lines = [
-            f"### ■ NovaAI Early Support Telemetry ({len(alerts)} Flagged)\n"
-            f"*Mode: {mode} · Ranked by composite concern points:*\n",
-            "| Priority | Student | Subject | Trigger Reasons | Recommended Intervention |",
-            "| :--- | :--- | :--- | :--- | :--- |",
-        ]
-        for a in alerts[:6]:
-            action = "1-on-1 check-in + accept late work" if "missing" in " ".join(a["reasons"]) else "Targeted concept review + practice quiz"
-            lines.append(f"| **{a['level']}** | **{a['student']}** | {a['subject']} | {', '.join(a['reasons'])} | {action} |")
-        lines.append("\n💡 **Next Step:** Open the **Student Outreach Drafter** tab to generate a personalized support message for any flagged student.")
-        return "\n".join(lines)
-
-    if any(w in q for w in ("grade", "grading", "queue", "ungraded", "mark", "submission", "check")):
-        queue, _ = coursework.grading_queue(subject_ids)
-        prefs = insights.get_teacher_prefs(user["id"])
-        dash_asgs = prefs.get("added_assignments", [])
-        trace.append(f"STAGE 03 // GRADING TELEMETRY: {len(queue)} LMS submission(s) + {len(dash_asgs)} dashboard assignment(s)")
-        st_session_save_trace(user["id"], trace)
-        lines = ["### ■ NovaAI Grading & Assessment Telemetry\n"]
-        if dash_asgs:
-            pending_dash = [a for a in dash_asgs if not a.get("done")]
-            lines.append(f"**Your Dashboard 'Assignments to Check':** `{len(pending_dash)}` pending of `{len(dash_asgs)}` added:")
-            for a in dash_asgs[:6]:
-                status = "● Checked" if a.get("done") else f"○ To Check ({a.get('checked_count', 0)}/{a.get('total_to_check', 0)})"
-                lines.append(f"- **{a['title']}** ({a.get('class_subject', 'General')}) — `{status}` · Priority: **{a.get('priority', 'Normal')}**")
-            lines.append("")
-        if queue:
-            lines.append(f"**LMS Submissions Waiting for a Grade (`{len(queue)}` total):**")
-            for sub in queue[:6]:
-                asg = storage.get("assignments", sub["assignment_id"])
-                stu_name = school.user_name(sub["student_id"])
-                late_tag = " *(Submitted Late)*" if coursework.is_late(sub, asg) else ""
-                lines.append(f"- **{stu_name}** $\\rightarrow$ *{asg['title']}* ({school.subject_label(asg['subject_id'])}){late_tag}")
-        elif not dash_asgs:
-            lines.append("Your LMS grading queue and dashboard check-list are both **100% clear**.")
-        return "\n".join(lines)
-
-    if any(w in q for w in ("conflict", "cluster", "pile", "schedule", "busy", "calendar")):
-        clusters = insights.teacher_conflicts(user["id"])
-        trace.append(f"STAGE 03 // DEADLINE DETECTOR: {len(clusters)} cluster(s) found")
-        st_session_save_trace(user["id"], trace)
-        if not clusters:
-            return "### ■ Deadline Conflict Telemetry\nNo deadline clusters detected across your classes. Your assessment pacing is well-balanced."
-        lines = ["### ■ Deadline Conflict Detector Report\n"]
-        for c in clusters:
-            titles = ", ".join(f"**{i['title']}** ({i['subject'].split(' · ')[0]})" for i in c["items"])
-            lines.append(
-                f"- **{c['class']}** has **{len(c['items'])} deadlines** packed between "
-                f"**{c['start'].strftime('%a %d %b')}** and **{c['end'].strftime('%a %d %b')}**: {titles}."
-            )
-        return "\n".join(lines)
-
-    if any(w in q for w in ("pulse", "confus", "confidence", "revisit", "re-teach", "reteach")):
-        flagged = [(s, r) for s in subjects for r in tracking.pulse_summary(s["id"]) if r["flagged"]]
-        trace.append(f"STAGE 03 // NOVAPULSE SCAN: {len(flagged)} low-confidence lesson(s)")
-        st_session_save_trace(user["id"], trace)
-        if not flagged:
-            return "### ■ NovaPulse Telemetry\nNo lessons are currently flagged for low student confidence (all rated lessons are $\\ge 2.5/5$)."
-        lines = ["### ■ NovaPulse — Lessons Flagged for Review\n"]
-        for s, r in flagged:
-            lines.append(
-                f"- **{r['lesson']}** (*{r['topic']}* — {school.subject_label(s)}): "
-                f"avg confidence **{r['average']:.1f}/5** ({r['responses']} responses)."
-            )
-        return "\n".join(lines)
-
-    # 4. Curriculum / Academic Knowledge Retrieval or Lesson Design Query
-    matched_lessons, matched_kg = semantic_retrieve(enriched_q, subject_ids, top_k=2)
-    if matched_lessons or matched_kg or any(w in q for w in ("lesson", "teach", "explain", "plan", "quiz", "rubric", "example", "formula", "code", "python")):
-        trace.append(
-            f"STAGE 03 // HYBRID RAG: Matched {len(matched_lessons)} school lesson(s) + {len(matched_kg)} Knowledge Graph node(s)"
-        )
-        st_session_save_trace(user["id"], trace)
-        parts = [f"### ■ NovaAI Curriculum & Knowledge Synthesis (`{mode}`)"]
-        if matched_lessons:
-            les = matched_lessons[0]
-            parts.append(
-                f"**From Your Novarix Lesson Hub — *{les['title']}* ({school.subject_label(les['subject_id'])}):**\n\n"
-                f"{les['content']}"
-            )
-        if matched_kg:
-            node = matched_kg[0]
-            parts.append(
-                f"**Academic Knowledge Graph — {node['title']} ({node['subject']} · {node['topic']}):**\n\n"
-                f"{node['summary']}\n\n"
-                f"{node['example']}\n\n"
-                f"**Suggested Classroom Check-for-Understanding Prompt:**\n> *{node['practice']}*"
-            )
-        if not matched_lessons and not matched_kg:
-            draft = generate_lesson_draft("General Course", raw_q[:40], raw_q[:50], raw_q)
-            parts.append(draft["content"])
-        return "\n\n---\n\n".join(parts)
-
-    # 5. Comprehensive Executive Briefing (Default / Summary)
-    trace.append("STAGE 03 // EXECUTIVE SYNTHESIS: Compiling full workspace telemetry")
-    st_session_save_trace(user["id"], trace)
     queue, _ = coursework.grading_queue(subject_ids) if subject_ids else ([], [])
     alerts = insights.support_alerts(subjects) if subjects else []
     prefs = insights.get_teacher_prefs(user["id"])
     dash_classes = prefs.get("added_classes", [])
-    dash_asgs = [a for a in prefs.get("added_assignments", []) if not a.get("done")]
-    return (
-        f"### ■ NovaAI Executive Telemetry — {user['full_name']}\n"
-        f"- **Dashboard Classes Added:** `{len(dash_classes)}` class card(s)\n"
-        f"- **Dashboard Assignments to Check:** `{len(dash_asgs)}` pending check(s)\n"
-        f"- **LMS Grading Queue:** `{len(queue)}` submission(s) awaiting scores\n"
-        f"- **Early Support Alerts:** `{len(alerts)}` flagged student-subject pair(s)\n\n"
-        "**What you can ask me right now:**\n"
-        "- *Mathematical & Statistical Queries:* `Solve 2x^2 + 5x - 3 = 0`, `Derivative of 4x^3 - 6x`, `Mean and std of 78, 84, 91, 65, 88`\n"
-        "- *Curriculum & Subject Explanations:* `Explain photosynthesis vs cellular respiration`, `Newton's Laws with worked example`, `Python binary search code`\n"
-        "- *Live Class Telemetry:* `Who needs support?`, `Show my grading queue`, `Check deadline conflicts`\n"
-        "- *1-Click Generators:* Use the tabs above to generate & publish **Lessons**, **Assignments + Rubrics**, **Auto-Graded Quizzes**, or **AI Submission Evaluations**."
+    dash_asgs = prefs.get("added_assignments", [])
+
+    ctx_lines = [
+        f"Teacher Name: {user['full_name']} (@{user['username']}, Role: {user['role']})",
+        f"Assigned LMS Subjects ({len(subj_names)}): {', '.join(subj_names) if subj_names else 'None yet'}",
+        f"Custom Dashboard Classes ({len(dash_classes)}): {', '.join(c.get('name', '') + ' (' + c.get('subject', '') + ')' for c in dash_classes[:8]) or 'None'}",
+        f"Dashboard Assignments to Check ({len(dash_asgs)}): "
+        + (", ".join(f"{a.get('title')} [{'Done' if a.get('done') else 'Pending'}]" for a in dash_asgs[:8]) or "None"),
+        f"LMS Ungraded Submissions Queue ({len(queue)}): "
+        + (", ".join(
+            f"{school.user_name(s['student_id'])} -> {storage.get('assignments', s['assignment_id'])['title']}"
+            for s in queue[:6] if storage.get("assignments", s["assignment_id"])
+        ) or "Empty"),
+        f"Early Support Alerts ({len(alerts)}): "
+        + (", ".join(f"{a['student']} ({a['subject']}: {', '.join(a['reasons'])})" for a in alerts[:6]) or "None"),
+    ]
+
+    # Include matching Lesson Hub excerpts if relevant
+    matched_lessons, _ = semantic_retrieve(query, subject_ids, top_k=2)
+    for les in matched_lessons:
+        ctx_lines.append(f"Relevant Lesson in Novarix ('{les['title']}'): {les['content'][:500]}")
+
+    # Include exact symbolic math verification if query contains math
+    math_sol, math_note = solve_math_problem(query)
+    if math_sol:
+        ctx_lines.append(f"Verified Symbolic Math Engine Result ({math_note}):\n{math_sol}")
+
+    return "\n".join(ctx_lines), math_sol, math_note
+
+
+def _build_student_rag_context(user, query):
+    """Build a live Novarix school context string to ground the LLM for a student."""
+    cls = school.student_class(user["id"])
+    subjects = school.subjects_for_student(user["id"])
+    subject_ids = [s["id"] for s in subjects]
+    todo = insights.student_todo(user["id"])
+    items = tracking.grade_items_for_student(user["id"])
+    overall = utils.mean([i["percent"] for i in items])
+
+    ctx_lines = [
+        f"Student Name: {user['full_name']} (@{user['username']})",
+        f"Enrolled Class: {cls['name'] if cls else 'Unassigned'}",
+        f"Enrolled Subjects: {', '.join(school.subject_label(s) for s in subjects) or 'None yet'}",
+        f"Overall Grade Average: {utils.fmt_pct(overall)} across {len(items)} graded items",
+        "Upcoming / Missing Coursework: "
+        + (", ".join(f"{t['title']} ({t['subject']}, {t['status']}, due {utils.fmt_dt(t['due'])})" for t in todo[:6]) or "All caught up"),
+    ]
+    if items:
+        recent = list(reversed(items))[:4]
+        ctx_lines.append(
+            "Recent Grades: " + ", ".join(f"{r['title']}: {r['score']:g}/{r['max']} ({utils.fmt_pct(r['percent'])})" for r in recent)
+        )
+
+    matched_lessons, _ = semantic_retrieve(query, subject_ids, top_k=2)
+    for les in matched_lessons:
+        ctx_lines.append(f"Teacher's Lesson Note ('{les['title']}'): {les['content'][:500]}")
+
+    math_sol, math_note = solve_math_problem(query)
+    if math_sol:
+        ctx_lines.append(f"Verified Symbolic Math Engine Result ({math_note}):\n{math_sol}")
+
+    return "\n".join(ctx_lines), math_sol, math_note
+
+
+def solve_any_problem_with_ai(query):
+    """Solve any math, science, calculus, statistics, or coding problem using both
+    the exact Symbolic Engine and the live Cloud LLM."""
+    q = (query or "").strip()
+    if not q:
+        return None, None
+
+    math_sol, math_note = solve_math_problem(q)
+    sys_prompt = (
+        "You are NovaAI, an expert Mathematics, Physics, Chemistry, Statistics, and Computer Science solver. "
+        "Solve the user's problem clearly and step-by-step using clean Markdown and LaTeX math ($...$ and $$...$$). "
+        "Always show: (1) Problem Setup / Given Formula, (2) Step-by-Step Working, and (3) Final Verified Answer."
+    )
+    if math_sol:
+        sys_prompt += f"\n\nVerified Symbolic Engine Check (must match your final numerical answer):\n{math_sol}"
+
+    reply, _, model_used = call_live_llm(
+        [
+            {"role": "system", "content": sys_prompt},
+            {"role": "user", "content": f"Solve step-by-step: {q}"},
+        ],
+        temperature=0.2,
+    )
+    if reply:
+        note = f"Live AI Solver ({model_used})" + (f" + {math_note}" if math_note else "")
+        return reply, note
+    if math_sol:
+        return math_sol, math_note
+    return None, None
+
+
+# ==========================================================================
+# Teacher AI Copilot Engine (Live LLM + Multi-Turn Memory + Live RAG)
+# ==========================================================================
+def ask_teacher_ai(user, prompt, mode="Analytical & Data-Driven"):
+    """Answer a teacher's question using a real Large Language Model grounded in
+    live Novarix school telemetry and multi-turn conversation history."""
+    raw_q = (prompt or "").strip()
+    subjects = (school.all_subjects() if user["role"] == "admin"
+                else school.subjects_for_teacher(user["id"]))
+    subject_ids = [s["id"] for s in subjects]
+
+    # Initial welcome screen when chat is empty
+    if not raw_q or raw_q.lower() == "summary":
+        queue, _ = coursework.grading_queue(subject_ids) if subject_ids else ([], [])
+        alerts = insights.support_alerts(subjects) if subjects else []
+        prefs = insights.get_teacher_prefs(user["id"])
+        dash_classes = prefs.get("added_classes", [])
+        dash_asgs = [a for a in prefs.get("added_assignments", []) if not a.get("done")]
+        return (
+            f"### NovaAI Copilot — Welcome, {user['full_name'].split()[0]}\n"
+            f"I am powered by a **live Large Language Model** connected directly to your Novarix workspace.\n\n"
+            f"- **Dashboard Classes:** `{len(dash_classes)}` · **Assignments to Check:** `{len(dash_asgs)}` pending\n"
+            f"- **LMS Grading Queue:** `{len(queue)}` ungraded submission(s) · **Support Alerts:** `{len(alerts)}`\n\n"
+            "**Ask me anything in natural language:**\n"
+            "- *Any academic, math, science, history, or coding question*\n"
+            "- *Custom lesson plans, worksheets, exam questions, parent emails, or rubrics*\n"
+            "- *Live questions about your classes, grading queue, or students*"
+        )
+
+    rag_context, math_sol, math_note = _build_teacher_rag_context(user, raw_q)
+    trace = [
+        f"STAGE 01 // USER PROMPT: '{raw_q[:80]}' | Mode='{mode}'",
+        f"STAGE 02 // LIVE RAG CONTEXT: Injected teacher workspace telemetry ({len(subjects)} subjects)",
+    ]
+    if math_note:
+        trace.append(f"STAGE 02b // SYMBOLIC VERIFIER: {math_note}")
+
+    sys_prompt = (
+        f"You are NovaAI, an intelligent AI Teaching Copilot built into the Novarix school LMS.\n"
+        f"Adopt the cognitive persona: {mode}.\n"
+        f"Answer any question the teacher asks — whether it is an open-ended academic question, math/science problem, "
+        f"coding request, lesson/curriculum design, parent email draft, or a question about their live Novarix classes.\n"
+        f"Use clean Markdown formatting and LaTeX ($...$ / $$...$$) for any mathematical formulas.\n\n"
+        f"=== LIVE NOVARIX CLASSROOM TELEMETRY ===\n{rag_context}\n========================================"
     )
 
+    messages = [{"role": "system", "content": sys_prompt}]
+    for past in get_chat_history(user["id"])[-8:]:
+        if past.get("role") in ("user", "assistant") and past.get("content"):
+            messages.append({"role": past["role"], "content": past["content"][:1200]})
+    messages.append({"role": "user", "content": raw_q})
 
-def _student_brief_for_teacher(student, teacher_subjects, draft_email=False):
-    """Build a detailed diagnostic profile of one student for a teacher."""
-    subj_ids = [s["id"] for s in teacher_subjects]
-    items = tracking.grade_items_for_student(student["id"], subj_ids)
-    overall = utils.mean([i["percent"] for i in items])
-    att = tracking.attendance_summary(student["id"], subj_ids)
-    missing = []
-    for sid in subj_ids:
-        missing.extend(insights.missing_items(student["id"], sid))
+    llm_reply, llm_reasoning, model_used = call_live_llm(messages, temperature=0.45)
+    if llm_reply:
+        trace.append(f"STAGE 03 // LIVE LLM INFERENCE: Model='{model_used}' responded ({len(llm_reply)} chars)")
+        if llm_reasoning:
+            trace.append(f"LLM REASONING TRACE:\n{llm_reasoning}")
+        st_session_save_trace(user["id"], trace)
+        return llm_reply
 
-    lines = [
-        f"### ■ Student Telemetry Profile: **{student['full_name']}** (`@{student['username']}`)\n",
-        f"- **Class Cohort:** {school.class_name(school.student_class(student['id'])['id']) if school.student_class(student['id']) else 'Unassigned'}",
-        f"- **Overall Average (your subjects):** **{utils.fmt_pct(overall)}** across {len(items)} graded item(s)",
-        f"- **Attendance Rate:** **{utils.fmt_pct(att['percent'])}** (Present {att['Present']}, Late {att['Late']}, Absent {att['Absent']})",
-        f"- **Missing Work:** **{len(missing)}** item(s)" + (
-            " — " + ", ".join(m["title"] for m in missing[:4]) if missing else " (All caught up ✓)"
-        ),
-    ]
-    if draft_email or missing or (overall is not None and overall < 70):
-        first = student["full_name"].split()[0]
-        missing_note = (
-            f"We noticed {len(missing)} missing assignment(s) ({', '.join(m['title'] for m in missing[:2])}). "
-            if missing else ""
-        )
-        lines.append(
-            "\n#### ■ AI-Drafted Support Outreach Message\n"
-            f"> **Subject:** Quick check-in & support plan for {student['full_name']}\n>\n"
-            f"> Hi {first},\n>\n"
-            f"> I wanted to check in on how you're feeling about our recent class topics. "
-            f"{missing_note}Your current average is {utils.fmt_pct(overall)}, and I'd love to help you boost your confidence before our next assessment. "
-            f"Please let me know which topic you'd like to review together this week!\n>\n"
-            f"> Best regards,\n> Your Teacher"
-        )
-    return "\n".join(lines)
+    # Offline fallback if network is unreachable or in fast test mode
+    trace.append(f"STAGE 03 // OFFLINE FALLBACK ({model_used})")
+    st_session_save_trace(user["id"], trace)
+    if math_sol:
+        return math_sol
+    matched_lessons, matched_kg = semantic_retrieve(raw_q, subject_ids, top_k=1)
+    if matched_kg:
+        node = matched_kg[0]
+        return f"### {node['title']} ({node['subject']})\n\n{node['summary']}\n\n{node['example']}"
+    if matched_lessons:
+        les = matched_lessons[0]
+        return f"### {les['title']}\n\n{les['content']}"
+    return f"### NovaAI Workspace Summary\n\n```\n{rag_context}\n```"
 
 
 # ==========================================================================
-# AI Submission Evaluator & Rubric Grader (for Teachers)
+# AI Submission Evaluator & Rubric Grader (Powered by Live LLM)
 # ==========================================================================
 def evaluate_submission_with_ai(assignment_title, max_points, student_text, rubric_focus=""):
-    """Analyze a student's written submission/code and return a structured
+    """Evaluate a student's submission using the live LLM and return a structured
     evaluation with suggested score, criterion breakdown, and feedback."""
     text = (student_text or "").strip()
     max_pts = float(max_points or 100)
@@ -974,59 +1102,89 @@ def evaluate_submission_with_ai(assignment_title, max_points, student_text, rubr
             "feedback": "Please submit your written response or file so it can be evaluated.",
         }
 
+    sys_prompt = (
+        "You are an expert teacher and academic evaluator in the Novarix LMS. "
+        "Evaluate the student's submission fairly and constructively against the assignment title, max points, and rubric focus. "
+        "Return ONLY valid JSON with these exact keys:\n"
+        '{\n'
+        '  "suggested_score": <number between 0 and max_points>,\n'
+        '  "completeness_pct": <number 0-100>,\n'
+        '  "Completeness_comment": "<short comment>",\n'
+        '  "depth_pct": <number 0-100>,\n'
+        '  "depth_comment": "<short comment>",\n'
+        '  "clarity_pct": <number 0-100>,\n'
+        '  "clarity_comment": "<short comment>",\n'
+        '  "strengths": ["<strength 1>", "<strength 2>"],\n'
+        '  "improvements": ["<improvement 1>", "<improvement 2>"],\n'
+        '  "feedback": "<2-3 sentence constructive feedback directly addressing the student>"\n'
+        '}'
+    )
+    user_msg = (
+        f"Assignment Title: {assignment_title}\n"
+        f"Maximum Points: {max_pts:g}\n"
+        f"Rubric Focus / Key Concepts: {rubric_focus or 'Accuracy, step-by-step reasoning, and clarity'}\n\n"
+        f"Student Submission:\n{text}"
+    )
+
+    llm_reply, _, model_used = call_live_llm(
+        [{"role": "system", "content": sys_prompt}, {"role": "user", "content": user_msg}],
+        temperature=0.2,
+    )
+    if llm_reply:
+        try:
+            m_json = re.search(r"\{.*\}", llm_reply, re.DOTALL)
+            parsed = json.loads(m_json.group(0) if m_json else llm_reply)
+            suggested_score = round(min(max_pts, max(0.0, float(parsed.get("suggested_score", max_pts * 0.85)))), 1)
+            pct = round((suggested_score / max_pts) * 100, 1) if max_pts > 0 else 0.0
+            comp_pct = float(parsed.get("completeness_pct", pct))
+            depth_pct = float(parsed.get("depth_pct", pct))
+            clarity_pct = float(parsed.get("clarity_pct", pct))
+            comp_c = parsed.get("Completeness_comment") or parsed.get("completeness_comment") or "Evaluated by AI"
+            depth_c = parsed.get("depth_comment") or "Evaluated by AI"
+            clarity_c = parsed.get("clarity_comment") or "Evaluated by AI"
+            feedback_text = (parsed.get("feedback") or "").strip() or f"Good work on {assignment_title}."
+            strengths = parsed.get("strengths") or []
+            improvements = parsed.get("improvements") or []
+
+            strengths_md = "\n".join(f"- **Strength:** {s}" for s in strengths)
+            improve_md = "\n".join(f"- **Area to Improve:** {i}" for i in improvements)
+            report_md = (
+                f"### NovaAI Live Evaluation — *{assignment_title}* (`{model_used}`)\n"
+                f"- **Recommended Score:** **`{suggested_score:g} / {max_pts:g}`** (**`{pct}%`**)\n\n"
+                "| Rubric Criterion | Weight | Score | AI Assessment |\n"
+                "| :--- | :--- | :--- | :--- |\n"
+                f"| **Completeness & Coverage** | 40% | `{comp_pct:.0f}%` | {comp_c} |\n"
+                f"| **Analytical Depth & Accuracy** | 35% | `{depth_pct:.0f}%` | {depth_c} |\n"
+                f"| **Clarity & Structure** | 25% | `{clarity_pct:.0f}%` | {clarity_c} |\n\n"
+                + (f"{strengths_md}\n" if strengths_md else "")
+                + (f"{improve_md}\n\n" if improve_md else "\n")
+                + f"**Ready-to-Save Feedback:**\n> {feedback_text}"
+            )
+            return {
+                "suggested_score": suggested_score,
+                "percent": pct,
+                "summary": report_md,
+                "feedback": feedback_text,
+            }
+        except Exception:
+            pass
+
+    # Fallback heuristic evaluation if offline
     words = text.split()
     word_count = len(words)
     sentences = [s.strip() for s in re.split(r"[.!?]+", text) if s.strip()]
-    has_structure = any(marker in text for marker in ("\n", "1.", "-", "•", "because", "therefore", "however", "for example", "def ", "="))
-    has_quant_or_evidence = bool(re.search(r"(\d+|\"[^\"]+\"|'[^']+'|==|\+|\-|\*|\/)", text))
-
-    # Score heuristic across 3 dimensions: Completeness (40%), Analytical Depth (35%), Clarity & Structure (25%)
+    has_structure = any(marker in text for marker in ("\n", "1.", "-", "•", "because", "therefore", "however", "def ", "="))
+    has_quant = bool(re.search(r"(\d+|\"[^\"]+\"|'[^']+'|==|\+|\-|\*|\/)", text))
     comp_ratio = min(1.0, word_count / 65.0) if word_count >= 15 else max(0.35, word_count / 30.0)
-    depth_ratio = 0.92 if (has_structure and has_quant_or_evidence) else (0.80 if (has_structure or has_quant_or_evidence) else 0.68)
+    depth_ratio = 0.92 if (has_structure and has_quant) else (0.80 if (has_structure or has_quant) else 0.68)
     clarity_ratio = 0.95 if len(sentences) >= 3 else 0.78
-
-    if rubric_focus:
-        focus_tokens = _tokenize(rubric_focus)
-        matched = sum(1 for tok in focus_tokens if tok in text.lower())
-        if focus_tokens:
-            depth_ratio = min(1.0, depth_ratio + 0.08 * (matched / len(focus_tokens)))
-
     total_ratio = min(0.98, max(0.45, 0.40 * comp_ratio + 0.35 * depth_ratio + 0.25 * clarity_ratio))
     suggested_score = round(max_pts * total_ratio, 1)
     pct = round(total_ratio * 100, 1)
-
-    strengths = []
-    improvements = []
-    if word_count >= 45:
-        strengths.append(f"Thorough response length ({word_count} words across {len(sentences)} sentences).")
-    else:
-        improvements.append(f"Expand your explanation with more detail (currently {word_count} words).")
-
-    if has_quant_or_evidence:
-        strengths.append("Includes concrete evidence, calculations, or specific examples.")
-    else:
-        improvements.append("Support your main claims with a worked example, formula, or specific quote.")
-
-    if has_structure:
-        strengths.append("Logical organization and clear reasoning transitions.")
-    else:
-        improvements.append("Use step-by-step numbering or paragraph transitions ('therefore', 'for example') to structure your work.")
-
-    feedback_text = (
-        f"Strong effort on '{assignment_title}'! "
-        + (" ".join(strengths[:2]) + " " if strengths else "")
-        + ("Next time: " + " ".join(improvements[:2]) if improvements else "Keep up the excellent analytical precision!")
-    )
-
+    feedback_text = f"Solid effort on '{assignment_title}'. Your response covers the key points clearly."
     report_md = (
-        f"### ■ NovaAI Submission Evaluation — *{assignment_title}*\n"
-        f"- **Recommended Score:** **`{suggested_score:g} / {max_pts:g}`** (**`{pct}%`**)\n"
-        f"- **Submission Metrics:** `{word_count}` words · `{len(sentences)}` sentence(s)\n\n"
-        "| Rubric Criterion | Weight | Assessment |\n"
-        "| :--- | :--- | :--- |\n"
-        f"| **Completeness & Coverage** | 40% | `{comp_ratio * 100:.0f}%` — {'Comprehensive coverage' if comp_ratio >= 0.8 else 'Developing coverage'} |\n"
-        f"| **Analytical Depth & Evidence** | 35% | `{depth_ratio * 100:.0f}%` — {'Strong evidence/examples' if depth_ratio >= 0.85 else 'Add concrete examples'} |\n"
-        f"| **Clarity & Organization** | 25% | `{clarity_ratio * 100:.0f}%` — {'Well-structured' if clarity_ratio >= 0.85 else 'Needs clearer steps'} |\n\n"
+        f"### NovaAI Submission Evaluation — *{assignment_title}*\n"
+        f"- **Recommended Score:** **`{suggested_score:g} / {max_pts:g}`** (**`{pct}%`**)\n\n"
         f"**Ready-to-Save Feedback:**\n> {feedback_text}"
     )
     return {
@@ -1038,58 +1196,91 @@ def evaluate_submission_with_ai(assignment_title, max_points, student_text, rubr
 
 
 # ==========================================================================
-# Teacher Content Generators (Lessons, Quizzes, Assignments & Rubrics)
+# Teacher Content Generators (Powered by Live LLM)
 # ==========================================================================
 def generate_lesson_draft(subject_name, topic, title, focus_points=""):
-    """Generate a rich, structured Markdown lesson ready to save to ``lessons.json``."""
+    """Generate a rich, structured Markdown lesson using the live LLM."""
     topic = utils.clean(topic, 80) or "Core Concepts"
     title = utils.clean(title, 120) or f"Introduction to {topic}"
     focus = utils.clean(focus_points, 300)
 
-    # Pull matching domain content from Knowledge Graph if available
-    _, kg_matches = semantic_retrieve(f"{subject_name} {topic} {title} {focus}", top_k=1)
-    kg_section = ""
-    if kg_matches:
-        node = kg_matches[0]
-        kg_section = f"\n## 2. Core Theory & Formulas\n{node['summary']}\n\n## 3. Worked Classroom Example\n{node['example']}\n"
-    else:
-        focus_bullets = "\n".join(
-            f"- **{pt.strip()}**: Core principle, mathematical/conceptual definition, and real-world application."
-            for pt in re.split(r"[,;\n]+", focus) if pt.strip()
-        ) if focus else (
-            f"- **Fundamental Principle of {topic}**: Definition, key terminology, and governing rules.\n"
-            f"- **Step-by-Step Methodology**: How to analyze and solve standard {topic} problems.\n"
-            f"- **Common Misconceptions**: Pitfalls to avoid when checking your work."
-        )
-        kg_section = (
-            f"\n## 2. Key Concepts & Breakdown\n{focus_bullets}\n\n"
-            f"## 3. Worked Classroom Example\n"
-            f"1. **Identify the given information** in the {topic} problem and state the target variable.\n"
-            f"2. **Select the governing rule or formula** from our {subject_name} toolkit.\n"
-            f"3. **Execute step-by-step** and verify that units and edge cases make sense.\n"
-        )
+    prompt = (
+        f"Write a comprehensive, engaging classroom lesson in Markdown for:\n"
+        f"- Subject: {subject_name}\n"
+        f"- Unit / Topic: {topic}\n"
+        f"- Lesson Title: {title}\n"
+        f"- Specific Focus: {focus or 'Core theory, key formulas/rules, worked step-by-step example, and common misconceptions'}\n\n"
+        f"Include: (1) Learning Objectives, (2) Core Theory & Key Rules/Formulas (use LaTeX $...$ if applicable), "
+        f"(3) A Complete Step-by-Step Worked Classroom Example, and (4) 3 Quick Self-Check Exit Ticket Questions."
+    )
+    llm_reply, _, _ = call_live_llm(
+        [
+            {"role": "system", "content": "You are an expert curriculum designer writing clear, structured Markdown lessons for students."},
+            {"role": "user", "content": prompt},
+        ],
+        temperature=0.4,
+    )
+    resources = f"{title} — Reference Guide | https://en.wikipedia.org/wiki/{topic.replace(' ', '_')}"
+    if llm_reply:
+        return {"topic": topic, "title": title, "content": llm_reply, "resources": resources}
 
+    # Offline fallback
     content = (
         f"# {title}\n"
         f"**Subject:** {subject_name} · **Unit / Topic:** {topic}\n\n"
         f"## 1. Learning Objectives\n"
-        f"By the end of this lesson, students will be able to:\n"
         f"1. Define the foundational principles of **{title}** within {subject_name}.\n"
-        f"2. Apply step-by-step problem-solving strategies to analyze **{topic}** scenarios.\n"
-        f"3. Self-evaluate mastery using the exit-ticket check below.\n"
-        f"{kg_section}\n"
-        f"## 4. Quick Self-Check (Exit Ticket)\n"
-        f"- **Question 1:** In your own words, what is the most important rule in *{title}*?\n"
-        f"- **Question 2:** Where do mistakes most commonly happen when solving *{topic}* problems, and how can you prevent them?\n"
-        f"- *Remember to rate your confidence (1–5) in **NovaPulse** after reviewing these notes!*"
+        f"2. Apply step-by-step problem-solving strategies to analyze **{topic}** scenarios.\n\n"
+        f"## 2. Core Concepts\n"
+        f"- **Fundamental Principle of {topic}**: Definition, key terminology, and governing rules.\n"
+        f"- **Worked Application**: Step-by-step analysis and verification.\n"
     )
-    resources = f"{title} — Reference Guide | https://en.wikipedia.org/wiki/{topic.replace(' ', '_')}"
     return {"topic": topic, "title": title, "content": content, "resources": resources}
 
 
 def generate_quiz_questions(subject_name, topic, count=4):
-    """Generate auto-gradable multiple-choice questions for a subject/topic."""
+    """Generate real, topic-specific multiple-choice questions using the live LLM."""
     topic = utils.clean(topic, 80) or subject_name
+    num_q = max(1, min(int(count or 4), 6))
+
+    sys_prompt = (
+        "You are an expert academic assessment writer. Generate multiple-choice quiz questions. "
+        "Return ONLY a valid JSON array of objects, where each object has:\n"
+        '{"text": "<question text>", "options": ["<option A>", "<option B>", "<option C>", "<option D>"], "answer": <integer 0, 1, 2, or 3 indicating the correct option>, "points": 2}'
+    )
+    user_msg = (
+        f"Generate {num_q} rigorous, specific multiple-choice questions on the topic '{topic}' "
+        f"for the subject '{subject_name}'. Make the questions test real subject knowledge, calculations, or concepts."
+    )
+    llm_reply, _, _ = call_live_llm(
+        [{"role": "system", "content": sys_prompt}, {"role": "user", "content": user_msg}],
+        temperature=0.35,
+    )
+    if llm_reply:
+        try:
+            m_arr = re.search(r"\[.*\]", llm_reply, re.DOTALL)
+            parsed = json.loads(m_arr.group(0) if m_arr else llm_reply)
+            valid_questions = []
+            for item in parsed:
+                if isinstance(item, dict) and item.get("text") and isinstance(item.get("options"), list) and len(item["options"]) >= 2:
+                    opts = [str(o) for o in item["options"][:4]]
+                    while len(opts) < 4:
+                        opts.append("None of the above")
+                    ans = int(item.get("answer", 0))
+                    if ans < 0 or ans >= len(opts):
+                        ans = 0
+                    valid_questions.append({
+                        "text": str(item["text"]),
+                        "options": opts,
+                        "answer": ans,
+                        "points": int(item.get("points", 2)),
+                    })
+            if valid_questions:
+                return valid_questions[:num_q]
+        except Exception:
+            pass
+
+    # Offline fallback
     templates = [
         {
             "text": f"Which statement best describes the primary objective of studying {topic} in {subject_name}?",
@@ -1136,177 +1327,131 @@ def generate_quiz_questions(subject_name, topic, count=4):
             "points": 2,
         },
     ]
-    return templates[:max(1, min(int(count), len(templates)))]
+    return templates[:num_q]
 
 
 def generate_assignment_and_rubric(subject_name, topic, max_points=30):
-    """Generate an assignment prompt with a clear grading rubric."""
+    """Generate a tailored assignment prompt and grading rubric using the live LLM."""
     topic = utils.clean(topic, 80) or subject_name
     pts = int(max_points or 30)
+    title = f"{topic} — Applied Problem Set & Analysis"
+
+    prompt = (
+        f"Create a detailed student assignment and a 3-tier Markdown grading rubric table for:\n"
+        f"- Subject: {subject_name}\n"
+        f"- Topic: {topic}\n"
+        f"- Total Points: {pts}\n\n"
+        f"Include concrete, specific questions/tasks on {topic} (Part 1: Conceptual Questions, Part 2: Applied Problems/Tasks, Part 3: Critical Thinking), "
+        f"followed by a Markdown Grading Rubric table whose criteria add up to {pts} points."
+    )
+    llm_reply, _, _ = call_live_llm(
+        [
+            {"role": "system", "content": "You are an expert teacher creating clear, rigorous classroom assignments and Markdown rubrics."},
+            {"role": "user", "content": prompt},
+        ],
+        temperature=0.4,
+    )
+    if llm_reply:
+        return {"title": title, "description": llm_reply, "max_points": pts}
+
     c1 = round(pts * 0.4)
     c2 = round(pts * 0.4)
     c3 = pts - c1 - c2
-    title = f"{topic} — Applied Problem Set & Reflection"
     description = (
         f"### Assignment Overview\n"
-        f"Demonstrate your mastery of **{topic}** in **{subject_name}** by completing the three parts below. "
-        f"Show all working steps clearly.\n\n"
+        f"Demonstrate your mastery of **{topic}** in **{subject_name}** by completing the three parts below.\n\n"
         f"#### Part 1: Concept Explanation ({c1} pts)\n"
-        f"Explain the core principles of **{topic}** in your own words and include one real-world or classroom example.\n\n"
+        f"Explain the core principles of **{topic}** in your own words and include one example.\n\n"
         f"#### Part 2: Worked Problems ({c2} pts)\n"
-        f"Solve the practice problems from this week's **{topic}** lesson, showing every step of your reasoning.\n\n"
-        f"#### Part 3: Error Analysis & Reflection ({c3} pts)\n"
-        f"Identify one common mistake students make in **{topic}** and explain how to avoid it.\n\n"
-        f"---\n"
-        f"### Grading Rubric ({pts} Points Total)\n"
-        f"| Criterion | Full Marks | Partial Marks | Needs Improvement |\n"
-        f"| :--- | :--- | :--- | :--- |\n"
-        f"| **Conceptual Accuracy ({c1} pts)** | Clear, accurate explanation with example ({c1} pts) | Minor gaps ({c1 // 2} pts) | Incomplete (0–{max(1, c1 // 4)} pts) |\n"
-        f"| **Step-by-Step Working ({c2} pts)** | All steps shown and verified ({c2} pts) | Correct method, minor slip ({c2 // 2} pts) | Answer only, no steps (0–{max(1, c2 // 4)} pts) |\n"
-        f"| **Clarity & Reflection ({c3} pts)** | Thoughtful error analysis & neat layout ({c3} pts) | Brief reflection ({c3 // 2} pts) | Missing reflection (0 pts) |"
+        f"Solve the practice problems on **{topic}**, showing every step of your reasoning.\n\n"
+        f"#### Part 3: Reflection ({c3} pts)\n"
+        f"Identify one common mistake in **{topic}** and explain how to avoid it."
     )
     return {"title": title, "description": description, "max_points": pts}
 
 
 # ==========================================================================
-# Student AI Study Tutor Engine (Multi-Mode + Math Solver + RAG + Memory)
+# Student AI Study Tutor Engine (Live LLM + Socratic Modes + Live RAG)
 # ==========================================================================
 def ask_student_ai(user, prompt, mode="Step-by-Step Deep Explainer"):
-    """Answer a student's study question using symbolic math solving, their
-    enrolled Lesson Hub notes, the Academic Knowledge Graph, and Socratic modes."""
+    """Answer a student's question using a real Large Language Model grounded in
+    their live Novarix coursework, grades, deadlines, and multi-turn chat history."""
     raw_q = (prompt or "").strip()
-    enriched_q, prior_topic = _resolve_conversation_context(user["id"], raw_q)
-    q = enriched_q.lower()
-
     subjects = school.subjects_for_student(user["id"])
     subject_ids = [s["id"] for s in subjects]
 
-    trace = [
-        f"STAGE 01 // TUTOR INTENT PARSER: Query='{raw_q[:60]}' | TutorMode='{mode}'",
-        f"STAGE 02 // STUDENT CONTEXT: {len(subjects)} enrolled subject(s) for @{user['username']}",
-    ]
-    if prior_topic:
-        trace.append(f"STAGE 02b // CONVERSATION MEMORY: Linked follow-up to '{prior_topic[:50]}'")
-
-    # 1. Symbolic Math / Equation / Calculus / Statistics Solver
-    math_sol, math_note = solve_math_problem(raw_q)
-    if math_sol:
-        trace.append(f"STAGE 03 // SYMBOLIC MATH SOLVER: {math_note}")
-        st_session_save_trace(user["id"], trace)
-        if "Socratic" in mode:
-            # In Socratic Hint Coach mode, guide the student first before showing the full solution
-            return (
-                "### ■ NovaAI Socratic Coach — Guided Math Hint\n"
-                "Instead of spoiling the final answer right away, let's solve it together:\n"
-                "1. **Isolate the structure:** What type of expression or equation is this (linear, quadratic, derivative, or dataset)?\n"
-                "2. **First move:** Move all variable terms to one side or identify $a, b, c$.\n\n"
-                "*Open the full verification below once you've tried the first step:*\n\n"
-                + math_sol
-            )
-        return math_sol
-
-    # 2. Deadlines / To-Do / Homework status
-    if any(w in q for w in ("due", "deadline", "todo", "to-do", "homework", "missing", "next", "upcoming")):
+    if not raw_q or raw_q.lower() == "summary":
         todo = insights.student_todo(user["id"])
-        trace.append(f"STAGE 03 // DEADLINE SCAN: {len(todo)} active task(s)")
-        st_session_save_trace(user["id"], trace)
-        if not todo:
-            return "### ■ Study Schedule Clear\nYou have **no pending assignments or quizzes** right now. Great job staying ahead!"
-        lines = ["### ■ Your Prioritized Deadlines & To-Do List\n"]
-        for item in todo[:6]:
-            tag = "▲ [MISSING — Submit ASAP]" if item["status"] == "Missing" else f"◆ [{item['kind']}]"
-            lines.append(
-                f"- **{tag} {item['title']}** ({item['subject']}) — "
-                f"due **{utils.fmt_dt(item['due'])}** (*{utils.relative_due(item['due'])}*)"
-            )
-        return "\n".join(lines)
-
-    # 3. Grades / Performance / Averages
-    if any(w in q for w in ("grade", "score", "average", "mark", "doing", "progress", "percent")):
         items = tracking.grade_items_for_student(user["id"])
         overall = utils.mean([i["percent"] for i in items])
-        trace.append(f"STAGE 03 // GRADEBOOK ANALYZER: {len(items)} graded item(s), avg={utils.fmt_pct(overall)}")
-        st_session_save_trace(user["id"], trace)
-        if not items:
-            return "You don't have any graded items yet. Once your teacher grades an assignment or you complete a quiz, I can break down your progress!"
-        lines = [f"### ■ Academic Performance Telemetry — Overall Average: **{utils.fmt_pct(overall)}**\n"]
-        for s in subjects:
-            avg = tracking.subject_average(user["id"], s["id"])
-            lines.append(f"- **{school.subject_label(s)}:** **{utils.fmt_pct(avg)}**")
-        recent = list(reversed(items))[:3]
-        lines.append("\n**Most Recent Graded Work:**")
-        for r in recent:
-            lines.append(f"- *{r['title']}* ({r['kind']}): **{r['score']:g}/{r['max']}** ({utils.fmt_pct(r['percent'])})")
-        return "\n".join(lines)
-
-    # 4. Hybrid RAG Search across School Lesson Hub + Built-in Academic Knowledge Graph
-    matched_lessons, matched_kg = semantic_retrieve(enriched_q, subject_ids, top_k=2)
-    if matched_lessons or matched_kg:
-        trace.append(
-            f"STAGE 03 // HYBRID RAG: Retrieved {len(matched_lessons)} class lesson(s) + {len(matched_kg)} encyclopedia concept(s)"
-        )
-        st_session_save_trace(user["id"], trace)
-        sections = [f"### ■ NovaAI Study Tutor (`{mode}`)"]
-
-        if matched_lessons:
-            best = matched_lessons[0]
-            subj_label = school.subject_label(best["subject_id"])
-            sections.append(
-                f"#### ◆ From Your Class Lesson Hub: *{best['title']}* ({subj_label} · {best['topic']})\n"
-                f"{best['content']}"
-            )
-
-        if matched_kg:
-            node = matched_kg[0]
-            if "Socratic" in mode:
-                sections.append(
-                    f"#### ● Socratic Guided Coaching — {node['title']} ({node['subject']})\n"
-                    f"**Step 1 — Core Intuition:**\n{node['summary'].split('###')[0].strip()}\n\n"
-                    f"**Step 2 — Think About This Guiding Question Before Looking at the Solution:**\n"
-                    f"> *{node['practice']}*\n\n"
-                    f"**Step 3 — Model Worked Example for Reference:**\n{node['example']}"
-                )
-            elif "ELI5" in mode:
-                sections.append(
-                    f"#### ● Intuition & Everyday Analogy — {node['title']}\n"
-                    f"Think of **{node['title']}** like a step-by-step recipe where every part has a clear job:\n\n"
-                    f"{node['summary']}\n\n"
-                    f"**Concrete Walkthrough:**\n{node['example']}"
-                )
-            else:
-                sections.append(
-                    f"#### ● Deep Concept Breakdown — {node['title']} ({node['subject']} · {node['topic']})\n"
-                    f"{node['summary']}\n\n"
-                    f"{node['example']}\n\n"
-                    f"#### ▲ Instant Self-Test Challenge\n> {node['practice']}"
-                )
-
-        return "\n\n---\n\n".join(sections)
-
-    # 5. General Intelligent Fallback (handles any open-ended topic gracefully)
-    trace.append("STAGE 03 // OPEN SYNTHESIS: Constructing structured study guide for custom topic")
-    st_session_save_trace(user["id"], trace)
-    if len(raw_q.split()) >= 2 and raw_q.lower() != "summary":
         return (
-            f"### ■ NovaAI Study Breakdown: **{raw_q.strip('?.')}** (`{mode}`)\n\n"
-            f"Here is a structured analytical framework for **{raw_q.strip('?.')}**:\n\n"
-            f"1. **Core Definition & Purpose:** Identify the fundamental rule, mechanism, or thesis behind *{raw_q.strip('?.')}*.\n"
-            f"2. **Governing Relationships:** Break the topic into **Inputs / Causes** $\\rightarrow$ **Process / Formula** $\\rightarrow$ **Outputs / Effects**.\n"
-            f"3. **Worked Application:** Test your understanding by writing one concrete example or solving one numerical case from start to finish.\n\n"
-            f"💡 **Try asking me:**\n"
-            f"- Any algebra or calculus problem (e.g., `Solve 2x^2 + 5x - 3 = 0` or `Derivative of 3x^3 - 4x`)\n"
-            f"- Science, Coding, or Literature topics (e.g., `Explain photosynthesis`, `Ohm's Law example`, `Python binary search`, `PEEL essay structure`)"
+            f"### Hi {user['full_name'].split()[0]}! I'm your NovaAI Live Study Tutor.\n"
+            f"I am powered by a **live Large Language Model** and connected to your Novarix classes.\n\n"
+            f"- **Enrolled Subjects:** `{len(subjects)}` · **Pending Deadlines:** `{len(todo)}` · **Overall Average:** `{utils.fmt_pct(overall)}`\n\n"
+            "**Ask me anything at all:**\n"
+            "- *Solve any math, calculus, physics, chemistry, or statistics problem step-by-step*\n"
+            "- *Explain any concept, historical event, literary text, or write/debug code*\n"
+            "- *Quiz you on a topic, give Socratic hints, or check your upcoming assignments & grades*"
         )
 
-    lessons = coursework.lessons_for_subjects(subject_ids)
-    sample_titles = ", ".join(f"*{l['title']}*" for l in lessons[:4]) if lessons else "*Quadratic Equations*, *Newton's Laws*, *Photosynthesis*, or *Python Loops*"
-    return (
-        f"### ■ Hi {user['full_name'].split()[0]}! I'm your NovaAI Cognitive Tutor.\n"
-        f"I combine a **Symbolic Math & Calculus Solver**, your teacher's **Lesson Hub notes**, and a **Multi-Subject Encyclopedia**.\n\n"
-        f"- **Solve Math & Science Step-by-Step:** Try `Solve 2x^2 + 5x - 3 = 0`, `Solve 5x - 8 = 2x + 10`, `Derivative of 3x^3 - 6x^2 + 4x`, or `Mean and std of 82, 88, 91, 75, 95`\n"
-        f"- **Master Any Concept:** Ask about {sample_titles}\n"
-        f"- **Track Your Coursework:** Ask `What is due soon?` or `How are my grades looking?`"
+    rag_context, math_sol, math_note = _build_student_rag_context(user, raw_q)
+    trace = [
+        f"STAGE 01 // STUDENT QUERY: '{raw_q[:80]}' | TutorMode='{mode}'",
+        f"STAGE 02 // LIVE RAG CONTEXT: Injected student coursework, grades & lessons ({len(subjects)} subjects)",
+    ]
+    if math_note:
+        trace.append(f"STAGE 02b // SYMBOLIC VERIFIER: {math_note}")
+
+    mode_instructions = {
+        "Step-by-Step Deep Explainer": (
+            "Explain concepts and solve problems thoroughly step-by-step. Show clear derivations, formulas (in LaTeX $...$ / $$...$$), and a concrete example."
+        ),
+        "Socratic Hint Coach (Guided Thinking)": (
+            "Act as a Socratic tutor: guide the student with clear intuition, step-by-step hints, and a guiding question so they learn how to reason through the problem, while still being super helpful."
+        ),
+        "ELI5 / Intuition & Analogies": (
+            "Explain the topic using vivid real-world analogies and simple, intuitive language first, then connect it to the formal academic rules."
+        ),
+        "Exam Cram & Practice Quizzer": (
+            "Give a high-yield exam summary (key formulas, definitions, common traps) followed by 2 quick practice questions with answers."
+        ),
+    }.get(mode, "Explain clearly and step-by-step.")
+
+    sys_prompt = (
+        f"You are NovaAI, an intelligent, encouraging AI Study Tutor built into the Novarix school LMS.\n"
+        f"Tutor Mode: {mode} — {mode_instructions}\n"
+        f"Answer any question the student asks across any subject (Math, Physics, Chemistry, Biology, Computer Science, "
+        f"English, History, World Languages, Study Skills, or their own Novarix deadlines and grades).\n\n"
+        f"=== LIVE STUDENT NOVARIX CONTEXT ===\n{rag_context}\n===================================="
     )
+
+    messages = [{"role": "system", "content": sys_prompt}]
+    for past in get_chat_history(user["id"])[-8:]:
+        if past.get("role") in ("user", "assistant") and past.get("content"):
+            messages.append({"role": past["role"], "content": past["content"][:1200]})
+    messages.append({"role": "user", "content": raw_q})
+
+    llm_reply, llm_reasoning, model_used = call_live_llm(messages, temperature=0.45)
+    if llm_reply:
+        trace.append(f"STAGE 03 // LIVE LLM INFERENCE: Model='{model_used}' responded ({len(llm_reply)} chars)")
+        if llm_reasoning:
+            trace.append(f"LLM REASONING TRACE:\n{llm_reasoning}")
+        st_session_save_trace(user["id"], trace)
+        return llm_reply
+
+    # Offline fallback if network is unreachable or in fast test mode
+    trace.append(f"STAGE 03 // OFFLINE FALLBACK ({model_used})")
+    st_session_save_trace(user["id"], trace)
+    if math_sol:
+        return math_sol
+    matched_lessons, matched_kg = semantic_retrieve(raw_q, subject_ids, top_k=1)
+    if matched_kg:
+        node = matched_kg[0]
+        return f"### {node['title']} ({node['subject']})\n\n{node['summary']}\n\n{node['example']}"
+    if matched_lessons:
+        les = matched_lessons[0]
+        return f"### {les['title']}\n\n{les['content']}"
+    return f"### Study Context\n\n```\n{rag_context}\n```"
 
 
 def st_session_save_trace(user_id, trace_steps):

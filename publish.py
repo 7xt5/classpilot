@@ -77,7 +77,7 @@ def main():
         "-o", "ExitOnForwardFailure=yes",
     ]
     if ssh_key.exists():
-        tunnel_cmd += ["-i", str(ssh_key), "-R", "80:127.0.0.1:8501", "localhost.run"]
+        tunnel_cmd += ["-i", str(ssh_key), "-R", "80:127.0.0.1:8501", "nokey@localhost.run"]
     else:
         tunnel_cmd += ["-R", "80:127.0.0.1:8501", "nokey@localhost.run"]
 
