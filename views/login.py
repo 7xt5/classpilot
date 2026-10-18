@@ -6,20 +6,20 @@ from classpilot import auth, school, storage, ui
 
 
 def _render_landing_page(settings, existing_users):
-    """Full overview page explaining what ClassPilot is about before Sign Up / Log In."""
+    """Short, bold, clean front page explaining ClassPilot before Sign Up / Log In."""
     ui.page_transition("LANDING_OVERVIEW")
     logo = ui.logo_path()
 
     # Top Header Bar with custom ClassPilot logo and direct button to Sign Up / Log In
     if logo:
-        logo_col, top_l, top_r = st.columns([0.45, 2.35, 1.05])
+        logo_col, top_l, top_r = st.columns([0.4, 2.4, 1.0])
         with logo_col:
             st.image(logo, width="stretch")
     else:
         top_l, top_r = st.columns([2.6, 1.1])
     with top_l:
         st.title(":blue[■] ClassPilot")
-        st.caption(f"{settings['school_name']} · Modern Learning Management & Classroom Workspace")
+        st.markdown("**Smart Classroom & AI Learning Workspace**")
     with top_r:
         st.write("")
         if st.button(
@@ -34,17 +34,16 @@ def _render_landing_page(settings, existing_users):
 
     st.divider()
 
-    # Hero Section — What ClassPilot Is About
+    # Clean, Bold Hero Card
     with st.container(border=True):
-        st.markdown(":blue-badge[● LEARNING MANAGEMENT SYSTEM] :green-badge[◆ TEACHER & STUDENT WORKSPACES] :violet-badge[▲ PILOTAI ENGINE]")
-        st.header("One Unified Workspace for Teaching, Learning, and Classroom AI")
+        st.markdown(":blue-badge[● CLASSROOM OS] :green-badge[◆ TEACHERS & STUDENTS] :violet-badge[▲ PILOTAI]")
+        st.header("Teach Smarter. Learn Faster.")
         st.markdown(
-            "**ClassPilot** is a complete digital school platform designed to give **Teachers** full control over their daily workflow "
-            "and give **Students** a clear, organized place to learn, submit coursework, and get step-by-step academic help."
+            "**One clean workspace to manage classes, submit coursework, track grades, and solve problems with AI.**"
         )
-        cta1, cta2, _ = st.columns([1.3, 1.3, 1.4])
+        cta1, cta2, _ = st.columns([1.2, 1.2, 1.6])
         if cta1.button(
-            "Create an Account (Sign Up)",
+            "Get Started (Sign Up)",
             icon=":material/person_add:",
             type="primary",
             width="stretch",
@@ -54,7 +53,7 @@ def _render_landing_page(settings, existing_users):
             st.session_state["show_auth_portal"] = True
             st.rerun()
         if cta2.button(
-            "Log In to Existing Account",
+            "Log In",
             icon=":material/login:",
             type="secondary",
             width="stretch",
@@ -65,55 +64,38 @@ def _render_landing_page(settings, existing_users):
             st.rerun()
 
     st.write("")
-    st.subheader(":blue[◆] What ClassPilot Is Built For")
 
-    # 2x2 Feature Grid explaining the platform
+    # 2x2 Short, Bold Feature Grid
     row1_l, row1_r = st.columns(2)
     with row1_l:
         with st.container(border=True):
             st.markdown(":blue-badge[● FOR TEACHERS]")
-            st.markdown("### Custom Teacher Studio")
-            st.markdown(
-                "- **100% Teacher-Driven Dashboard:** Nothing is cluttered automatically — add the exact classes, assignments to check, and tasks you want to track.\n"
-                "- **Coursework & Grading:** Publish lessons with file attachments, create assignments, build auto-graded multiple-choice quizzes, and manage your gradebook.\n"
-                "- **Attendance & Planning:** Record daily class attendance in seconds and check for deadline pile-ups before assigning homework."
-            )
+            st.subheader("Custom Teacher Studio")
+            st.markdown("**Build your own dashboard. Add classes, track assignments to check, and grade work in one place.**")
     with row1_r:
         with st.container(border=True):
             st.markdown(":green-badge[◆ FOR STUDENTS]")
-            st.markdown("### Guided Student Portal")
-            st.markdown(
-                "- **Clear To-Do & Deadlines:** See everything due this week, upcoming quizzes, and teacher announcements in one clean dashboard.\n"
-                "- **Lessons, Assignments & Quizzes:** Read lesson notes, upload assignment submissions, and take interactive quizzes with instant feedback.\n"
-                "- **Live Progress Tracking:** Track your subject averages, assignment scores, attendance percentage, and milestone badges."
-            )
+            st.subheader("Student Learning Hub")
+            st.markdown("**Join your class, study lessons, submit assignments, take quizzes, and track your live grades.**")
 
     row2_l, row2_r = st.columns(2)
     with row2_l:
         with st.container(border=True):
-            st.markdown(":violet-badge[▲ BUILT-IN AI ASSISTANT]")
-            st.markdown("### PilotAI Cognitive Workbench")
-            st.markdown(
-                "- **AI Copilot for Teachers:** Generate lesson plans, assignment rubrics, and quiz questions, or run the **AI Rubric Submission Grader**.\n"
-                "- **Socratic Tutor for Students:** Ask academic questions across Math, Science, English, CS, and History with expandable reasoning traces.\n"
-                "- **Symbolic Math & Stats Solver:** Step-by-step algebra, quadratic equations, calculus derivatives, and descriptive statistics."
-            )
+            st.markdown(":violet-badge[▲ PILOTAI]")
+            st.subheader("Built-In AI Assistant")
+            st.markdown("**Step-by-step math & science solver, Socratic study tutor, and instant AI rubric grader.**")
     with row2_r:
         with st.container(border=True):
-            st.markdown(":orange-badge[■ CLASSROOM INSIGHTS]")
-            st.markdown("### Smart Classroom Signals")
-            st.markdown(
-                "- **ClassPulse Confidence Ratings:** Students privately rate how well they understood each lesson so teachers know which topics to review.\n"
-                "- **Early Support Alerts:** Automatically highlights students who may need extra support based on missing work, grade trends, or attendance.\n"
-                "- **Instant Role Setup:** Sign up in seconds as either a **Teacher** or a **Student** and launch straight into your tailored workspace."
-            )
+            st.markdown(":orange-badge[■ INSIGHTS]")
+            st.subheader("Live Classroom Signals")
+            st.markdown("**Take attendance in seconds, check lesson confidence, and prevent deadline pile-ups.**")
 
     st.write("")
     with st.container(border=True):
         bot_l, bot_r = st.columns([2.4, 1.2])
         with bot_l:
-            st.markdown("### Ready to open your workspace?")
-            st.caption("Choose whether you are a Student or a Teacher on the next screen, or sign in to an existing account.")
+            st.subheader("Ready to open your workspace?")
+            st.markdown("**Sign up as a Student or a Teacher in seconds.**")
         with bot_r:
             st.write("")
             if st.button(
