@@ -12,7 +12,7 @@ def login_page():
     if "auth_mode" not in st.session_state:
         st.session_state["auth_mode"] = "signup" if not existing_users else "signin"
 
-    left, center, right = st.columns([0.9, 1.6, 0.9])
+    left, center, right = st.columns([0.4, 2.2, 0.4])
     with center:
         ui.page_transition(f"AUTH_{st.session_state['auth_mode'].upper()}")
         st.markdown(
@@ -22,21 +22,8 @@ def login_page():
             f":orange-badge[■ ACCOUNTS // {len(existing_users)}]"
         )
 
-        hdr_l, hdr_r = st.columns([3, 1.3])
-        with hdr_l:
-            st.title("■ :green[CLASSPILOT] :blue[OS]")
-            st.caption(f"▸ {settings['school_name'].upper()} · TECHNICAL LEARNING MANAGEMENT SYSTEM")
-        with hdr_r:
-            st.write("")
-            if st.session_state["auth_mode"] == "signin":
-                if st.button("Sign Up", icon=":material/person_add:", type="primary", width="stretch", key="top_signup_btn"):
-                    st.session_state["auth_mode"] = "signup"
-                    st.rerun()
-            else:
-                if st.button("Sign In", icon=":material/login:", type="secondary", width="stretch", key="top_signin_btn"):
-                    st.session_state["auth_mode"] = "signin"
-                    st.rerun()
-
+        st.title("■ :green[CLASSPILOT] :blue[OS]")
+        st.caption(f"▸ {settings['school_name'].upper()} · TECHNICAL LEARNING MANAGEMENT SYSTEM")
         st.divider()
 
         mode_col1, mode_col2 = st.columns(2)

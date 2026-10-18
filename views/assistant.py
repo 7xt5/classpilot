@@ -40,12 +40,14 @@ def _render_chat(user, ask_fn, quick_prompts, placeholder, modes):
             ai_assistant.clear_chat_history(user["id"])
             st.rerun()
 
-    # Quick-prompt buttons
-    cols = st.columns(len(quick_prompts))
+    # Quick-prompt buttons in a spacious 2-column grid
     triggered_prompt = None
-    for col, (label, prompt_text) in zip(cols, quick_prompts):
-        if col.button(label, key=f"qp_{user['id']}_{label}", width="stretch"):
-            triggered_prompt = prompt_text
+    for row_idx in range(0, len(quick_prompts), 2):
+        chunk = quick_prompts[row_idx:row_idx + 2]
+        cols = st.columns(len(chunk))
+        for col, (label, prompt_text) in zip(cols, chunk):
+            if col.button(label, key=f"qp_{user['id']}_{label}", width="stretch"):
+                triggered_prompt = prompt_text
 
     typed_prompt = st.chat_input(placeholder, key=f"chat_in_{user['id']}")
     active_prompt = triggered_prompt or typed_prompt
@@ -100,11 +102,13 @@ def _render_symbolic_solver_panel(key_prefix):
             ("Calculus: d/dx (3x^3 - 6x^2 + 4x - 9)", "Derivative of 3x^3 - 6x^2 + 4x - 9"),
             ("Statistics: 74, 82, 88, 91, 95, 68", "Mean, median, std of 74, 82, 88, 91, 95, 68"),
         ]
-        p_cols = st.columns(len(presets))
         chosen_preset = None
-        for col, (lbl, val) in zip(p_cols, presets):
-            if col.button(lbl, key=f"{key_prefix}_pre_{lbl}", width="stretch"):
-                chosen_preset = val
+        for row_idx in range(0, len(presets), 2):
+            chunk = presets[row_idx:row_idx + 2]
+            p_cols = st.columns(len(chunk))
+            for col, (lbl, val) in zip(p_cols, chunk):
+                if col.button(lbl, key=f"{key_prefix}_pre_{lbl}", width="stretch"):
+                    chosen_preset = val
 
         default_val = chosen_preset or st.session_state.get(f"{key_prefix}_math_in", "2x^2 + 5x - 3 = 0")
         if chosen_preset:

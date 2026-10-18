@@ -209,16 +209,16 @@ def _teacher_builder_panel(user, school_subjects, prefs, is_empty):
                 st.markdown("**Add an Assignment to Check**")
                 with st.form("t_dash_add_assignment_form", clear_on_submit=True):
                     a_title = st.text_input("Assignment Title to Check", placeholder="e.g. Quadratic Equations Problem Set")
-                    af1, af2, af3 = st.columns(3)
                     default_classes = [f"{c['class_name']} · {c['subject_name']}" for c in prefs.get("added_classes", [])]
                     default_classes += [school.subject_label(s) for s in school_subjects if school.subject_label(s) not in default_classes]
-                    a_class = af1.text_input(
+                    a_class = st.text_input(
                         "Class / Subject",
                         value=default_classes[0] if default_classes else "",
                         placeholder="e.g. Grade 9 - A · Mathematics",
                     )
-                    a_count = af2.number_input("Submissions / Papers to Check", min_value=0, max_value=500, value=10, step=1)
-                    a_prio = af3.selectbox("Priority", ["Normal", "High", "Urgent"])
+                    af1, af2 = st.columns(2)
+                    a_count = af1.number_input("Submissions / Papers to Check", min_value=0, max_value=500, value=10, step=1)
+                    a_prio = af2.selectbox("Priority", ["Normal", "High", "Urgent"])
                     af4, af5 = st.columns(2)
                     a_due = af4.text_input("Check By / Deadline Note", placeholder="e.g. Friday 5:00 PM")
                     a_notes = af5.text_input("Grading Notes (optional)", placeholder="e.g. Check Q4 working steps")

@@ -5,16 +5,16 @@ backgroundColor = "#F7FAF7"
 secondaryBackgroundColor = "#FFFFFF"
 textColor = "#0B1D0A"
 
-# Modern, fatter/heavier geometric typography
-font = "Outfit:https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&display=swap"
-headingFont = "Outfit:https://fonts.googleapis.com/css2?family=Outfit:wght@700;800;900&display=swap"
-codeFont = "JetBrains Mono:https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600;700&display=swap"
+# Modern, fatter geometric typography
+font = "Outfit:https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&display=swap"
+headingFont = "Outfit:https://fonts.googleapis.com/css2?family=Outfit:wght@700;800&display=swap"
+codeFont = "JetBrains Mono:https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&display=swap"
 baseFontSize = 16
 baseFontWeight = 600
-headingFontWeights = [900, 850, 800, 800, 750, 750]
-headingFontSizes = ["2.7rem", "2.1rem", "1.6rem", "1.3rem", "1.12rem", "1rem"]
-metricValueFontWeight = 900
-codeFontWeight = 700
+headingFontWeights = [800, 800, 750, 700, 700, 700]
+headingFontSizes = ["2.25rem", "1.75rem", "1.35rem", "1.15rem", "1.05rem", "0.95rem"]
+metricValueFontWeight = 800
+codeFontWeight = 600
 
 borderColor = "#D1E7CF"
 showWidgetBorder = true
@@ -55,66 +55,68 @@ grayTextColor = "#243823"
 
 chartCategoricalColors = ["#1EA812", "#0D9488", "#15803D", "#D97706", "#0284C7", "#DC2626"]
 
-# Subtle Grid Background & Fatter Modern Typography
+# Subtle Grid Background & Anti-Overlap Layout Rules
 [[theme.fontFaces]]
-family = "Outfit"
+family = "ClassPilotGrid"
 url = "https://fonts.gstatic.com/s/outfit/v11/QGYvz_MVcBeNP4NJtEtq.woff2"
-weight_range = "500 900"
+weight_range = "400 800"
 style = "normal"
 unicode_range = """U+0000-FFFF; }
 [data-testid="stAppViewContainer"], .stApp {
   background-color: #F7FAF7 !important;
   background-image:
-    radial-gradient(circle at 50% 0%, rgba(30, 168, 18, 0.055), transparent 65%),
-    linear-gradient(to right, rgba(30, 168, 18, 0.042) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(30, 168, 18, 0.042) 1px, transparent 1px),
-    linear-gradient(to right, rgba(22, 138, 14, 0.082) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(22, 138, 14, 0.082) 1px, transparent 1px) !important;
+    radial-gradient(circle at 50% 0%, rgba(30, 168, 18, 0.045), transparent 65%),
+    linear-gradient(to right, rgba(30, 168, 18, 0.038) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(30, 168, 18, 0.038) 1px, transparent 1px),
+    linear-gradient(to right, rgba(22, 138, 14, 0.072) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(22, 138, 14, 0.072) 1px, transparent 1px) !important;
   background-size: 100% 100%, 28px 28px, 28px 28px, 140px 140px, 140px 140px !important;
   background-attachment: fixed !important;
 }
 [data-testid="stHeader"] {
-  background: rgba(247, 250, 247, 0.85) !important;
+  background: rgba(247, 250, 247, 0.88) !important;
   backdrop-filter: blur(8px) !important;
   border-bottom: 1px solid rgba(30, 168, 18, 0.12) !important;
 }
 [data-testid="stSidebar"] {
   background-color: #0B1F0A !important;
   background-image:
-    linear-gradient(to right, rgba(46, 213, 29, 0.038) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(46, 213, 29, 0.038) 1px, transparent 1px) !important;
+    linear-gradient(to right, rgba(46, 213, 29, 0.032) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(46, 213, 29, 0.032) 1px, transparent 1px) !important;
   background-size: 28px 28px !important;
   border-right: 1.5px solid rgba(30, 168, 18, 0.35) !important;
 }
 [data-testid="stMain"] [data-testid="stVerticalBlockBorderWrapper"] {
-  background-color: rgba(255, 255, 255, 0.96) !important;
+  background-color: rgba(255, 255, 255, 0.97) !important;
   border: 1.5px solid rgba(30, 168, 18, 0.22) !important;
-  box-shadow: 0 4px 16px rgba(11, 29, 10, 0.045) !important;
+  box-shadow: 0 4px 14px rgba(11, 29, 10, 0.04) !important;
   border-radius: 0.6rem !important;
 }
 [data-testid="stSidebar"] [data-testid="stVerticalBlockBorderWrapper"] {
-  background-color: rgba(20, 48, 18, 0.90) !important;
+  background-color: rgba(20, 48, 18, 0.92) !important;
   border: 1px solid rgba(46, 213, 29, 0.25) !important;
   border-radius: 0.6rem !important;
 }
-h1, h2, h3, h4, [data-testid="stMarkdownContainer"] h1, [data-testid="stMarkdownContainer"] h2, [data-testid="stMarkdownContainer"] h3 {
-  font-family: "Outfit", sans-serif !important;
-  font-weight: 900 !important;
-  letter-spacing: -0.02em !important;
+[data-testid="stIconMaterial"], .material-symbols-rounded {
+  font-family: "Material Symbols Rounded" !important;
+  font-weight: normal !important;
+  font-style: normal !important;
+  line-height: 1 !important;
 }
-p, li, label, span, [data-testid="stMarkdownContainer"] p, [data-testid="stWidgetLabel"] p, [data-testid="stCaptionContainer"] p {
-  font-family: "Outfit", sans-serif !important;
-  font-weight: 650 !important;
+h1, h2, h3, h4 {
+  line-height: 1.28 !important;
+  letter-spacing: -0.015em !important;
 }
-button[kind="primary"], button[kind="secondary"], [data-testid="stBaseButton-primary"] p, [data-testid="stBaseButton-secondary"] p {
-  font-family: "Outfit", sans-serif !important;
-  font-weight: 800 !important;
-  letter-spacing: 0.01em !important;
+p, li, label {
+  line-height: 1.5 !important;
 }
-[data-testid="stMetricValue"] {
-  font-family: "Outfit", sans-serif !important;
-  font-weight: 900 !important;
-  letter-spacing: -0.025em !important;
+button[kind="primary"], button[kind="secondary"] {
+  height: auto !important;
+  min-height: 2.6rem !important;
+  padding-top: 0.45rem !important;
+  padding-bottom: 0.45rem !important;
+  white-space: normal !important;
+  line-height: 1.3 !important;
 }
 .stApp { --subtle-grid-ready: 1"""
 
@@ -129,7 +131,7 @@ linkColor = "#4ADE80"
 codeBackgroundColor = "#0E290C"
 codeTextColor = "#86EFAC"
 baseFontWeight = 600
-headingFontWeights = [900, 850, 800, 800, 750, 750]
+headingFontWeights = [800, 800, 750, 700, 700, 700]
 
 greenColor = "#25C417"
 blueColor = "#2DD4BF"

@@ -182,16 +182,18 @@ def pct_column(label, help_text=None):
 
 def metrics(items):
     """Row of technical metric cards. ``items`` = list of (label, value, help, delta)."""
-    accent_cycle = ["green", "blue", "orange", "violet", "red", "green"]
-    columns = st.columns(len(items))
-    for idx, (column, item) in enumerate(zip(columns, items)):
-        label, value = item[0], item[1]
-        help_text = item[2] if len(item) > 2 else None
-        delta = item[3] if len(item) > 3 else None
-        acc = accent_cycle[idx % len(accent_cycle)]
-        with column.container(border=True):
-            st.markdown(f":{acc}-badge[◆ METRIC #{idx + 1:02d}]")
-            st.metric(label, value, delta=delta, help=help_text)
+    if not items:
+        return
+    per_row = 3 if len(items) > 4 else len(items)
+    for row_start in range(0, len(items), per_row):
+        chunk = items[row_start:row_start + per_row]
+        columns = st.columns(len(chunk))
+        for column, item in zip(columns, chunk):
+            label, value = item[0], item[1]
+            help_text = item[2] if len(item) > 2 else None
+            delta = item[3] if len(item) > 3 else None
+            with column.container(border=True):
+                st.metric(label, value, delta=delta, help=help_text)
 
 
 def bar_chart(rows, x, y, color=None, horizontal=False, height=280):
