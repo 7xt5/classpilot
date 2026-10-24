@@ -41,6 +41,7 @@ COLLECTIONS = [
     "pulse",
     "teacher_prefs",
     "ai_history",
+    "join_requests",
 ]
 
 # Default school settings (stored in settings.json, which is a dictionary).

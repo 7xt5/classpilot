@@ -52,7 +52,7 @@ def users_page():
             full_name = col1.text_input("Full name")
             username = col2.text_input("Username", help="Lowercase letters, numbers, dots or underscores.")
             email = col1.text_input("E-mail")
-            role = col2.selectbox("Role", auth.ROLES, index=2, format_func=str.title)
+            role = col2.selectbox("Role", ["teacher", "student"], index=1, format_func=str.title)
             password = col1.text_input("Temporary password", type="password",
                                        help="At least 8 characters with a letter and a number.")
             class_options = ["none"] + [c["id"] for c in school.all_classes()]
@@ -126,10 +126,15 @@ def _manage_user(admin, user):
 # ==========================================================================
 def classes_page():
     auth.require_role("admin")
-    ui.page_header("Classes", "Create classes and manage which students belong to each one.", "🏫")
+    ui.page_header("Classes & Join Requests", "Add or remove classes, and accept or decline Teacher & Student join requests.")
+
+    from views.dashboard import render_admin_requests_and_classes
+    render_admin_requests_and_classes(key_prefix="adm_cls_page")
+    st.divider()
 
     classes = school.all_classes()
     rows = [{"Class": c["name"], "Grade": c.get("grade_level", ""), "Room": c.get("room", ""),
+             "Teachers": ", ".join(t["full_name"] for t in school.class_teachers(c["id"])) or "—",
              "Students": len(school.class_students(c["id"])),
              "Subjects": ", ".join(s["name"] for s in school.subjects_for_class(c["id"])) or "—"} for c in classes]
     ui.table(rows)

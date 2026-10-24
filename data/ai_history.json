@@ -31,47 +31,17 @@
     "messages": [
       {
         "role": "user",
-        "content": "what days today",
-        "timestamp": "2026-10-17T13:52:40"
+        "content": "Who is falling behind and needs support in my classes?",
+        "timestamp": "2026-10-18T21:32:29"
       },
       {
         "role": "assistant",
-        "content": "### ■ NovaAI Executive Telemetry — Ibad-ur-rehman\n- **Dashboard Classes Added:** `0` class card(s)\n- **Dashboard Assignments to Check:** `0` pending check(s)\n- **LMS Grading Queue:** `0` submission(s) awaiting scores\n- **Early Support Alerts:** `0` flagged student-subject pair(s)\n\n**What you can ask me right now:**\n- *Mathematical & Statistical Queries:* `Solve 2x^2 + 5x - 3 = 0`, `Derivative of 4x^3 - 6x`, `Mean and std of 78, 84, 91, 65, 88`\n- *Curriculum & Subject Explanations:* `Explain photosynthesis vs cellular respiration`, `Newton's Laws with worked example`, `Python binary search code`\n- *Live Class Telemetry:* `Who needs support?`, `Show my grading queue`, `Check deadline conflicts`\n- *1-Click Generators:* Use the tabs above to generate & publish **Lessons**, **Assignments + Rubrics**, **Auto-Graded Quizzes**, or **AI Submission Evaluations**.",
-        "timestamp": "2026-10-17T13:52:40",
+        "content": "### ■ NovaAI Risk Telemetry — All Clear\nNo students currently cross the school's risk thresholds for missing work, low/declining grades, or attendance.\n\n- **Recommendation:** Keep recording daily attendance and encourage students to submit NovaPulse ratings after lessons.",
+        "timestamp": "2026-10-18T21:32:29",
         "trace": [
-          "STAGE 01 // INTENT PARSER: Query='what days today' | Persona='Empathetic Mentor & Parent Outreach'",
-          "STAGE 02 // TELEMETRY SCOPE: 0 active subject(s) linked to @ibad",
-          "STAGE 03 // EXECUTIVE SYNTHESIS: Compiling full workspace telemetry"
-        ]
-      },
-      {
-        "role": "user",
-        "content": "Solve 2+3",
-        "timestamp": "2026-10-17T14:35:00"
-      },
-      {
-        "role": "assistant",
-        "content": "### ■ Symbolic Computation Engine — Direct Evaluation\n- **Expression:** `2+3`\n- **Computed Result:** **`5`**",
-        "timestamp": "2026-10-17T14:35:00",
-        "trace": [
-          "STAGE 01 // INTENT PARSER: Query='Solve 2+3' | Persona='Analytical & Data-Driven'",
-          "STAGE 02 // TELEMETRY SCOPE: 0 active subject(s) linked to @ibad",
-          "STAGE 03 // SYMBOLIC ENGINE: Evaluated mathematical expression '2+3' = 5."
-        ]
-      },
-      {
-        "role": "user",
-        "content": "what is the date today",
-        "timestamp": "2026-10-17T14:35:24"
-      },
-      {
-        "role": "assistant",
-        "content": "### ■ NovaAI Executive Telemetry — Ibad-ur-rehman\n- **Dashboard Classes Added:** `0` class card(s)\n- **Dashboard Assignments to Check:** `0` pending check(s)\n- **LMS Grading Queue:** `0` submission(s) awaiting scores\n- **Early Support Alerts:** `0` flagged student-subject pair(s)\n\n**What you can ask me right now:**\n- *Mathematical & Statistical Queries:* `Solve 2x^2 + 5x - 3 = 0`, `Derivative of 4x^3 - 6x`, `Mean and std of 78, 84, 91, 65, 88`\n- *Curriculum & Subject Explanations:* `Explain photosynthesis vs cellular respiration`, `Newton's Laws with worked example`, `Python binary search code`\n- *Live Class Telemetry:* `Who needs support?`, `Show my grading queue`, `Check deadline conflicts`\n- *1-Click Generators:* Use the tabs above to generate & publish **Lessons**, **Assignments + Rubrics**, **Auto-Graded Quizzes**, or **AI Submission Evaluations**.",
-        "timestamp": "2026-10-17T14:35:24",
-        "trace": [
-          "STAGE 01 // INTENT PARSER: Query='what is the date today' | Persona='Analytical & Data-Driven'",
-          "STAGE 02 // TELEMETRY SCOPE: 0 active subject(s) linked to @ibad",
-          "STAGE 03 // EXECUTIVE SYNTHESIS: Compiling full workspace telemetry"
+          "STAGE 01 // INTENT PARSER: Query='Who is falling behind and needs support in my classes?' | Persona='Analytical & Data-Driven'",
+          "STAGE 02 // TELEMETRY SCOPE: 1 active subject(s) linked to @ibad",
+          "STAGE 03 // RISK TELEMETRY: Scanned rosters -> 0 early support alert(s)"
         ]
       }
     ]

@@ -368,21 +368,16 @@ def add_teacher_dashboard_class(teacher_id, class_name, subject_name, room="", s
 
     if register_in_school and not subject_id:
         existing_cls = next((c for c in school.all_classes() if c["name"].lower() == class_name.lower()), None)
-        if not existing_cls:
-            existing_cls, _ = school.create_class(class_name, class_name.split("-")[0].strip(), room or "Room TBD")
         if existing_cls:
             existing_subj = next(
                 (s for s in school.subjects_for_class(existing_cls["id"])
-                 if s["name"].lower() == subject_name.lower()),
+                 if s["name"].lower() == subject_name.lower() and s.get("teacher_id") == teacher_id),
                 None,
             )
-            if not existing_subj:
-                code = "".join(w[0] for w in subject_name.split()[:3]).upper() + existing_cls["name"][:2].upper()
-                existing_subj, _ = school.create_subject(
-                    subject_name, code, existing_cls["id"], teacher_id, notes or f"{subject_name} ({class_name})"
-                )
             if existing_subj:
                 subject_id = existing_subj["id"]
+            else:
+                school.request_join_class(teacher_id, existing_cls["id"], subject_name=subject_name)
 
     prefs = get_teacher_prefs(teacher_id)
     classes = prefs.get("added_classes", [])

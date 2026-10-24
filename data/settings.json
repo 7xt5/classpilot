@@ -30,5 +30,9 @@
       "letter": "F",
       "min": 0
     }
-  ]
+  ],
+  "remembered_user_id": "usr_c62d206b",
+  "remembered_token": "y4J5AvAp4p_X-hU9TrrewgWXC8WdAjit",
+  "remembered_expires": "2026-11-17T21:32:05",
+  "admin_classes_initialized": true
 }

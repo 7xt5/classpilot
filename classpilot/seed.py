@@ -461,23 +461,100 @@ OLD_DEMO_USERNAMES = {
 }
 
 
+DEFAULT_ADMIN_CLASSES = [
+    ("Grade 9 - A", "Grade 9", "Room 101"),
+    ("Grade 10 - B", "Grade 10", "Room 202"),
+    ("Grade 11 - A", "Grade 11", "Room 301"),
+    ("Grade 12 - A", "Grade 12", "Room 401"),
+]
+
+
+def ensure_single_admin_and_classes():
+    """Guarantee exactly 1 Admin account (admin / Admin@123) exists and owns initial classes."""
+    users = storage.load("users")
+    changed_users = False
+
+    # Keep only 'admin' as the single admin account
+    admin_user = None
+    filtered_users = []
+    for u in users:
+        if u.get("username") == "admin":
+            u["role"] = "admin"
+            u["active"] = True
+            admin_user = u
+            filtered_users.append(u)
+        elif u.get("role") == "admin":
+            # Demote or skip any extra admin account so there is strictly 1 Admin
+            changed_users = True
+            continue
+        else:
+            filtered_users.append(u)
+
+    if not admin_user:
+        admin_user = {
+            "id": storage.new_id("usr"),
+            "username": "admin",
+            "full_name": "School Admin",
+            "email": "admin@novarix.edu",
+            "role": "admin",
+            "password_hash": auth.hash_password("Admin@123"),
+            "active": True,
+            "created_at": _ts(-1),
+            "last_login": None,
+            "failed_attempts": 0,
+            "locked_until": None,
+        }
+        filtered_users.insert(0, admin_user)
+        changed_users = True
+
+    if changed_users:
+        storage.save("users", filtered_users)
+
+    # Seed initial Admin classes once if no classes exist yet
+    settings = storage.load_settings()
+    classes = storage.load("classes")
+    if not classes and not settings.get("admin_classes_initialized"):
+        initial_classes = [
+            {
+                "id": storage.new_id("cls"),
+                "name": name,
+                "grade_level": grade,
+                "room": room,
+                "owner_id": admin_user["id"],
+                "teacher_ids": [],
+                "student_ids": [],
+                "created_at": _ts(-1),
+            }
+            for name, grade, room in DEFAULT_ADMIN_CLASSES
+        ]
+        storage.save("classes", initial_classes)
+        settings["admin_classes_initialized"] = True
+        storage.save_settings(settings)
+    elif classes and not settings.get("admin_classes_initialized"):
+        settings["admin_classes_initialized"] = True
+        storage.save_settings(settings)
+
+
 def reset_to_clean_slate():
-    """Remove pre-seeded demo people (sara.khan, ali.raza, etc.) so users create their own accounts."""
+    """Remove pre-seeded demo people (sara.khan, ali.raza, etc.) and keep the 1 Admin account + classes."""
     storage.DATA_DIR.mkdir(parents=True, exist_ok=True)
     storage.UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
     storage.save_settings(storage.DEFAULT_SETTINGS)
     for name in storage.COLLECTIONS:
         storage.save(name, [])
+    ensure_single_admin_and_classes()
 
 
 def ensure_data():
-    """Ensure storage directories and default settings exist without seeding demo users."""
+    """Ensure storage directories, default settings, and the 1 Admin account & classes exist."""
     storage.DATA_DIR.mkdir(parents=True, exist_ok=True)
     storage.UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+    created = False
     if not (storage.DATA_DIR / "settings.json").exists():
         storage.save_settings(storage.DEFAULT_SETTINGS)
-        return True
-    return False
+        created = True
+    ensure_single_admin_and_classes()
+    return created
 
 
 

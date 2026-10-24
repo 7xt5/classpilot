@@ -38,14 +38,16 @@ def build_pages(user):
         page(profile.profile_page, "My account", ":material/person:", "account"),
     ]
     if role == "admin":
+        pending_count = len(school.pending_join_requests())
+        cls_nav_title = f"Classes ({pending_count} pending)" if pending_count else "Classes"
         return {
             "Overview": [
                 page(dashboard.admin_dashboard, "Dashboard", ":material/dashboard:", "dashboard", True),
                 page(assistant.teacher_assistant_page, "NovaAI Copilot", ":material/smart_toy:", "assistant"),
             ],
             "School setup": [
+                page(admin.classes_page, cls_nav_title, ":material/domain:", "classes"),
                 page(admin.users_page, "Users", ":material/group:", "users"),
-                page(admin.classes_page, "Classes", ":material/domain:", "classes"),
                 page(admin.subjects_page, "Subjects", ":material/menu_book:", "subjects"),
                 page(admin.settings_page, "Settings", ":material/settings:", "settings"),
             ],

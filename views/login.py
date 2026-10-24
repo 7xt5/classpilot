@@ -192,19 +192,26 @@ def login_page():
                     )
                     email = st.text_input("Email Address (optional)", placeholder="e.g. ayesha@school.edu")
 
+                    existing_classes = [c["name"] for c in school.all_classes()]
                     class_input = ""
-                    if role_choice == "student":
-                        existing_classes = [c["name"] for c in school.all_classes()]
-                        if existing_classes:
-                            class_input = st.selectbox(
-                                "Select Your Class",
+                    subject_input = ""
+                    if existing_classes:
+                        if role_choice == "teacher":
+                            tc1, tc2 = st.columns(2)
+                            class_input = tc1.selectbox(
+                                "Request to Join Class (optional)",
                                 options=[""] + existing_classes,
-                                format_func=lambda v: v if v else "— Select or join later on Dashboard —",
+                                format_func=lambda v: v if v else "— Join later on Dashboard —",
+                            )
+                            subject_input = tc2.text_input(
+                                "Subject You Teach (if requesting class)",
+                                placeholder="e.g. Mathematics",
                             )
                         else:
-                            class_input = st.text_input(
-                                "Your Class / Grade (optional)",
-                                placeholder="e.g. Grade 9 - A",
+                            class_input = st.selectbox(
+                                "Request to Join Class (sent to Admin for approval)",
+                                options=[""] + existing_classes,
+                                format_func=lambda v: v if v else "— Join later on Dashboard —",
                             )
 
                     p1, p2 = st.columns(2)
@@ -237,27 +244,31 @@ def login_page():
                         password=password,
                         confirm_password=confirm_password,
                         class_name=class_input,
+                        subject_name=subject_input,
                     )
                     if err:
                         st.error(err, icon=":material/error:")
                     else:
                         auth.login_session(new_user, remember=remember_signup)
+                        join_msg = (
+                            f" Your join request for '{class_input}' has been sent to the Admin."
+                            if class_input
+                            else ""
+                        )
                         st.session_state.setdefault("_flash", []).append((
-                            f"Account created! Welcome to your {role_choice.title()} Dashboard, {new_user['full_name'].split()[0]}.",
+                            f"Account created! Welcome to your {role_choice.title()} Dashboard, {new_user['full_name'].split()[0]}.{join_msg}",
                             ":material/check_circle:",
                         ))
                         st.rerun()
 
         # ==================================================================
-        # SIGN IN — Existing Account
+        # SIGN IN — Existing Account (including the 1 School Admin Account)
         # ==================================================================
         else:
             with st.container(border=True):
                 st.subheader("Sign In")
-                if not existing_users:
-                    st.info("No accounts exist yet. Click **Create New Account (Sign Up)** above to register as a Teacher or Student.", icon=":material/person_add:")
                 with st.form("login_form"):
-                    username = st.text_input("Username", placeholder="Enter your username")
+                    username = st.text_input("Username", placeholder="Enter your username (or 'admin')")
                     password = st.text_input("Password", type="password")
                     remember_signin = st.checkbox(
                         "Remember me (stay signed in automatically)",
@@ -273,4 +284,24 @@ def login_page():
                         auth.login_session(user, remember=remember_signin)
                         st.session_state.setdefault("_flash", []).append(
                             (f"Welcome back, {user['full_name'].split()[0]}.", ":material/check_circle:"))
+                        st.rerun()
+
+            with st.container(border=True):
+                st.markdown("**School Admin Account (Manages All Classes & Join Requests)**")
+                st.caption("Username: `admin` · Password: `Admin@123`")
+                if st.button(
+                    "Quick Sign In as School Admin",
+                    icon=":material/admin_panel_settings:",
+                    type="secondary",
+                    width="stretch",
+                    key="quick_admin_login_btn",
+                ):
+                    admin_user, error = auth.authenticate("admin", "Admin@123")
+                    if error:
+                        st.error(error, icon=":material/error:")
+                    else:
+                        auth.login_session(admin_user, remember=True)
+                        st.session_state.setdefault("_flash", []).append(
+                            ("Signed in as School Admin.", ":material/check_circle:")
+                        )
                         st.rerun()

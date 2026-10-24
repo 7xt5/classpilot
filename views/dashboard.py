@@ -34,37 +34,61 @@ def _announcement_feed(user, limit=3):
                 st.rerun()
 
 
+def _render_student_class_join_panel(user):
+    """Allow students to view Admin classes and click 'Join' to send a request to Admin."""
+    cls = school.student_class(user["id"])
+    all_cls = school.all_classes()
+    my_requests = school.user_join_requests(user["id"])
+    pending_by_cls = {r["class_id"]: r for r in my_requests if r.get("status") == "pending"}
+
+    with st.container(border=True):
+        if cls:
+            st.markdown(f"**■ Your Current Class:** **{cls['name']}** ({cls.get('grade_level', '')} · {cls.get('room', '')}) — *Approved by Admin*")
+            expand_label = "View All School Classes or Request to Switch Class"
+            expanded_default = False
+        else:
+            st.markdown("**■ Join a Class (Request Sent to School Admin)**")
+            st.caption("Click **Join Class** on your class below. Your request will be sent to the Admin, and once accepted you will enter the class.")
+            expand_label = "Available School Classes (Click Join)"
+            expanded_default = True
+
+        with st.expander(expand_label, expanded=expanded_default):
+            if not all_cls:
+                st.caption("No classes have been created by the School Admin yet.")
+            else:
+                cols = st.columns(min(len(all_cls), 3))
+                for idx, c in enumerate(all_cls):
+                    col = cols[idx % len(cols)]
+                    with col.container(border=True):
+                        st.markdown(f"**{c['name']}**")
+                        st.caption(f"{c.get('grade_level', 'Class')} · {c.get('room', 'Room TBD')} · {len(c.get('student_ids', []))} student(s)")
+                        if cls and cls["id"] == c["id"]:
+                            st.markdown("**[ ● Joined & Approved ]**")
+                        elif c["id"] in pending_by_cls:
+                            req = pending_by_cls[c["id"]]
+                            st.markdown("**[ ◆ Request Sent — Pending Admin Approval ]**")
+                            if st.button("Cancel Request", key=f"stu_cancel_req_{req['id']}", type="secondary", width="stretch"):
+                                school.cancel_join_request(req["id"], user["id"])
+                                ui.done(f"Cancelled join request for {c['name']}.")
+                        else:
+                            if st.button(
+                                "Join Class",
+                                key=f"stu_join_cls_{c['id']}",
+                                type="primary",
+                                icon=":material/group_add:",
+                                width="stretch",
+                            ):
+                                _, err = school.request_join_class(user["id"], c["id"])
+                                ui.report(err, f"Request to join '{c['name']}' sent to Admin for approval!")
+
+
 # ==========================================================================
 # Student Dashboard (Monochrome White & Black)
 # ==========================================================================
 def student_dashboard():
     user = auth.require_role("student")
     ui.page_header(_greeting(user), datetime.now().strftime("%A, %d %B %Y"))
-    cls = school.student_class(user["id"])
-    if not cls:
-        with st.container(border=True):
-            st.markdown("**■ Join Your Class**")
-            st.caption("Select an existing class or enter your class name below to link your subjects and assignments.")
-            all_cls = school.all_classes()
-            with st.form("student_self_join_class"):
-                if all_cls:
-                    chosen_cls_id = st.selectbox("Select Class", [c["id"] for c in all_cls], format_func=school.class_name)
-                    custom_cls_name = st.text_input("Or enter a new Class name", placeholder="e.g. Grade 9 - A")
-                else:
-                    chosen_cls_id = None
-                    custom_cls_name = st.text_input("Enter your Class / Grade", placeholder="e.g. Grade 9 - A")
-                if st.form_submit_button("Join Class", type="primary", icon=":material/add:"):
-                    if custom_cls_name.strip():
-                        clean_name = utils.clean(custom_cls_name, 60)
-                        found_cls = next((c for c in all_cls if c["name"].lower() == clean_name.lower()), None)
-                        if not found_cls:
-                            found_cls, _ = school.create_class(clean_name, clean_name.split("-")[0].strip(), "Room 101")
-                        if found_cls:
-                            school.set_student_class(user["id"], found_cls["id"])
-                            ui.done(f"Joined {found_cls['name']}.")
-                    elif chosen_cls_id:
-                        school.set_student_class(user["id"], chosen_cls_id)
-                        ui.done(f"Joined {school.class_name(chosen_cls_id)}.")
+    _render_student_class_join_panel(user)
 
 
     settings = storage.load_settings()
@@ -161,41 +185,44 @@ def _teacher_builder_panel(user, school_subjects, prefs, is_empty):
             "+ Add Live Widget / Settings",
         ])
 
-        # --- TAB 1: Add a Class to Dashboard ---
+        # --- TAB 1: Join an Admin Class or Add Approved Class to Dashboard ---
         with tab_cls:
             c_left, c_right = st.columns([3, 2])
             with c_left:
-                st.markdown("**Add a Class & Subject to My Dashboard**")
-                with st.form("t_dash_add_class_form", clear_on_submit=True):
-                    f1, f2 = st.columns(2)
-                    cls_name = f1.text_input("Class Name", placeholder="e.g. Grade 9 - A")
-                    subj_name = f2.text_input("Subject", placeholder="e.g. Mathematics")
-                    f3, f4 = st.columns(2)
-                    room = f3.text_input("Room", placeholder="e.g. Room 204")
-                    schedule = f4.text_input("Schedule / Days & Time", placeholder="e.g. Mon / Wed · 09:00 AM")
-                    notes = st.text_input("Class Focus / Notes (optional)", placeholder="e.g. Check homework folders; Quiz on Friday")
-                    register_in_school = st.checkbox("Also register this Class & Subject in the school LMS if new", value=True)
-                    if st.form_submit_button("Add Class to My Dashboard", type="primary", icon=":material/add:", width="stretch"):
-                        err = insights.add_teacher_dashboard_class(
-                            user["id"], cls_name, subj_name, room, schedule, notes,
-                            register_in_school=register_in_school,
+                st.markdown("**Request to Join an Admin School Class**")
+                st.caption("Select a class owned by the School Admin and enter the Subject you teach. Once the Admin accepts your request, the class & subject will be added to your workspace.")
+                all_admin_classes = school.all_classes()
+                if not all_admin_classes:
+                    st.caption("No classes have been created by the Admin yet.")
+                else:
+                    with st.form("t_dash_add_class_form", clear_on_submit=True):
+                        f1, f2 = st.columns(2)
+                        picked_cls_id = f1.selectbox(
+                            "Select Admin Class",
+                            options=[c["id"] for c in all_admin_classes],
+                            format_func=school.class_name,
                         )
-                        ui.report(err, f"Added '{cls_name} · {subj_name}' to your dashboard.")
+                        subj_name = f2.text_input("Subject You Teach", placeholder="e.g. Mathematics")
+                        if st.form_submit_button("Join Class (Send Request to Admin)", type="primary", icon=":material/group_add:", width="stretch"):
+                            _, err = school.request_join_class(
+                                user["id"], picked_cls_id, subject_name=subj_name or "General Studies"
+                            )
+                            ui.report(err, f"Join request for '{school.class_name(picked_cls_id)}' sent to Admin for approval.")
 
             with c_right:
-                st.markdown("**Or Quick-Add Existing School Subject**")
+                st.markdown("**Add Approved Subject to Dashboard**")
                 if not school_subjects:
-                    st.caption("No existing school subjects assigned yet. Use the form on the left to create and add any class.")
+                    st.caption("Once the Admin accepts your class join request, your approved subjects will appear here and on your dashboard automatically.")
                 else:
                     with st.form("t_dash_quick_subject_form", clear_on_submit=True):
                         picked_subj_id = st.selectbox(
-                            "Select Subject",
+                            "Select Approved Subject",
                             options=[s["id"] for s in school_subjects],
                             format_func=school.subject_label,
                         )
                         q_sched = st.text_input("Schedule / Time (optional)", placeholder="e.g. Tue / Thu · 10:30 AM")
                         q_notes = st.text_input("Notes (optional)", placeholder="e.g. Check lab books")
-                        if st.form_submit_button("Add Selected Class to Dashboard", icon=":material/add:", width="stretch"):
+                        if st.form_submit_button("Add Approved Class to Dashboard", icon=":material/add:", width="stretch"):
                             err = insights.add_teacher_dashboard_class(
                                 user["id"], "", "", "", q_sched, q_notes,
                                 subject_id=picked_subj_id, register_in_school=False,
@@ -424,6 +451,64 @@ def _widget_header(user, widget_key, title):
         st.rerun()
 
 
+def _render_teacher_class_join_panel(user, school_subjects):
+    """Allow teachers to see all Admin classes and click 'Join' to send a request to Admin."""
+    all_cls = school.all_classes()
+    my_requests = school.user_join_requests(user["id"])
+    pending_reqs = [r for r in my_requests if r.get("status") == "pending"]
+    approved_cls_ids = set(school.teacher_class_ids(user["id"]))
+
+    with st.container(border=True):
+        st.markdown("**■ Join a School Class (Request Sent to School Admin)**")
+        st.caption(
+            "All school classes are managed by the Admin. Enter the Subject you teach and click **Join Class** on any class below — "
+            "once the Admin accepts your request, you will enter the class and can post lessons, assignments, quizzes, and grades."
+        )
+        subj_input_col, _ = st.columns([2, 2])
+        default_subj = subj_input_col.text_input(
+            "Subject You Teach (for joining a class)",
+            value="Mathematics",
+            placeholder="e.g. Mathematics, Physics, English",
+            key="teacher_join_subj_input",
+        )
+
+        if not all_cls:
+            st.caption("No classes have been created by the School Admin yet.")
+        else:
+            cols = st.columns(min(len(all_cls), 3))
+            for idx, c in enumerate(all_cls):
+                col = cols[idx % len(cols)]
+                with col.container(border=True):
+                    st.markdown(f"**{c['name']}**")
+                    st.caption(f"{c.get('grade_level', 'Class')} · {c.get('room', 'Room TBD')} · {len(c.get('student_ids', []))} student(s)")
+                    my_subjs_in_cls = [s["name"] for s in school_subjects if s["class_id"] == c["id"]]
+                    cls_pending = [r for r in pending_reqs if r["class_id"] == c["id"]]
+
+                    if my_subjs_in_cls:
+                        st.markdown(f"**[ ● Approved: {', '.join(my_subjs_in_cls)} ]**")
+                    elif c["id"] in approved_cls_ids:
+                        st.markdown("**[ ● Approved in Class ]**")
+
+                    for req in cls_pending:
+                        st.markdown(f"**[ ◆ Pending Approval: {req.get('subject_name') or 'General'} ]**")
+                        if st.button("Cancel Request", key=f"t_cancel_req_{req['id']}", type="secondary", width="stretch"):
+                            school.cancel_join_request(req["id"], user["id"])
+                            ui.done(f"Cancelled request for {c['name']}.")
+
+                    if not cls_pending:
+                        if st.button(
+                            "Join Class",
+                            key=f"t_join_cls_btn_{c['id']}",
+                            type="primary" if not my_subjs_in_cls else "secondary",
+                            icon=":material/group_add:",
+                            width="stretch",
+                        ):
+                            _, err = school.request_join_class(
+                                user["id"], c["id"], subject_name=default_subj or "General Studies"
+                            )
+                            ui.report(err, f"Request to join '{c['name']}' ({default_subj or 'General Studies'}) sent to Admin!")
+
+
 def teacher_dashboard():
     user = auth.require_role("teacher")
     prefs = insights.get_teacher_prefs(user["id"])
@@ -439,7 +524,10 @@ def teacher_dashboard():
 
     is_empty = not (added_classes or added_assignments or pinned_ids or check_items or active_widgets)
 
-    # Always show the Teacher Dashboard Builder at the top
+    # 1. Join an Admin Class (Request sent to Admin)
+    _render_teacher_class_join_panel(user, school_subjects)
+
+    # 2. Teacher Dashboard Builder
     _teacher_builder_panel(user, school_subjects, prefs, is_empty)
 
     if is_empty:
@@ -580,50 +668,128 @@ def teacher_dashboard():
 
 
 # ==========================================================================
-# Admin Dashboard (Monochrome White & Black)
+# Admin Dashboard — Single Admin Owns All Classes & Approves Join Requests
 # ==========================================================================
+def render_admin_requests_and_classes(key_prefix="adm_dash"):
+    """Shared Admin control center for accepting/declining Teacher & Student join requests
+    and adding/removing classes."""
+    pending = school.pending_join_requests()
+    classes = school.all_classes()
+
+    # 1. Pending Class Join Requests (Teachers & Students)
+    st.subheader(f"■ Class Join Requests ({len(pending)} Pending)")
+    if not pending:
+        with st.container(border=True):
+            st.markdown("**[ ● No Pending Requests ]** When a Teacher or Student clicks **Join Class**, their request appears here for your approval.")
+    else:
+        for req in pending:
+            requester = school.get_user(req["user_id"])
+            target_cls = school.get_class(req["class_id"])
+            if not requester or not target_cls:
+                continue
+            role_tag = "TEACHER" if requester["role"] == "teacher" else "STUDENT"
+            subj_note = f" · Subject: **{req['subject_name']}**" if req.get("subject_name") else ""
+            with st.container(border=True):
+                c_info, c_acc, c_dec = st.columns([3.4, 1.1, 0.9])
+                c_info.markdown(
+                    f"**[ {role_tag} ]** **{requester['full_name']}** (`{requester['username']}`) "
+                    f"wants to join **{target_cls['name']}**{subj_note}"
+                )
+                c_info.caption(f"Requested {utils.fmt_dt(req['created_at'])}")
+                if c_acc.button(
+                    "Accept",
+                    key=f"{key_prefix}_acc_{req['id']}",
+                    type="primary",
+                    icon=":material/check_circle:",
+                    width="stretch",
+                ):
+                    err = school.approve_join_request(req["id"])
+                    ui.report(err, f"Accepted {requester['full_name']} ({role_tag.title()}) into {target_cls['name']}.")
+                if c_dec.button(
+                    "Decline",
+                    key=f"{key_prefix}_dec_{req['id']}",
+                    type="secondary",
+                    icon=":material/cancel:",
+                    width="stretch",
+                ):
+                    err = school.reject_join_request(req["id"])
+                    ui.report(err, f"Declined request from {requester['full_name']}.")
+
+    # 2. Admin Class Manager — Add or Remove Classes
+    st.subheader(f"■ Manage My Classes ({len(classes)} Total)")
+    add_col, list_col = st.columns([1.4, 2.6])
+    with add_col:
+        with st.container(border=True):
+            st.markdown("**+ Add a New Class**")
+            with st.form(f"{key_prefix}_create_class_form", clear_on_submit=True):
+                new_cls_name = st.text_input("Class Name", placeholder="e.g. Grade 9 - A")
+                new_cls_grade = st.text_input("Grade Level", placeholder="e.g. Grade 9")
+                new_cls_room = st.text_input("Room", placeholder="e.g. Room 104")
+                if st.form_submit_button("Add Class", type="primary", icon=":material/add:", width="stretch"):
+                    _, err = school.create_class(new_cls_name, new_cls_grade, new_cls_room)
+                    ui.report(err, f"Class '{new_cls_name}' added.")
+
+    with list_col:
+        if not classes:
+            with st.container(border=True):
+                st.caption("No classes exist yet. Use **+ Add a New Class** on the left to create classes.")
+        else:
+            for cls in classes:
+                cls_teachers = school.class_teachers(cls["id"])
+                cls_students = school.class_students(cls["id"])
+                cls_subjects = school.subjects_for_class(cls["id"])
+                with st.container(border=True):
+                    top_l, top_r = st.columns([3.5, 1.1])
+                    top_l.markdown(f"**{cls['name']}** ({cls.get('grade_level', 'Grade')} · {cls.get('room', 'Room')})")
+                    if top_r.button(
+                        "Remove Class",
+                        key=f"{key_prefix}_rm_cls_{cls['id']}",
+                        type="secondary",
+                        icon=":material/delete:",
+                        width="stretch",
+                    ):
+                        err = school.delete_class(cls["id"])
+                        ui.report(err, f"Removed class '{cls['name']}'.")
+                    t_names = ", ".join(t["full_name"] for t in cls_teachers) or "None yet"
+                    s_names = ", ".join(s["full_name"] for s in cls_students) or "None yet"
+                    subj_names = ", ".join(f"{s['name']} ({school.user_name(s['teacher_id'])})" for s in cls_subjects) or "None yet"
+                    st.caption(
+                        f"Teachers ({len(cls_teachers)}): {t_names}  \n"
+                        f"Subjects ({len(cls_subjects)}): {subj_names}  \n"
+                        f"Students ({len(cls_students)}): {s_names}"
+                    )
+
+
 def admin_dashboard():
     user = auth.require_role("admin")
     settings = storage.load_settings()
-    ui.page_header(_greeting(user), f"{settings['school_name']} · school overview")
+    ui.page_header(_greeting(user), f"{settings['school_name']} · Admin Class & Request Manager")
 
     students = school.users_by_role("student", True)
     teachers = school.users_by_role("teacher", True)
     classes = school.all_classes()
     subjects = school.all_subjects()
+    pending_reqs = school.pending_join_requests()
     all_ids = [s["id"] for s in subjects]
     attendance = utils.mean([tracking.attendance_summary(s["id"], all_ids)["percent"] for s in students])
     averages = [tracking.overall_average(s["id"]) for s in students]
-    ui.metrics([("Students", len(students)), ("Teachers", len(teachers)), ("Classes", len(classes)),
-                ("Subjects", len(subjects)), ("School attendance", utils.fmt_pct(attendance)),
-                ("School average", utils.fmt_pct(utils.mean(averages)))])
+    ui.metrics([
+        ("Pending Requests", len(pending_reqs), "Teacher & Student join requests"),
+        ("My Classes", len(classes), "All school classes"),
+        ("Teachers", len(teachers)),
+        ("Students", len(students)),
+        ("Subjects", len(subjects)),
+        ("School average", utils.fmt_pct(utils.mean(averages))),
+    ])
 
-    unassigned_students = [s for s in students if not school.student_class(s["id"])]
-    idle_teachers = [t for t in teachers if not school.subjects_for_teacher(t["id"])]
-    locked = [u for u in storage.load("users") if u.get("locked_until") and utils.parse_dt(u["locked_until"]) > datetime.now()]
-    st.subheader("■ Setup Checks")
-    checks = 0
-    if unassigned_students:
-        checks += 1
-        with st.container(border=True):
-            st.markdown(f"**[ ▲ Unassigned Students ]** {len(unassigned_students)} student(s) are not in a class: "
-                        + ", ".join(s["full_name"] for s in unassigned_students[:6]))
-    if idle_teachers:
-        checks += 1
-        with st.container(border=True):
-            st.markdown("**[ ◆ Teachers Without Subjects ]** " + ", ".join(t["full_name"] for t in idle_teachers))
-    if locked:
-        checks += 1
-        with st.container(border=True):
-            st.markdown("**[ ▲ Locked Accounts ]** " + ", ".join(u["full_name"] for u in locked)
-                        + ". Reset their password on the Users page to unlock.")
-    if not checks:
-        with st.container(border=True):
-            st.markdown("**[ ● All Clear ]** Everything is set up correctly.")
+    # Primary Admin Controls: Join Requests + Add/Remove Classes
+    render_admin_requests_and_classes(key_prefix="adm_dash")
+
+    st.divider()
 
     left, right = st.columns(2)
     with left:
-        st.subheader("■ Classes")
+        st.subheader("■ Class Performance Overview")
         rows = []
         for cls in classes:
             ids = [s["id"] for s in school.subjects_for_class(cls["id"])]

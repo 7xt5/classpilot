@@ -216,11 +216,11 @@
     "password_hash": "pbkdf2_sha256$200000$e1841dd1b4a626a3386890f42ba89f7b$6a56e54a1aec3243497bda98474562a0cebba2d1f022b31f0291bcb99f046011",
     "active": true,
     "created_at": "2026-10-16T17:54:53",
-    "last_login": "2026-10-18T12:41:55",
+    "last_login": "2026-10-18T21:32:05",
     "failed_attempts": 0,
     "locked_until": null,
-    "remember_token": null,
-    "remember_expires": null
+    "remember_token": "y4J5AvAp4p_X-hU9TrrewgWXC8WdAjit",
+    "remember_expires": "2026-11-17T21:32:05"
   },
   {
     "id": "usr_6a0a26eb",
